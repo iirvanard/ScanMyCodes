@@ -1,9 +1,5 @@
 from flask import render_template
 from app import app
-from ...database.helper import DatabaseHelper
-
-# Inisialisasi objek DatabaseHelper
-db = DatabaseHelper()
 
 def dashboard():
     """Rute untuk halaman about."""

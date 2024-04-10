@@ -1,0 +1,58 @@
+version: "3.8"
+
+# creating a volume to be able to persist data between Postgres container restarts
+volumes:
+  postgres-db:
+
+services:
+  db:
+    container_name: postgres_container
+    image: postgres
+    restart: always
+
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: iirvanard
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - mynetwork
+  # flask service
+  server:
+    container_name: server
+    build:
+      context: .
+      dockerfile: dockerfile
+    ports:
+      - 5000:5000
+    # environment:
+    #   - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
+    #   - FLASK_ENV=development
+    links:
+      - db:db
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+
+  # pgadmin:
+  #   container_name: pgadmin4_container
+  #   image: dpage/pgadmin4
+  #   restart: always
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: admin@admin.com
+  #     PGADMIN_DEFAULT_PASSWORD: root
+  #   ports:
+  #     - "5050:80"

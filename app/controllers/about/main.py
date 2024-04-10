@@ -1,14 +1,8 @@
 from flask import render_template
 from app import app
-from ...database.helper import DatabaseHelper
-
-# Inisialisasi objek DatabaseHelper
-db = DatabaseHelper()
 
 def about():
-    """Rute untuk halaman about."""
-    # Contoh eksekusi query database
-    # result = db.execute_query("SELECT * FROM USER;")
-    # Misalnya, Anda ingin merender hasil query di dalam template HTML
-    # Anda bisa mengirimnya sebagai parameter ke render_template
+    # db_helper.execute_query("CREATE TABLE users (id SERIAL PRIMARY KEY, username VARCHAR(80) UNIQUE NOT NULL, email VARCHAR(120) UNIQUE NOT NULL);")
+    # result = db_helper.execute_query("SELECT * FROM users")
+
     return "result"

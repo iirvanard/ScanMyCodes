@@ -1,24 +1,23 @@
-# Gunakan Ubuntu versi terbaru sebagai base image
-FROM ubuntu:latest
-FROM python:3.11
-# Informasi tentang pembuat (Opsional)
-LABEL maintainer="IRVAN ARDIANSYAH <irvan9110@gmail.com>"
+FROM python:3.8.3-slim
+LABEL maintainer="irvan9110@gmail.com"
+COPY . ./usr/src/app
+WORKDIR /usr/src/app
 
+RUN apt-get update \
+    && apt-get -y install libpq-dev gcc \
+    && pip install psycopg2
 
-COPY . .
-# Tentukan direktori kerja
-WORKDIR /app
+RUN pip install -r requirements.txt 
 
-# Salin file-file dari host ke dalam image
+# # Add docker-compose-wait tool -------------------
+# ENV WAIT_VERSION 2.7.2
+# ADD https://github.com/ufoscout/docker-compose-wait/releases/download/$WAIT_VERSION/wait /wait
+# RUN chmod +x /wait
 
-
-COPY requirements.txt /app/
-RUN pip3 install -r requirements.txt
-
-# Buka port 5000 untuk koneksi HTTP
 EXPOSE 5000
 
-# Jalankan aplikasi Flask ketika container dimulai
-CMD ["flask", "run"]
 
-# CMD [ "gunicorn", "-w", "4", "-b","0.0.0.0:5000","--reload","app:create_app('development')" ]
+ENTRYPOINT ["python"]
+CMD [ "run.py" ]
+
+# CMD ["flask","run","--debug"]
