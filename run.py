@@ -5,5 +5,4 @@ if __name__ == "__main__":
     HOST = load_dotenv('HOST') or '5000'
     PORT = load_dotenv('PORT') or '5000'
     DEBUG = load_dotenv('FLASK_DEBUG_MODE') or None
-    app.run(host='0.0.0.0', port=5000) #masih hard code nanti ubah
-
+    app.run(host='0.0.0.0', port=5000)
