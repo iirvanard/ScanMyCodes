@@ -19,16 +19,25 @@ class User(db.Model):
         self.role = role
 
     def register_user_if_not_exist(self):
-        db_user = User.query.filter(User.username == self.username).all()
+        db_user = User.query.filter(
+            User.username == self.username).first()  # Changed all() to first()
         if not db_user:
             db.session.add(self)
             db.session.commit()
+            return True  # Return True after successful insertion
+        return False  # Return False if user already exists
 
-        return True
-
+    @staticmethod
     def get_by_username(username):
         db_user = User.query.filter(User.username == username).first()
         return db_user
+
+    @staticmethod
+    def insert_user(username, created_at, role):
+        new_user = User(username=username, created_at=created_at, role=role)
+        db.session.add(new_user)
+        db.session.commit()
+        return new_user  # Return the newly created user object
 
     def __repr__(self):
         return f"<User {self.username}>"

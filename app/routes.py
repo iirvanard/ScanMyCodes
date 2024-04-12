@@ -6,7 +6,7 @@
 # app.add_url_rule("/", view_func=about)
 # app.add_url_rule("/about", view_func=dashboard)
 
-from app.controllers import index
+from app.modules import index
 
 from app import app
 
