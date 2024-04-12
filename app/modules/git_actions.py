@@ -24,6 +24,6 @@ def clone_or_pull(repo_url, destination_path):
 
 
 # Example usage:
-repo_url = "https://github.com/irvan91110/flask-backbone.git"
+repo_url = "https://github.com/irvan91110/tugas_akhir.git"
 relative_path = "path"
 clone_or_pull(repo_url, relative_path)
