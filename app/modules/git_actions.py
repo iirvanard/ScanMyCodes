@@ -3,7 +3,10 @@ import subprocess
 
 
 def clone_or_pull(repo_url, destination_path):
-    full_path = os.path.join(os.getcwd(), destination_path)
+    full_path = os.path.join("D:/", destination_path)
+
+    # full_path = os.path.join(os.getcwd(), destination_path)
+
     if os.path.exists(full_path):
         # If the repository already exists locally, pull changes
         try:
