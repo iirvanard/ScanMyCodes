@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, render_template
 
 blueprint = Blueprint('index', __name__, url_prefix='/')
 
@@ -14,10 +14,7 @@ def index():
         serialized_user = {
             'id': user.id,
             'username': user.username,
-            'created_at':
-            user.created_at.strftime('%Y-%m-%d'),  # Convert datetime to string
-            'role': user.role
         }
         serialized_users.append(serialized_user)
 
-    return jsonify(serialized_users)
+    return render_template("index.html", title="index")

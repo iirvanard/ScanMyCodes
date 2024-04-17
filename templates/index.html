@@ -1,1 +1,142 @@
-ini html harusnya
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title> 
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          fontFamily: {
+            sans: ["Roboto", "sans-serif"],
+            body: ["Roboto", "sans-serif"],
+            mono: ["ui-monospace", "monospace"],
+          },
+        },
+        corePlugins: {
+          preflight: false,
+        },
+      };
+    </script>
+    <style> 
+    .dropdown:hover .dropdown-menu {
+        display: block;
+    }
+    </style>
+</head>
+<header class="relative">
+    {% include 'nav.html' %}
+</header>
+<body>
+    <div class="mx-32">
+        <ul class="flex mt-10" id="menu">
+            <li class="mt-5 mr-5 cursor-pointer px-2 py-2 font-semibold transition relative border-b-2 border-transparent hover:border-blue-700"  data-content="analysis">
+                <a href="#analysis" class="text-blue-700 hover:text-blue-700 block py-2 px-2 relative z-10 ">
+                    Analysis
+                </a>
+            </li>
+            <li class="mt-5 mr-5 cursor-pointer px-2 py-2 font-semibold transition relative border-b-2 border-transparent hover:border-blue-700"  data-content="log">
+                <a href="#log" class="text-grey-700 hover:text-blue-700 block py-2 px-2 relative z-10 ">
+                    log
+                </a>
+            </li>  
+            <li class="mt-5 mr-5 cursor-pointer px-2 py-2 font-semibold transition relative border-b-2 border-transparent hover:border-blue-700"  data-content="settings">
+                <a href="#Settings" class="text-grey-700 hover:text-blue-700 block py-2 px-2 relative z-10 ">
+                    Settings
+                </a>
+            </li>
+        </ul>
+        <hr class="border-t border-gray-200 mt-5">
+        <!-- item 1  -->
+        <div id="analysis" class="content mt-5">
+            
+            <!-- dropdown  -->
+            <div class="dropdown inline-block relative">
+                <button class="bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="h-4 w-4 mr-1">
+                        <path fill="#000000" d="M416,160a64,64,0,1,0-96.27,55.24c-2.29,29.08-20.08,37-75,48.42-17.76,3.68-35.93,7.45-52.71,13.93V151.39a64,64,0,1,0-64,0V360.61a64,64,0,1,0,64.42.24c2.39-18,16-24.33,65.26-34.52,27.43-5.67,55.78-11.54,79.78-26.95,29-18.58,44.53-46.78,46.36-83.89A64,64,0,0,0,416,160ZM160,64a32,32,0,1,1-32,32A32,32,0,0,1,160,64Zm0,384a32,32,0,1,1,32-32A32,32,0,0,1,160,448ZM352,192a32,32,0,1,1,32-32A32,32,0,0,1,352,192Z"/>
+                    </svg>
+                    <span class="mr-1" id="dropdown-selected">Branch</span>
+                </button>
+                <ul class="dropdown-menu absolute hidden text-gray-700 pt-1 inline-block relative">
+                    <li><a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" onclick="changeDropdownItem('One')">One</a></li>
+                    <li><a class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" onclick="changeDropdownItem('TwoTwoTwo')">TwoTwoTwo</a></li>
+                    <li><a class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" onclick="changeDropdownItem('Two')">Two</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- item 2 -->
+        <div id="log" class="content mt-5 hidden">
+            <!-- Content for Users -->
+            <a>Content for Users</a>
+        </div>
+        <!-- item 3 -->
+        <div id="settings" class="content mt-5 hidden">
+            <!-- Content for Profile -->
+            <a>Content for Profile</a>
+        </div>
+    </div>
+    <script>
+        const menuItems = document.querySelectorAll('#menu li');
+        const contents = document.querySelectorAll('.content');
+
+        // Fungsi untuk menyembunyikan semua konten
+        function hideAllContents() {
+            contents.forEach(content => content.classList.add('hidden'));
+        }
+
+        // Fungsi untuk mengatur kelas pada item menu
+        function setActiveMenuItem(item) {
+            menuItems.forEach(menuItem => {
+                menuItem.querySelector('a').classList.remove('text-blue-700', 'border-blue-700');
+                menuItem.querySelector('a').classList.add('text-grey-700', 'border-transparent');
+                menuItem.classList.remove('border-blue-700');
+                menuItem.classList.add('border-transparent');
+            });
+            item.classList.remove('border-transparent');
+            item.classList.add('border-blue-700');
+            item.querySelector('a').classList.remove('text-grey-700');
+            item.querySelector('a').classList.add('text-blue-700', 'border-blue-700');
+        }
+
+        // Fungsi untuk menampilkan konten yang sesuai dengan item menu yang diklik
+        function showCorrespondingContent(contentId) {
+            // Sembunyikan semua konten terlebih dahulu
+            hideAllContents();
+            // Tampilkan konten yang sesuai dengan ID yang diberikan
+            document.getElementById(contentId).classList.remove('hidden');
+            // Perbarui hash dalam URL agar sesuai dengan ID konten yang ditampilkan
+            window.location.hash = "#" + contentId;
+        }
+
+        // Iterasi melalui setiap item menu
+        menuItems.forEach(item => {
+            // Tambahkan event listener untuk setiap item
+            item.addEventListener('click', () => {
+                setActiveMenuItem(item);
+                const contentId = item.getAttribute('data-content');
+                showCorrespondingContent(contentId);
+            });
+        });
+
+        // Cek hash pada URL saat pertama kali halaman dimuat
+        window.onload = function () {
+            const hash = window.location.hash.substring(1);
+            const menuItem = document.querySelector(`[data-content="${hash}"]`);
+            if (menuItem) {
+                setActiveMenuItem(menuItem);
+                showCorrespondingContent(hash);
+            }
+        };
+
+        // Fungsi untuk mengubah teks yang dipilih pada dropdown
+        function changeDropdownItem(text) {
+            document.getElementById('dropdown-selected').textContent = text;
+        }
+    </script>
+</body>
+</html>

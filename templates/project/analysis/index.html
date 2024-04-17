@@ -1,0 +1,51 @@
+{% extends 'project/layout.html' %}
+
+{% block content %}
+<div class="content mt-5 my-8">
+    <!-- dropdown  -->
+    <div class="dropdown inline-block relative">
+        <button class="bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center" id="dropdown-button">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="h-4 w-4 mr-1">
+                <path fill="#000000" d="M416,160a64,64,0,1,0-96.27,55.24c-2.29,29.08-20.08,37-75,48.42-17.76,3.68-35.93,7.45-52.71,13.93V151.39a64,64,0,1,0-64,0V360.61a64,64,0,1,0,64.42.24c2.39-18,16-24.33,65.26-34.52,27.43-5.67,55.78-11.54,79.78-26.95,29-18.58,44.53-46.78,46.36-83.89A64,64,0,0,0,416,160ZM160,64a32,32,0,1,1-32,32A32,32,0,0,1,160,64Zm0,384a32,32,0,1,1,32-32A32,32,0,0,1,160,448ZM352,192a32,32,0,1,1,32-32A32,32,0,0,1,352,192Z"/>
+            </svg>
+            <span class="mr-1" id="dropdown-selected">{{ BranchName or 'branch' }}</span>
+        </button>
+        <ul class="dropdown-menu absolute hidden text-gray-700 pt-1 inline-block relative" id="dropdown-menu">
+            <li><a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="/project/analysis/one">one</a></li>
+            <li><a class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="/project/analysis/two">two</a></li>
+            <li><a class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="/project/analysis/three" >three</a></li>
+        </ul>
+    </div>
+</div>
+
+{{ analysis_content|safe }}
+
+{% endblock %}
+
+<script>
+    // Mendapatkan URL saat ini
+    var currentUrl = window.location.href;
+
+    // Mendapatkan bagian hash dari URL (misal: #one)
+    var hash = currentUrl.split('/')[1];
+
+    // Jika hash tidak kosong, ubah teks yang dipilih di dropdown
+    if (hash) {
+        document.getElementById('dropdown-selected').innerText = hash.charAt(0).toUpperCase() + hash.slice(1);
+    }
+
+    // Mencari item dropdown yang sesuai dengan hash dan menandainya sebagai aktif
+    var dropdownItems = document.querySelectorAll('.dropdown-menu a');
+    dropdownItems.forEach(function(item) {
+        if (item.getAttribute('href').slice(1) === hash) {
+            item.classList.add('bg-gray-400');
+        }
+    });
+
+    // Menambahkan event listener untuk mengubah teks yang dipilih di dropdown saat item dropdown diklik
+    dropdownItems.forEach(function(item) {
+        item.addEventListener('click', function() {
+            document.getElementById('dropdown-selected').innerText = item.innerText;
+        });
+    });
+</script>

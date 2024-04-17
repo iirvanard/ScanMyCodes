@@ -1,0 +1,32 @@
+{% extends 'project/layout.html' %}
+
+{% block content %}
+
+<a href="{{ url_for('project.log') ~ '/' ~ 'asdasdads' }}" class="md:container md:mx-auto">
+    <div class="max-w rounded overflow-hidden  bg-gray-100	">
+        <div class="m-4">
+            <div class="flex space-x-6">
+                <div class="type-section flex">
+                    <div class="font-bold text-sm mr-1">Type:</div> 
+                    <div class="text-sm">analysis</div>
+                </div>
+                <div class="type-section flex">
+                    <div class="font-bold text-sm mr-1">Type:</div> 
+                    <div class="text-sm">analysis</div>
+                </div>
+            </div>
+            <div class="info-section mt-5">
+                <div class="font-bold text-sm mr-1">Created:</div> 
+                <div class="text-sm">asdasdasdasdasdasdasdasdasdasd</div>
+            </div>
+            <div class="info-section">
+                <div class="font-bold text-sm mr-1">Duration:</div> 
+                <div class="text-sm">6 second</div>
+            </div>
+            <hr>
+        </div>
+    </div>
+</a>
+
+{% endblock %}
+
