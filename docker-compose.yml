@@ -37,5 +37,21 @@ services:
     env_file:
       - .env
 
+  worker:
+    build: .
+    command: celery --app project.server.tasks.celery worker --loglevel=info
+    volumes:
+      - .:/usr/src/app
+    environment:
+      - FLASK_DEBUG=1
+      - APP_SETTINGS=project.server.config.DevelopmentConfig
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - web
+      - redis
+
+  redis:
+    image: redis:6-alpine
 
 

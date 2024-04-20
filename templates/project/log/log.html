@@ -2,24 +2,24 @@
 
 {% block content %}
 
-<a href="{{ url_for('project.log') ~ '/' ~ 'asdasdads' }}" class="md:container md:mx-auto">
+<a href="{{ url_for('project.log',idproject=idproject) ~ '/' ~ logid }}" class="md:container md:mx-auto">
     <div class="max-w rounded overflow-hidden  bg-gray-100	">
         <div class="m-4">
             <div class="flex space-x-6">
                 <div class="type-section flex">
                     <div class="font-bold text-sm mr-1">Type:</div> 
-                    <div class="text-sm">analysis</div>
+                    <div class="text-sm">analysisanalysisanalysisanalysisanalysisanalysisanalysisanalysisanalysis</div>
                 </div>
                 <div class="type-section flex">
-                    <div class="font-bold text-sm mr-1">Type:</div> 
-                    <div class="text-sm">analysis</div>
+                    <div class="font-bold text-sm mr-1">status:</div> 
+                    <div class="text-sm">failed</div>
                 </div>
             </div>
-            <div class="info-section mt-5">
+            <div class="info-section mt-5 flex">
                 <div class="font-bold text-sm mr-1">Created:</div> 
                 <div class="text-sm">asdasdasdasdasdasdasdasdasdasd</div>
             </div>
-            <div class="info-section">
+            <div class="info-section flex">
                 <div class="font-bold text-sm mr-1">Duration:</div> 
                 <div class="text-sm">6 second</div>
             </div>

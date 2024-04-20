@@ -1,7 +1,8 @@
 from flask import Flask
 from app.config import CoolConfig
-from app.extensions import db, login_manager, csrf
+from app.extensions import db, login_manager, csrf,celery
 from flask_migrate import Migrate
+from celery import Celery
 
 app = Flask(__name__,
             template_folder='../templates',
@@ -23,15 +24,14 @@ migrate = Migrate(app, db)
 login_manager.init_app(app)
 
 
-# Define user loader function
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
+#celery 
+celery = Celery(app.name, broker=app.config["CELERY_BROKER_URL"])
+celery.conf.update(app.config)
+
 
 
 # Import model setelah inisialisasi ekstensi db
-from app.models.users import User
-from app.models.project import Project
+from app.models import *
 
 # Import routes setelah inisialisasi aplikasi
 from app import routes

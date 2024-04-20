@@ -1,127 +1,74 @@
-from flask import Blueprint, jsonify, flash, redirect, render_template, url_for, request
-from datetime import datetime
+from functools import wraps
+from flask import Blueprint, abort, jsonify, flash, redirect, render_template, url_for
 from app.models.project import Project
-from app.extensions import login_user, logout_user, login_required
+from flask_login import current_user
 
-blueprint = Blueprint('project', __name__, url_prefix='/project')
 
-# @blueprint.route("/", methods=["GET"])
-# def index():
-#     projects = Project.query.all()
-#     serialized_projects = []
+blueprint = Blueprint('project',
+                      __name__,
+                      url_prefix='/project/<string:idproject>')
 
-#     for project in projects:
-#         serialized_project = {
-#             'id': project.id,
-#             'username': project.username,
-#             'git_urls': project.git_urls,
-#             'last_update': project.last_update,
-#             'created_at': project.created_at,
-#         }
-#         serialized_projects.append(serialized_project)
+
+def check_idproject(func):
+    @wraps(func)
+    def decorated_function(*args, **kwargs):
+        try:
+            idproject = kwargs.get('idproject')
+            project = Project.query.filter_by(project_id=idproject).first()
+            if not project or project.username != current_user.username:
+                raise None
+        
+        except Exception:
+            abort(404)
+        return func(*args, **kwargs)
+
+    return decorated_function
 
 
 @blueprint.route("/", methods=["GET"])
-def index():
-    # users = User.query.all()
-    # serialized_users = []
-
-    # for user in users:
-    #     serialized_user = {
-    #         'id': user.id,
-    #         'username': user.username,
-    #     }
-    #     serialized_users.append(serialized_user)
-
-    return redirect(url_for('project.analysis'))
+@check_idproject
+def index(idproject):
+    return redirect(url_for('project.analysis', idproject=idproject))
 
 
 @blueprint.route("/analysis", methods=["GET"])
-def analysis():
-    # users = User.query.all()
-    # serialized_users = []
-
-    # for user in users:
-    #     serialized_user = {
-    #         'id': user.id,
-    #         'username': user.username,
-    #     }
-    #     serialized_users.append(serialized_user)
-
+@check_idproject
+def analysis(idproject):
     return render_template("/project/analysis/index.html",
-                           title="project title")
+                           title="project title",
+                           idproject=idproject)
 
 
 @blueprint.route("/analysis/<string:branchid>", methods=["GET"])
-def analysisByBranch(branchid):
-    analysis_content = branchid
-
+@check_idproject
+def analysisByBranch(idproject, branchid):
+    analysis_content = render_template("/project/analysis/branch.html")
     return render_template('/project/analysis/index.html',
                            analysis_content=analysis_content,
                            BranchName=branchid,
-                           title="branch dev")
+                           title="branch dev",
+                           idproject=idproject)
 
 
-@blueprint.route('/log')
-def log():
-    return render_template('/project/log/log.html', title="log - 12313123")
+@blueprint.route('/log', methods=["GET"])
+@check_idproject
+def log(idproject):
+    return render_template('/project/log/log.html',
+                           logid="asdasd",
+                           title="log - 12313123",
+                           idproject=idproject)
 
 
-@blueprint.route('/log/<string:logId>')
-def LogById(logId):
-
+@blueprint.route('/log/<string:logid>')
+@check_idproject
+def log_by_id(logid, idproject):
     return render_template('/project/log/log_item.html',
-                           id=logId,
-                           title="log details - 123123")
+                           title="Log details - 123123",
+                           idproject=idproject,
+                           logid=logid)
 
 
-@blueprint.route('/contact')
-def contact():
-    return render_template('/project/analysis/contact.html')
-
-
-# @blueprint.route("/", methods=["GET"])
-# @login_required
-# def index():
-#     projects = Project.query.all()
-#     serialized_projects = []
-
-#     for project in projects:
-#         serialized_project = {
-#             'id': project.id,
-#             'username': project.username,
-#             'git_urls': project.git_urls,
-#             'last_update': project.last_update,
-#             'created_at': project.created_at,
-#         }
-#         serialized_projects.append(serialized_project)
-
-#     return jsonify(serialized_projects)
-
-# @blueprint.route('/add_project', methods=['POST'])
-# @login_required
-# def add_project():
-#     try:
-#         form = request.form
-#         if form.get('email') and form.get('username'):
-#             email = form.get('email')
-#             username = form.get('username')
-#             if Project.query.filter_by(
-#                     email=email).first() or Project.query.filter_by(
-#                         username=username).first():
-#                 flash('Email or username already registered', 'error')
-#                 return redirect(url_for('auth.auth', _anchor='register'))
-#             # Define hashed_password if it's not defined elsewhere
-#             Project.insert_project(username=form.get('username'),
-#                                    git_urls=form.get('git_urls'),
-#                                    last_update=datetime.now(),
-#                                    created_at=datetime.now())
-#             flash('Registration successful. You can now login.', 'success')
-#             return redirect(url_for('auth.auth'))
-#         else:
-#             flash('Registration failed. Please check your input.', 'error')
-#             return redirect(url_for('auth.auth', _anchor='register'))
-#     except Exception as e:
-#         flash('An error occurred. Please try again later.', 'error')
-#         print(e)
-#         return redirect(url_for('index.index'))
+@blueprint.route('/settings')
+@check_idproject
+def settings(idproject):
+    return render_template('/project/settings/index.html', idproject=idproject)

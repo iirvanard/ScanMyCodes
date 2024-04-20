@@ -33,49 +33,40 @@
 </header>
 <body>
     <div class="mx-32 ">
-        
-        <ul class="flex mt-10" id="menu">
+        <div class="py-4 flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-800">Judul Project</h1>
+                <p>ini disini refresh aja</p>    
+            </div>
+
+            <p>disini jumlah error</p>    
+        </div>
+        <ul class="flex" id="menu">
             <li class="menu-item mr-4">
-                <a href="{{ url_for('project.analysis') }}" class="menu-link {% if url_for('project.analysis') in request.path %}text-blue-700{% else %}text-grey-700{% endif %} hover:text-blue-700 block py-2 px-2 relative z-10 {% if url_for('project.analysis') in request.path %}border-b-2 border-blue-700{% else %}border-b-2 border-transparent{% endif %} hover:border-blue-700" data-content="analysis">
+                <a href="{{ url_for('project.analysis', idproject=idproject) }}" class="menu-link {% if url_for('project.analysis', idproject=idproject) in request.path %}text-blue-700{% else %}text-grey-700{% endif %} hover:text-blue-700 block py-2 px-2 relative z-10 {% if url_for('project.analysis', idproject=idproject) in request.path %}border-b-2 border-blue-700{% else %}border-b-2 border-transparent{% endif %} hover:border-blue-700" data-content="analysis">
                     Analysis
                 </a>
             </li>
-
+        
             <li class="menu-item mr-4">
-                <a href="{{ url_for('project.log') }}" class="menu-link {% if url_for('project.log') in request.path %}text-blue-700{% else %}text-grey-700{% endif %} hover:text-blue-700 block py-2 px-2 relative z-10 {% if url_for('project.log') in request.path %}border-b-2 border-blue-700{% else %}border-b-2 border-transparent{% endif %} hover:border-blue-700" data-content="analysis">
+                <a href="{{ url_for('project.log', idproject=idproject) }}" class="menu-link {% if url_for('project.log', idproject=idproject) in request.path %}text-blue-700{% else %}text-grey-700{% endif %} hover:text-blue-700 block py-2 px-2 relative z-10 {% if url_for('project.log', idproject=idproject) in request.path %}border-b-2 border-blue-700{% else %}border-b-2 border-transparent{% endif %} hover:border-blue-700" data-content="analysis">
                     Log
                 </a>
             </li>
             <li class="menu-item mr-4">
-                <a href="{{ url_for('project.contact') }}" class="menu-link {% if url_for('project.contact') in request.path %}text-blue-700{% else %}text-grey-700{% endif %} hover:text-blue-700 block py-2 px-2 relative z-10 {% if url_for('project.contact') in request.path %}border-b-2 border-blue-700{% else %}border-b-2 border-transparent{% endif %} hover:border-blue-700" data-content="analysis">
+                <a href="{{ url_for('project.settings', idproject=idproject) }}" class="menu-link {% if url_for('project.settings', idproject=idproject) in request.path %}text-blue-700{% else %}text-grey-700{% endif %} hover:text-blue-700 block py-2 px-2 relative z-10 {% if url_for('project.settings', idproject=idproject) in request.path %}border-b-2 border-blue-700{% else %}border-b-2 border-transparent{% endif %} hover:border-blue-700" data-content="analysis">
                     Settings
                 </a>
             </li>
-
         </ul>
         
+        
         <hr class="border-t border-gray-200 mt-4">
-        <!-- item 1  -->
-        <!-- <div id="analysis" class="content mt-5">
-            
-         
-        </div> -->
-        <!-- item 2 -->
-        <!-- <div id="log" class="content mt-5 hidden"> -->
-            <!-- Content for Users -->
-            <!-- <a>Content for Users</a> -->
-        <!-- </div> -->
-        <!-- item 3 -->
-        <!-- <div id="settings" class="content mt-5 hidden"> -->
-            <!-- Content for Profile -->
-            <!-- <a>Content for Profile</a> -->
-        <!-- </div> -->
-<div class="my-4">
-    {% block content %}
-    {% endblock %}
-</div>
+        <div class="my-4">
+            {% block content %}
+            {% endblock %}
+        </div>
 
     </div>
-
 </body>
 </html>
