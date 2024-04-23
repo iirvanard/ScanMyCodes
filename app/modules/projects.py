@@ -1,11 +1,14 @@
 from flask import Blueprint, abort, jsonify, flash, redirect,request, render_template, url_for
 from app.models.project import Project,db
 from flask_login import current_user
+from app.tasks.projects import add_2_database # Import Celery task
+from celery.result import AsyncResult
 
 
 blueprint = Blueprint('projects',
                       __name__,
                       url_prefix='/project')
+
 
 @blueprint.route("/", methods=["GET"])
 def index():
@@ -31,14 +34,22 @@ def add():
     project_name = request.form.get('projectName')
     project_url = request.form.get('projectURL')
     description = request.form.get('description')
-    
-    
-    new_project = Project(username=current_user.username,project_name=project_name, project_url=project_url, description=description)
-    db.session.add(new_project)
-    db.session.commit()
-    
-    flash('Project added successfully!', 'success')
-    return redirect(url_for('projects.index'))
+    result = add_2_database.delay(current_user.username,project_name,project_url,description)
+    return str(result)
+    # return redirect(url_for("projects.index"))
+
+
+
+@blueprint.route("/ese", methods=["GET"])
+def ese():
+    task_result = AsyncResult('f905b62e-fb2c-43d5-aa23-c42d2dfb120e')
+
+    print(task_result)
+    return str(task_result.date_done)
+
+
+
+
 
 @blueprint.route("/update", methods=["POST"])
 def update():

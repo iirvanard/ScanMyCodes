@@ -4,7 +4,7 @@ import os
 
 if __name__ == "__main__":
     load_dotenv()  # Load environment variables from .env file
-
+   
     # Access environment variables using os.getenv
     HOST = os.getenv('HOST') or 'localhost'
     PORT = os.getenv('PORT') or '5000'
@@ -12,5 +12,6 @@ if __name__ == "__main__":
 
     # Convert port to integer
     PORT = int(PORT)
+    
 
     app.run(host=HOST, port=PORT, debug=DEBUG)

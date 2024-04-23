@@ -1,0 +1,1175 @@
+2024-04-20 21:06:57,746 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-20 21:06:57,755 - celery.worker.consumer.connection - INFO - Connected to redis://localhost:6379//
+2024-04-20 21:06:57,756 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-20 21:06:57,766 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2024-04-20 21:06:58,797 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2024-04-20 21:06:58,825 - celery.apps.worker - INFO - celery@DESKTOP-POHF8L5 ready.
+2024-04-20 21:07:03,172 - celery.worker.strategy - INFO - Task app.tasks.add[9be2716d-c9e4-48c7-9003-cb8ed9719d90] received
+2024-04-20 21:07:03,172 - app.tasks - INFO - Found addition
+2024-04-20 21:07:03,172 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 21:07:03,179 - celery.app.trace - INFO - Task app.tasks.add[9be2716d-c9e4-48c7-9003-cb8ed9719d90] succeeded in 0.01600000000144064s: 8
+asdasd
+2024-04-20 21:08:15,294 - celery.worker.strategy - INFO - Task app.tasks.add[834cf7d7-57f9-4957-a656-dcdda2bd2c60] received
+2024-04-20 21:08:15,295 - app.tasks - INFO - Found addition
+2024-04-20 21:08:15,295 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 21:08:15,297 - celery.app.trace - INFO - Task app.tasks.add[834cf7d7-57f9-4957-a656-dcdda2bd2c60] succeeded in 0.0s: 8
+2024-04-20 21:39:09,452 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-20 21:39:09,461 - celery.worker.consumer.connection - INFO - Connected to redis://localhost:6379//
+2024-04-20 21:39:09,462 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-20 21:39:09,469 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2024-04-20 21:39:10,494 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2024-04-20 21:39:10,527 - celery.apps.worker - INFO - celery@DESKTOP-POHF8L5 ready.
+2024-04-20 21:39:37,094 - celery.worker.strategy - INFO - Task app.tasks.add[f02ce3fe-a4f4-448c-817d-598d1b3cfd09] received
+2024-04-20 21:39:37,095 - app.tasks - INFO - Found addition
+2024-04-20 21:39:37,096 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 21:39:37,102 - celery.app.trace - INFO - Task app.tasks.add[f02ce3fe-a4f4-448c-817d-598d1b3cfd09] succeeded in 0.0s: 8
+2024-04-20 21:40:17,102 - celery.worker.strategy - INFO - Task app.tasks.add[310da0f4-13e4-40e7-88f6-7cce9aae2be5] received
+2024-04-20 21:40:17,103 - app.tasks - INFO - Found addition
+2024-04-20 21:40:17,103 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 21:40:17,105 - celery.app.trace - INFO - Task app.tasks.add[310da0f4-13e4-40e7-88f6-7cce9aae2be5] succeeded in 0.0s: 8
+2024-04-20 21:42:37,741 - celery.worker.strategy - INFO - Task app.tasks.add[be2ea73c-b3ed-4bb3-94f9-8aac32837b01] received
+2024-04-20 21:42:37,742 - app.tasks - INFO - Found addition
+2024-04-20 21:42:37,742 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 21:42:37,744 - celery.app.trace - INFO - Task app.tasks.add[be2ea73c-b3ed-4bb3-94f9-8aac32837b01] succeeded in 0.0s: 8
+2024-04-20 21:42:38,633 - celery.worker.strategy - INFO - Task app.tasks.add[c41cea9d-3989-494f-851b-ff646e54851c] received
+2024-04-20 21:42:38,634 - app.tasks - INFO - Found addition
+2024-04-20 21:42:38,634 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 21:42:38,637 - celery.app.trace - INFO - Task app.tasks.add[c41cea9d-3989-494f-851b-ff646e54851c] succeeded in 0.0s: 8
+2024-04-20 21:54:57,025 - celery.worker.strategy - INFO - Task app.tasks.add[063254b6-2bce-4dca-9def-ed6edbc7505e] received
+2024-04-20 21:54:57,026 - app.tasks - INFO - Found addition
+2024-04-20 21:54:57,026 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 21:54:57,029 - celery.app.trace - INFO - Task app.tasks.add[063254b6-2bce-4dca-9def-ed6edbc7505e] succeeded in 0.0s: 8
+2024-04-20 21:55:03,650 - celery.worker.strategy - INFO - Task app.tasks.add[0959a9c7-66f3-49c5-97c8-4ceee5d9e313] received
+2024-04-20 21:55:03,650 - app.tasks - INFO - Found addition
+2024-04-20 21:55:03,651 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 21:55:03,653 - celery.app.trace - INFO - Task app.tasks.add[0959a9c7-66f3-49c5-97c8-4ceee5d9e313] succeeded in 0.0s: 8
+2024-04-20 21:55:09,871 - celery.worker.strategy - INFO - Task app.tasks.add[51a3cfb9-d3cb-465b-9357-186cc672438c] received
+2024-04-20 21:55:09,873 - app.tasks - INFO - Found addition
+2024-04-20 21:55:09,873 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 21:55:09,875 - celery.app.trace - INFO - Task app.tasks.add[51a3cfb9-d3cb-465b-9357-186cc672438c] succeeded in 0.0s: 8
+2024-04-20 21:56:26,697 - celery.worker.strategy - INFO - Task app.tasks.add[f90a9663-f0b3-40d2-a4ba-975665f3adfd] received
+2024-04-20 21:56:26,697 - app.tasks - INFO - Found addition
+2024-04-20 21:56:26,698 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 21:56:26,699 - celery.app.trace - INFO - Task app.tasks.add[f90a9663-f0b3-40d2-a4ba-975665f3adfd] succeeded in 0.0s: 8
+2024-04-20 21:56:26,703 - celery.worker.consumer.consumer - ERROR - Received unregistered task of type 'app.tasks.send_log'.
+The message has been ignored and discarded.
+
+Did you remember to import the module containing this task?
+Or maybe you're using relative imports?
+
+Please see
+https://docs.celeryq.dev/en/latest/internals/protocol.html
+for more information.
+
+The full contents of the message body was:
+b'[["Task for addition submitted with task id: f90a9663-f0b3-40d2-a4ba-975665f3adfd"], {}, {"callbacks": null, "errbacks": null, "chain": null, "chord": null}]' (157b)
+
+The full contents of the message headers:
+{'lang': 'py', 'task': 'app.tasks.send_log', 'id': '3ae2f916-03fa-4e6c-961c-2fe2f2c994bd', 'shadow': None, 'eta': None, 'expires': None, 'group': None, 'group_index': None, 'retries': 0, 'timelimit': [None, None], 'root_id': '3ae2f916-03fa-4e6c-961c-2fe2f2c994bd', 'parent_id': None, 'argsrepr': "('Task for addition submitted with task id: f90a9663-f0b3-40d2-a4ba-975665f3adfd',)", 'kwargsrepr': '{}', 'origin': 'gen7796@DESKTOP-POHF8L5', 'ignore_result': False, 'replaced_task_nesting': 0, 'stamped_headers': None, 'stamps': {}}
+
+The delivery info for this task is:
+{'exchange': '', 'routing_key': 'celery'}
+Traceback (most recent call last):
+  File "D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py", line 659, in on_task_received
+    strategy = strategies[type_]
+               ~~~~~~~~~~^^^^^^^
+KeyError: 'app.tasks.send_log'
+2024-04-20 21:57:05,355 - celery.worker.strategy - INFO - Task app.tasks.add[65614c8d-d8e9-4462-98ce-bf8f81e09e61] received
+2024-04-20 21:57:05,355 - app.tasks - INFO - Found addition
+2024-04-20 21:57:05,356 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 21:57:05,358 - celery.app.trace - INFO - Task app.tasks.add[65614c8d-d8e9-4462-98ce-bf8f81e09e61] succeeded in 0.0s: 8
+2024-04-20 21:57:05,361 - celery.worker.consumer.consumer - ERROR - Received unregistered task of type 'app.tasks.send_log'.
+The message has been ignored and discarded.
+
+Did you remember to import the module containing this task?
+Or maybe you're using relative imports?
+
+Please see
+https://docs.celeryq.dev/en/latest/internals/protocol.html
+for more information.
+
+The full contents of the message body was:
+b'[["Task for addition submitted with task id: 65614c8d-d8e9-4462-98ce-bf8f81e09e61"], {}, {"callbacks": null, "errbacks": null, "chain": null, "chord": null}]' (157b)
+
+The full contents of the message headers:
+{'lang': 'py', 'task': 'app.tasks.send_log', 'id': '3260a1da-551a-40be-a74b-79e3e74c7daf', 'shadow': None, 'eta': None, 'expires': None, 'group': None, 'group_index': None, 'retries': 0, 'timelimit': [None, None], 'root_id': '3260a1da-551a-40be-a74b-79e3e74c7daf', 'parent_id': None, 'argsrepr': "('Task for addition submitted with task id: 65614c8d-d8e9-4462-98ce-bf8f81e09e61',)", 'kwargsrepr': '{}', 'origin': 'gen7796@DESKTOP-POHF8L5', 'ignore_result': False, 'replaced_task_nesting': 0, 'stamped_headers': None, 'stamps': {}}
+
+The delivery info for this task is:
+{'exchange': '', 'routing_key': 'celery'}
+Traceback (most recent call last):
+  File "D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py", line 659, in on_task_received
+    strategy = strategies[type_]
+               ~~~~~~~~~~^^^^^^^
+KeyError: 'app.tasks.send_log'
+2024-04-20 21:57:07,254 - celery.worker.strategy - INFO - Task app.tasks.add[292abdd2-81ed-4a71-8538-961af8950a38] received
+2024-04-20 21:57:07,254 - app.tasks - INFO - Found addition
+2024-04-20 21:57:07,255 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 21:57:07,257 - celery.app.trace - INFO - Task app.tasks.add[292abdd2-81ed-4a71-8538-961af8950a38] succeeded in 0.0s: 8
+2024-04-20 21:57:07,261 - celery.worker.consumer.consumer - ERROR - Received unregistered task of type 'app.tasks.send_log'.
+The message has been ignored and discarded.
+
+Did you remember to import the module containing this task?
+Or maybe you're using relative imports?
+
+Please see
+https://docs.celeryq.dev/en/latest/internals/protocol.html
+for more information.
+
+The full contents of the message body was:
+b'[["Task for addition submitted with task id: 292abdd2-81ed-4a71-8538-961af8950a38"], {}, {"callbacks": null, "errbacks": null, "chain": null, "chord": null}]' (157b)
+
+The full contents of the message headers:
+{'lang': 'py', 'task': 'app.tasks.send_log', 'id': '938861b3-7342-4b5f-870a-25881515d343', 'shadow': None, 'eta': None, 'expires': None, 'group': None, 'group_index': None, 'retries': 0, 'timelimit': [None, None], 'root_id': '938861b3-7342-4b5f-870a-25881515d343', 'parent_id': None, 'argsrepr': "('Task for addition submitted with task id: 292abdd2-81ed-4a71-8538-961af8950a38',)", 'kwargsrepr': '{}', 'origin': 'gen7796@DESKTOP-POHF8L5', 'ignore_result': False, 'replaced_task_nesting': 0, 'stamped_headers': None, 'stamps': {}}
+
+The delivery info for this task is:
+{'exchange': '', 'routing_key': 'celery'}
+Traceback (most recent call last):
+  File "D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py", line 659, in on_task_received
+    strategy = strategies[type_]
+               ~~~~~~~~~~^^^^^^^
+KeyError: 'app.tasks.send_log'
+2024-04-20 21:59:13,289 - celery.worker.strategy - INFO - Task app.tasks.add[bcce3c01-fefa-44a4-aedf-e45433dadf97] received
+2024-04-20 21:59:13,290 - app.tasks - INFO - Found addition
+2024-04-20 21:59:13,290 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 21:59:13,292 - celery.app.trace - INFO - Task app.tasks.add[bcce3c01-fefa-44a4-aedf-e45433dadf97] succeeded in 0.0s: 8
+2024-04-20 21:59:13,295 - celery.worker.consumer.consumer - ERROR - Received unregistered task of type 'app.tasks.send_log'.
+The message has been ignored and discarded.
+
+Did you remember to import the module containing this task?
+Or maybe you're using relative imports?
+
+Please see
+https://docs.celeryq.dev/en/latest/internals/protocol.html
+for more information.
+
+The full contents of the message body was:
+b'[["Task for addition submitted with task id: bcce3c01-fefa-44a4-aedf-e45433dadf97"], {}, {"callbacks": null, "errbacks": null, "chain": null, "chord": null}]' (157b)
+
+The full contents of the message headers:
+{'lang': 'py', 'task': 'app.tasks.send_log', 'id': '516e30a3-43d9-4d32-948b-ef00b8b459e0', 'shadow': None, 'eta': None, 'expires': None, 'group': None, 'group_index': None, 'retries': 0, 'timelimit': [None, None], 'root_id': '516e30a3-43d9-4d32-948b-ef00b8b459e0', 'parent_id': None, 'argsrepr': "('Task for addition submitted with task id: bcce3c01-fefa-44a4-aedf-e45433dadf97',)", 'kwargsrepr': '{}', 'origin': 'gen10188@DESKTOP-POHF8L5', 'ignore_result': False, 'replaced_task_nesting': 0, 'stamped_headers': None, 'stamps': {}}
+
+The delivery info for this task is:
+{'exchange': '', 'routing_key': 'celery'}
+Traceback (most recent call last):
+  File "D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py", line 659, in on_task_received
+    strategy = strategies[type_]
+               ~~~~~~~~~~^^^^^^^
+KeyError: 'app.tasks.send_log'
+2024-04-20 21:59:51,188 - celery.worker.strategy - INFO - Task app.tasks.add[789a4f48-4fe9-4cff-ae36-cfb57b8017d4] received
+2024-04-20 21:59:51,189 - app.tasks - INFO - Found addition
+2024-04-20 21:59:51,189 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 21:59:51,191 - celery.app.trace - INFO - Task app.tasks.add[789a4f48-4fe9-4cff-ae36-cfb57b8017d4] succeeded in 0.0s: 8
+2024-04-20 21:59:51,193 - celery.worker.consumer.consumer - ERROR - Received unregistered task of type 'app.tasks.send_log'.
+The message has been ignored and discarded.
+
+Did you remember to import the module containing this task?
+Or maybe you're using relative imports?
+
+Please see
+https://docs.celeryq.dev/en/latest/internals/protocol.html
+for more information.
+
+The full contents of the message body was:
+b'[["Task for addition submitted with task id: 789a4f48-4fe9-4cff-ae36-cfb57b8017d4"], {}, {"callbacks": null, "errbacks": null, "chain": null, "chord": null}]' (157b)
+
+The full contents of the message headers:
+{'lang': 'py', 'task': 'app.tasks.send_log', 'id': '72d7e61d-9331-443f-b8e3-e7356a59f863', 'shadow': None, 'eta': None, 'expires': None, 'group': None, 'group_index': None, 'retries': 0, 'timelimit': [None, None], 'root_id': '72d7e61d-9331-443f-b8e3-e7356a59f863', 'parent_id': None, 'argsrepr': "('Task for addition submitted with task id: 789a4f48-4fe9-4cff-ae36-cfb57b8017d4',)", 'kwargsrepr': '{}', 'origin': 'gen16624@DESKTOP-POHF8L5', 'ignore_result': False, 'replaced_task_nesting': 0, 'stamped_headers': None, 'stamps': {}}
+
+The delivery info for this task is:
+{'exchange': '', 'routing_key': 'celery'}
+Traceback (most recent call last):
+  File "D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py", line 659, in on_task_received
+    strategy = strategies[type_]
+               ~~~~~~~~~~^^^^^^^
+KeyError: 'app.tasks.send_log'
+2024-04-20 22:00:08,680 - celery.worker.strategy - INFO - Task app.tasks.add[a30795db-db69-4fe5-960b-9fb842b880ec] received
+2024-04-20 22:00:08,682 - app.tasks - INFO - Found addition
+2024-04-20 22:00:08,682 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 22:00:08,684 - celery.app.trace - INFO - Task app.tasks.add[a30795db-db69-4fe5-960b-9fb842b880ec] succeeded in 0.0s: 8
+2024-04-20 22:00:08,687 - celery.worker.consumer.consumer - ERROR - Received unregistered task of type 'app.tasks.send_log'.
+The message has been ignored and discarded.
+
+Did you remember to import the module containing this task?
+Or maybe you're using relative imports?
+
+Please see
+https://docs.celeryq.dev/en/latest/internals/protocol.html
+for more information.
+
+The full contents of the message body was:
+b'[["Task for addition submitted with task id: a30795db-db69-4fe5-960b-9fb842b880ec"], {}, {"callbacks": null, "errbacks": null, "chain": null, "chord": null}]' (157b)
+
+The full contents of the message headers:
+{'lang': 'py', 'task': 'app.tasks.send_log', 'id': 'c75945fb-87c7-4009-9c30-d26a53b37030', 'shadow': None, 'eta': None, 'expires': None, 'group': None, 'group_index': None, 'retries': 0, 'timelimit': [None, None], 'root_id': 'c75945fb-87c7-4009-9c30-d26a53b37030', 'parent_id': None, 'argsrepr': "('Task for addition submitted with task id: a30795db-db69-4fe5-960b-9fb842b880ec',)", 'kwargsrepr': '{}', 'origin': 'gen5848@DESKTOP-POHF8L5', 'ignore_result': False, 'replaced_task_nesting': 0, 'stamped_headers': None, 'stamps': {}}
+
+The delivery info for this task is:
+{'exchange': '', 'routing_key': 'celery'}
+Traceback (most recent call last):
+  File "D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py", line 659, in on_task_received
+    strategy = strategies[type_]
+               ~~~~~~~~~~^^^^^^^
+KeyError: 'app.tasks.send_log'
+2024-04-20 22:00:09,433 - celery.worker.strategy - INFO - Task app.tasks.add[b868d388-2d2a-4c78-ba01-51ec9836e694] received
+2024-04-20 22:00:09,434 - app.tasks - INFO - Found addition
+2024-04-20 22:00:09,434 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 22:00:09,436 - celery.app.trace - INFO - Task app.tasks.add[b868d388-2d2a-4c78-ba01-51ec9836e694] succeeded in 0.0s: 8
+2024-04-20 22:00:09,439 - celery.worker.consumer.consumer - ERROR - Received unregistered task of type 'app.tasks.send_log'.
+The message has been ignored and discarded.
+
+Did you remember to import the module containing this task?
+Or maybe you're using relative imports?
+
+Please see
+https://docs.celeryq.dev/en/latest/internals/protocol.html
+for more information.
+
+The full contents of the message body was:
+b'[["Task for addition submitted with task id: b868d388-2d2a-4c78-ba01-51ec9836e694"], {}, {"callbacks": null, "errbacks": null, "chain": null, "chord": null}]' (157b)
+
+The full contents of the message headers:
+{'lang': 'py', 'task': 'app.tasks.send_log', 'id': 'f01b6474-9077-45f1-ab91-98a91055589c', 'shadow': None, 'eta': None, 'expires': None, 'group': None, 'group_index': None, 'retries': 0, 'timelimit': [None, None], 'root_id': 'f01b6474-9077-45f1-ab91-98a91055589c', 'parent_id': None, 'argsrepr': "('Task for addition submitted with task id: b868d388-2d2a-4c78-ba01-51ec9836e694',)", 'kwargsrepr': '{}', 'origin': 'gen5848@DESKTOP-POHF8L5', 'ignore_result': False, 'replaced_task_nesting': 0, 'stamped_headers': None, 'stamps': {}}
+
+The delivery info for this task is:
+{'exchange': '', 'routing_key': 'celery'}
+Traceback (most recent call last):
+  File "D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py", line 659, in on_task_received
+    strategy = strategies[type_]
+               ~~~~~~~~~~^^^^^^^
+KeyError: 'app.tasks.send_log'
+2024-04-20 22:00:30,566 - celery.worker.strategy - INFO - Task app.tasks.add[a6ac2c9a-42eb-4222-9300-09cf15cfd17c] received
+2024-04-20 22:00:30,567 - app.tasks - INFO - Found addition
+2024-04-20 22:00:30,567 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 22:00:30,569 - celery.app.trace - INFO - Task app.tasks.add[a6ac2c9a-42eb-4222-9300-09cf15cfd17c] succeeded in 0.0s: 8
+2024-04-20 22:00:30,572 - celery.worker.consumer.consumer - ERROR - Received unregistered task of type 'app.tasks.send_log'.
+The message has been ignored and discarded.
+
+Did you remember to import the module containing this task?
+Or maybe you're using relative imports?
+
+Please see
+https://docs.celeryq.dev/en/latest/internals/protocol.html
+for more information.
+
+The full contents of the message body was:
+b'[["Task for addition submitted with task id: a6ac2c9a-42eb-4222-9300-09cf15cfd17c"], {}, {"callbacks": null, "errbacks": null, "chain": null, "chord": null}]' (157b)
+
+The full contents of the message headers:
+{'lang': 'py', 'task': 'app.tasks.send_log', 'id': 'eed79c97-08c5-426f-8292-e46a4eadc410', 'shadow': None, 'eta': None, 'expires': None, 'group': None, 'group_index': None, 'retries': 0, 'timelimit': [None, None], 'root_id': 'eed79c97-08c5-426f-8292-e46a4eadc410', 'parent_id': None, 'argsrepr': "('Task for addition submitted with task id: a6ac2c9a-42eb-4222-9300-09cf15cfd17c',)", 'kwargsrepr': '{}', 'origin': 'gen16984@DESKTOP-POHF8L5', 'ignore_result': False, 'replaced_task_nesting': 0, 'stamped_headers': None, 'stamps': {}}
+
+The delivery info for this task is:
+{'exchange': '', 'routing_key': 'celery'}
+Traceback (most recent call last):
+  File "D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py", line 659, in on_task_received
+    strategy = strategies[type_]
+               ~~~~~~~~~~^^^^^^^
+KeyError: 'app.tasks.send_log'
+2024-04-20 22:00:31,599 - celery.worker.strategy - INFO - Task app.tasks.add[bd8e66ba-cad8-4e78-9b2a-ca9200e03f43] received
+2024-04-20 22:00:31,600 - app.tasks - INFO - Found addition
+2024-04-20 22:00:31,600 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 22:00:31,602 - celery.app.trace - INFO - Task app.tasks.add[bd8e66ba-cad8-4e78-9b2a-ca9200e03f43] succeeded in 0.0s: 8
+2024-04-20 22:00:31,603 - celery.worker.consumer.consumer - ERROR - Received unregistered task of type 'app.tasks.send_log'.
+The message has been ignored and discarded.
+
+Did you remember to import the module containing this task?
+Or maybe you're using relative imports?
+
+Please see
+https://docs.celeryq.dev/en/latest/internals/protocol.html
+for more information.
+
+The full contents of the message body was:
+b'[["Task for addition submitted with task id: bd8e66ba-cad8-4e78-9b2a-ca9200e03f43"], {}, {"callbacks": null, "errbacks": null, "chain": null, "chord": null}]' (157b)
+
+The full contents of the message headers:
+{'lang': 'py', 'task': 'app.tasks.send_log', 'id': '62b608f7-a01c-49be-8df5-715d9fa1f81c', 'shadow': None, 'eta': None, 'expires': None, 'group': None, 'group_index': None, 'retries': 0, 'timelimit': [None, None], 'root_id': '62b608f7-a01c-49be-8df5-715d9fa1f81c', 'parent_id': None, 'argsrepr': "('Task for addition submitted with task id: bd8e66ba-cad8-4e78-9b2a-ca9200e03f43',)", 'kwargsrepr': '{}', 'origin': 'gen16984@DESKTOP-POHF8L5', 'ignore_result': False, 'replaced_task_nesting': 0, 'stamped_headers': None, 'stamps': {}}
+
+The delivery info for this task is:
+{'exchange': '', 'routing_key': 'celery'}
+Traceback (most recent call last):
+  File "D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py", line 659, in on_task_received
+    strategy = strategies[type_]
+               ~~~~~~~~~~^^^^^^^
+KeyError: 'app.tasks.send_log'
+2024-04-20 22:00:39,302 - celery.worker.strategy - INFO - Task app.tasks.add[e09123ac-e24a-43ed-95a6-b41d236ee91e] received
+2024-04-20 22:00:39,303 - app.tasks - INFO - Found addition
+2024-04-20 22:00:39,303 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 22:00:39,305 - celery.app.trace - INFO - Task app.tasks.add[e09123ac-e24a-43ed-95a6-b41d236ee91e] succeeded in 0.0s: 8
+2024-04-20 22:00:39,308 - celery.worker.consumer.consumer - ERROR - Received unregistered task of type 'app.tasks.send_log'.
+The message has been ignored and discarded.
+
+Did you remember to import the module containing this task?
+Or maybe you're using relative imports?
+
+Please see
+https://docs.celeryq.dev/en/latest/internals/protocol.html
+for more information.
+
+The full contents of the message body was:
+b'[["Task for addition submitted with task id: e09123ac-e24a-43ed-95a6-b41d236ee91e"], {}, {"callbacks": null, "errbacks": null, "chain": null, "chord": null}]' (157b)
+
+The full contents of the message headers:
+{'lang': 'py', 'task': 'app.tasks.send_log', 'id': 'a6438042-42b8-4823-92ce-a972980262a3', 'shadow': None, 'eta': None, 'expires': None, 'group': None, 'group_index': None, 'retries': 0, 'timelimit': [None, None], 'root_id': 'a6438042-42b8-4823-92ce-a972980262a3', 'parent_id': None, 'argsrepr': "('Task for addition submitted with task id: e09123ac-e24a-43ed-95a6-b41d236ee91e',)", 'kwargsrepr': '{}', 'origin': 'gen16984@DESKTOP-POHF8L5', 'ignore_result': False, 'replaced_task_nesting': 0, 'stamped_headers': None, 'stamps': {}}
+
+The delivery info for this task is:
+{'exchange': '', 'routing_key': 'celery'}
+Traceback (most recent call last):
+  File "D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py", line 659, in on_task_received
+    strategy = strategies[type_]
+               ~~~~~~~~~~^^^^^^^
+KeyError: 'app.tasks.send_log'
+2024-04-20 22:02:51,030 - celery.worker.strategy - INFO - Task app.tasks.add[6ad4657a-34eb-4473-9c13-cb644cb20c9b] received
+2024-04-20 22:02:51,030 - app.tasks - INFO - Found addition
+2024-04-20 22:02:51,031 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 22:02:51,032 - celery.app.trace - INFO - Task app.tasks.add[6ad4657a-34eb-4473-9c13-cb644cb20c9b] succeeded in 0.014999999999417923s: 8
+2024-04-20 22:05:20,256 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-20 22:05:20,265 - celery.worker.consumer.connection - INFO - Connected to redis://localhost:6379//
+2024-04-20 22:05:20,266 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-20 22:05:20,272 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2024-04-20 22:05:21,308 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2024-04-20 22:05:21,340 - celery.apps.worker - INFO - celery@DESKTOP-POHF8L5 ready.
+2024-04-20 22:05:33,860 - celery.worker.strategy - INFO - Task app.tasks.add[23a1eb55-f4c2-4018-b158-365781f55195] received
+2024-04-20 22:05:33,861 - app.tasks - INFO - Found addition
+2024-04-20 22:05:33,861 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 22:05:33,867 - celery.app.trace - INFO - Task app.tasks.add[23a1eb55-f4c2-4018-b158-365781f55195] succeeded in 0.0s: 8
+2024-04-20 22:06:28,269 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-20 22:06:28,279 - celery.worker.consumer.connection - INFO - Connected to redis://localhost:6379//
+2024-04-20 22:06:28,280 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-20 22:06:28,285 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2024-04-20 22:06:29,311 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2024-04-20 22:06:29,361 - celery.apps.worker - INFO - celery@DESKTOP-POHF8L5 ready.
+2024-04-20 22:06:30,453 - celery.worker.strategy - INFO - Task app.tasks.add[f9da3f2a-a82c-41c0-abc0-2407402413bf] received
+2024-04-20 22:06:30,454 - app.tasks - INFO - Found addition
+2024-04-20 22:06:30,454 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 22:06:30,461 - celery.app.trace - INFO - Task app.tasks.add[f9da3f2a-a82c-41c0-abc0-2407402413bf] succeeded in 0.01599999999962165s: 8
+2024-04-20 22:07:02,163 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-20 22:07:02,172 - celery.worker.consumer.connection - INFO - Connected to redis://localhost:6379//
+2024-04-20 22:07:02,173 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-20 22:07:02,178 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2024-04-20 22:07:03,215 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2024-04-20 22:07:03,244 - celery.apps.worker - INFO - celery@DESKTOP-POHF8L5 ready.
+2024-04-20 22:07:03,247 - celery.worker.strategy - INFO - Task app.tasks.add[60ef53ef-bf16-4031-b455-3522eb613d68] received
+2024-04-20 22:07:03,247 - app.tasks - INFO - Found addition
+2024-04-20 22:07:03,248 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 22:07:03,252 - celery.app.trace - INFO - Task app.tasks.add[60ef53ef-bf16-4031-b455-3522eb613d68] succeeded in 0.01599999999962165s: 8
+2024-04-20 22:07:06,164 - celery.worker.strategy - INFO - Task app.tasks.add[f0d9833d-6b09-4de4-9665-936b3c016158] received
+2024-04-20 22:07:06,165 - app.tasks - INFO - Found addition
+2024-04-20 22:07:06,165 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 22:07:06,167 - celery.app.trace - INFO - Task app.tasks.add[f0d9833d-6b09-4de4-9665-936b3c016158] succeeded in 0.0s: 8
+2024-04-20 22:07:10,598 - celery.worker.strategy - INFO - Task app.tasks.add[99af00dc-9cc6-4154-9e07-a72bc460e102] received
+2024-04-20 22:07:10,599 - app.tasks - INFO - Found addition
+2024-04-20 22:07:10,599 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 22:07:10,602 - celery.app.trace - INFO - Task app.tasks.add[99af00dc-9cc6-4154-9e07-a72bc460e102] succeeded in 0.0s: 8
+2024-04-20 22:19:07,816 - celery.utils.dispatch.signal - ERROR - Signal handler <function setup_loggers at 0x00000294390E8900> raised: TypeError('Level not an integer or a valid string: <function setup_loggers.<locals>.print_log_message at 0x00000294390EAAC0>')
+Traceback (most recent call last):
+  File "D:\project\ta_project\env\Lib\site-packages\celery\utils\dispatch\signal.py", line 276, in send
+    response = receiver(signal=self, sender=sender, **named)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\app\tasks.py", line 44, in setup_loggers
+    logger.addHandler(logging.Handler(print_log_message))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\irvan\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 935, in __init__
+    self.level = _checkLevel(level)
+                 ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\irvan\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 216, in _checkLevel
+    raise TypeError("Level not an integer or a valid string: %r"
+TypeError: Level not an integer or a valid string: <function setup_loggers.<locals>.print_log_message at 0x00000294390EAAC0>
+2024-04-20 22:19:07,875 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-20 22:19:07,884 - celery.worker.consumer.connection - INFO - Connected to redis://localhost:6379//
+2024-04-20 22:19:07,885 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-20 22:19:07,892 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2024-04-20 22:19:08,925 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2024-04-20 22:19:08,952 - celery.apps.worker - INFO - celery@DESKTOP-POHF8L5 ready.
+2024-04-20 22:19:21,511 - celery.worker.strategy - INFO - Task app.tasks.add[9609838b-d1a2-4701-a693-e916c707d20c] received
+2024-04-20 22:19:21,512 - app.tasks - INFO - Found addition
+2024-04-20 22:19:21,512 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 22:19:21,518 - celery.app.trace - INFO - Task app.tasks.add[9609838b-d1a2-4701-a693-e916c707d20c] succeeded in 0.01599999999962165s: 8
+2024-04-20 22:19:23,149 - celery.worker.strategy - INFO - Task app.tasks.add[702cf093-4f54-42e6-9ded-36630b64e9e2] received
+2024-04-20 22:19:23,150 - app.tasks - INFO - Found addition
+2024-04-20 22:19:23,150 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 22:19:23,153 - celery.app.trace - INFO - Task app.tasks.add[702cf093-4f54-42e6-9ded-36630b64e9e2] succeeded in 0.0s: 8
+2024-04-20 22:20:26,016 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-20 22:20:26,016 - celery.worker - CRITICAL - Unrecoverable error: AttributeError("'function' object has no attribute 'level'")
+Traceback (most recent call last):
+  File "D:\project\ta_project\env\Lib\site-packages\celery\worker\worker.py", line 202, in start
+    self.blueprint.start(self)
+  File "D:\project\ta_project\env\Lib\site-packages\celery\bootsteps.py", line 116, in start
+    step.start(parent)
+  File "D:\project\ta_project\env\Lib\site-packages\celery\bootsteps.py", line 365, in start
+    return self.obj.start()
+           ^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py", line 340, in start
+    blueprint.start(self)
+  File "D:\project\ta_project\env\Lib\site-packages\celery\bootsteps.py", line 116, in start
+    step.start(parent)
+  File "D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\connection.py", line 21, in start
+    c.connection = c.connect()
+                   ^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py", line 470, in connect
+    conn = self.connection_for_read(heartbeat=self.amqheartbeat)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py", line 476, in connection_for_read
+    return self.ensure_connected(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py", line 508, in ensure_connected
+    warnings.warn(
+  File "C:\Users\irvan\AppData\Local\Programs\Python\Python312\Lib\warnings.py", line 110, in _showwarnmsg
+    sw(msg.message, msg.category, msg.filename, msg.lineno,
+  File "C:\Users\irvan\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 2336, in _showwarning
+    logger.warning(str(s))
+  File "C:\Users\irvan\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 1551, in warning
+    self._log(WARNING, msg, args, **kwargs)
+  File "C:\Users\irvan\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 1684, in _log
+    self.handle(record)
+  File "C:\Users\irvan\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 1700, in handle
+    self.callHandlers(record)
+  File "C:\Users\irvan\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 1761, in callHandlers
+    if record.levelno >= hdlr.level:
+                         ^^^^^^^^^^
+AttributeError: 'function' object has no attribute 'level'
+2024-04-20 22:20:26,156 - celery.redirected - WARNING - Traceback (most recent call last):
+2024-04-20 22:30:05,605 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-20 22:30:05,615 - celery.worker.consumer.connection - INFO - Connected to redis://localhost:6379//
+2024-04-20 22:30:05,616 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-20 22:30:05,628 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2024-04-20 22:30:06,666 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2024-04-20 22:30:06,697 - celery.apps.worker - INFO - celery@DESKTOP-POHF8L5 ready.
+2024-04-20 22:30:26,507 - celery.worker.strategy - INFO - Task app.tasks.add[03d30185-7546-4555-891e-d400d209014a] received
+2024-04-20 22:30:26,508 - app.tasks - INFO - Found addition
+2024-04-20 22:30:26,508 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 22:30:26,514 - celery.app.trace - INFO - Task app.tasks.add[03d30185-7546-4555-891e-d400d209014a] succeeded in 0.0s: 8
+2024-04-20 22:32:16,109 - celery.worker.strategy - INFO - Task app.tasks.add[18ca4d88-ba85-49af-aa0c-0b77f4bff775] received
+2024-04-20 22:32:16,110 - app.tasks - INFO - Found addition
+2024-04-20 22:32:16,110 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 22:32:16,112 - celery.app.trace - INFO - Task app.tasks.add[18ca4d88-ba85-49af-aa0c-0b77f4bff775] succeeded in 0.015000000001236913s: 8
+2024-04-20 22:32:23,846 - celery.worker.strategy - INFO - Task app.tasks.add[4ab79001-7fc5-4399-be55-10fd22e6608e] received
+2024-04-20 22:32:23,846 - app.tasks - INFO - Found addition
+2024-04-20 22:32:23,846 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 22:32:23,850 - celery.app.trace - INFO - Task app.tasks.add[4ab79001-7fc5-4399-be55-10fd22e6608e] succeeded in 0.0s: 8
+2024-04-20 22:32:41,766 - celery.worker.strategy - INFO - Task app.tasks.add[75d3aaf7-7b1f-4e2e-bb95-54ed8dfeba84] received
+2024-04-20 22:32:41,768 - app.tasks - INFO - Found addition
+2024-04-20 22:32:41,768 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 22:32:41,770 - celery.app.trace - INFO - Task app.tasks.add[75d3aaf7-7b1f-4e2e-bb95-54ed8dfeba84] succeeded in 0.0s: 8
+2024-04-20 22:32:58,400 - celery.worker.strategy - INFO - Task app.tasks.add[62ead869-09e5-4e0a-977d-700442c54703] received
+2024-04-20 22:32:58,401 - app.tasks - INFO - Found addition
+2024-04-20 22:32:58,401 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 22:32:58,403 - celery.app.trace - INFO - Task app.tasks.add[62ead869-09e5-4e0a-977d-700442c54703] succeeded in 0.0s: 8
+2024-04-20 22:40:12,192 - celery.worker.strategy - INFO - Task app.tasks.add[008640fc-22d4-4c6f-9a87-efbb78491ec1] received
+2024-04-20 22:40:12,192 - app.tasks - INFO - Found addition
+2024-04-20 22:40:12,193 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 22:40:12,195 - celery.app.trace - INFO - Task app.tasks.add[008640fc-22d4-4c6f-9a87-efbb78491ec1] succeeded in 0.0s: 8
+2024-04-20 22:40:16,268 - celery.worker.strategy - INFO - Task app.tasks.add[ae1ab7fb-1344-4826-b435-919452a0fb0d] received
+2024-04-20 22:40:16,268 - app.tasks - INFO - Found addition
+2024-04-20 22:40:16,269 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 22:40:16,271 - celery.app.trace - INFO - Task app.tasks.add[ae1ab7fb-1344-4826-b435-919452a0fb0d] succeeded in 0.0s: 8
+2024-04-20 22:41:18,896 - celery.worker.strategy - INFO - Task app.tasks.add[7b239646-cfb4-4e1e-a790-af10e8201aec] received
+2024-04-20 22:41:18,897 - app.tasks - INFO - Found addition
+2024-04-20 22:41:18,897 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 22:41:18,899 - celery.app.trace - INFO - Task app.tasks.add[7b239646-cfb4-4e1e-a790-af10e8201aec] succeeded in 0.0s: 8
+2024-04-20 22:41:51,163 - celery.worker.strategy - INFO - Task app.tasks.add[1cdae636-bd80-4ca1-88c9-0740b7de888f] received
+2024-04-20 22:41:51,164 - app.tasks - INFO - Found addition
+2024-04-20 22:41:51,164 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 22:41:51,168 - celery.app.trace - INFO - Task app.tasks.add[1cdae636-bd80-4ca1-88c9-0740b7de888f] succeeded in 0.0s: 8
+2024-04-20 22:41:52,673 - celery.worker.strategy - INFO - Task app.tasks.add[7cdcac10-0203-45b5-8b15-28532002bb6e] received
+2024-04-20 22:41:52,674 - app.tasks - INFO - Found addition
+2024-04-20 22:41:52,674 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 22:41:52,676 - celery.app.trace - INFO - Task app.tasks.add[7cdcac10-0203-45b5-8b15-28532002bb6e] succeeded in 0.0s: 8
+2024-04-20 22:43:00,347 - celery.worker.strategy - INFO - Task app.tasks.add[3aeac82f-7124-49fd-9d05-eed000c24cff] received
+2024-04-20 22:43:00,347 - app.tasks - INFO - Found addition
+2024-04-20 22:43:00,348 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 22:43:00,350 - celery.app.trace - INFO - Task app.tasks.add[3aeac82f-7124-49fd-9d05-eed000c24cff] succeeded in 0.0s: 8
+2024-04-20 22:43:01,254 - celery.worker.strategy - INFO - Task app.tasks.add[288b09ce-a0be-4706-aac0-cb2c94da2018] received
+2024-04-20 22:43:01,254 - app.tasks - INFO - Found addition
+2024-04-20 22:43:01,255 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 22:43:01,256 - celery.app.trace - INFO - Task app.tasks.add[288b09ce-a0be-4706-aac0-cb2c94da2018] succeeded in 0.0s: 8
+2024-04-20 22:44:49,141 - celery.worker.strategy - INFO - Task app.tasks.add[f8eb57dc-bb29-4449-818e-609ee9998f6e] received
+2024-04-20 22:44:49,141 - app.tasks - INFO - Found addition
+2024-04-20 22:44:49,142 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 22:44:49,144 - celery.app.trace - INFO - Task app.tasks.add[f8eb57dc-bb29-4449-818e-609ee9998f6e] succeeded in 0.01599999999962165s: 8
+2024-04-20 22:44:49,823 - celery.worker.strategy - INFO - Task app.tasks.add[a2a48fef-8ce8-4b59-b71e-eaf4c37753f8] received
+2024-04-20 22:44:49,823 - app.tasks - INFO - Found addition
+2024-04-20 22:44:49,824 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 22:44:49,825 - celery.app.trace - INFO - Task app.tasks.add[a2a48fef-8ce8-4b59-b71e-eaf4c37753f8] succeeded in 0.0s: 8
+2024-04-20 22:46:36,830 - celery.worker.strategy - INFO - Task app.tasks.add[bb26e73b-805d-4abd-8bc7-7c4449273c66] received
+2024-04-20 22:46:36,830 - app.tasks - INFO - Found addition
+2024-04-20 22:46:36,830 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-20 22:46:36,832 - celery.app.trace - INFO - Task app.tasks.add[bb26e73b-805d-4abd-8bc7-7c4449273c66] succeeded in 0.0s: 8
+2024-04-21 02:49:14,100 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-21 02:49:18,183 - celery.worker.consumer.consumer - ERROR - consumer: Cannot connect to redis://localhost:6379//: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it..
+Trying again in 2.00 seconds... (1/100)
+
+2024-04-21 02:49:24,232 - celery.worker.consumer.consumer - ERROR - consumer: Cannot connect to redis://localhost:6379//: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it..
+Trying again in 4.00 seconds... (2/100)
+
+2024-04-21 02:49:32,297 - celery.worker.consumer.consumer - ERROR - consumer: Cannot connect to redis://localhost:6379//: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it..
+Trying again in 6.00 seconds... (3/100)
+
+2024-04-21 02:49:42,391 - celery.worker.consumer.consumer - ERROR - consumer: Cannot connect to redis://localhost:6379//: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it..
+Trying again in 8.00 seconds... (4/100)
+
+2024-04-21 02:49:50,406 - celery.worker.consumer.connection - INFO - Connected to redis://localhost:6379//
+2024-04-21 02:49:50,407 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-21 02:49:50,418 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2024-04-21 02:49:51,472 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2024-04-21 02:49:51,527 - celery.apps.worker - INFO - celery@DESKTOP-POHF8L5 ready.
+2024-04-21 02:50:21,196 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-21 02:50:21,213 - celery.worker.consumer.connection - INFO - Connected to redis://localhost:6379//
+2024-04-21 02:50:21,215 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-21 02:50:21,237 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2024-04-21 02:50:22,284 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2024-04-21 02:50:22,326 - celery.apps.worker - INFO - celery@DESKTOP-POHF8L5 ready.
+2024-04-21 02:51:28,692 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-21 02:51:28,711 - celery.worker.consumer.connection - INFO - Connected to redis://localhost:6379//
+2024-04-21 02:51:28,712 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-21 02:51:28,733 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2024-04-21 02:51:29,777 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2024-04-21 02:51:29,825 - celery.apps.worker - INFO - celery@DESKTOP-POHF8L5 ready.
+2024-04-21 02:54:02,333 - celery.worker.strategy - INFO - Task app.tasks.add[e892ceec-4968-43bc-a433-0a7c025ba38d] received
+2024-04-21 02:54:02,335 - app.tasks - INFO - Found addition
+2024-04-21 02:54:02,335 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-21 02:54:02,345 - celery.app.trace - INFO - Task app.tasks.add[e892ceec-4968-43bc-a433-0a7c025ba38d] succeeded in 0.016000000000076398s: 8
+2024-04-21 02:54:06,114 - celery.worker.strategy - INFO - Task app.tasks.add[89e74ade-2184-478f-976a-a7ac548ff55b] received
+2024-04-21 02:54:06,115 - app.tasks - INFO - Found addition
+2024-04-21 02:54:06,115 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-21 02:54:06,118 - celery.app.trace - INFO - Task app.tasks.add[89e74ade-2184-478f-976a-a7ac548ff55b] succeeded in 0.01499999999987267s: 8
+2024-04-21 02:54:06,614 - celery.worker.strategy - INFO - Task app.tasks.add[2a5dea9e-a873-40b5-9541-774a0c4e88da] received
+2024-04-21 02:54:06,614 - app.tasks - INFO - Found addition
+2024-04-21 02:54:06,615 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-21 02:54:06,619 - celery.app.trace - INFO - Task app.tasks.add[2a5dea9e-a873-40b5-9541-774a0c4e88da] succeeded in 0.01499999999987267s: 8
+2024-04-21 02:54:06,911 - celery.worker.strategy - INFO - Task app.tasks.add[5fa43a82-09bb-49b1-8142-a03e51993cc7] received
+2024-04-21 02:54:06,912 - app.tasks - INFO - Found addition
+2024-04-21 02:54:06,913 - app.tasks - INFO - Added 3 and 5 to result, 
+2024-04-21 02:54:06,916 - celery.app.trace - INFO - Task app.tasks.add[5fa43a82-09bb-49b1-8142-a03e51993cc7] succeeded in 0.01499999999987267s: 8
+2024-04-21 03:05:13,484 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-21 03:05:13,499 - celery.worker.consumer.connection - INFO - Connected to redis://localhost:6379//
+2024-04-21 03:05:13,501 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-21 03:05:13,512 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2024-04-21 03:05:14,558 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2024-04-21 03:05:14,610 - celery.apps.worker - INFO - celery@DESKTOP-POHF8L5 ready.
+2024-04-21 03:05:50,029 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-21 03:05:50,044 - celery.worker.consumer.connection - INFO - Connected to redis://localhost:6379//
+2024-04-21 03:05:50,046 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-21 03:05:50,056 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2024-04-21 03:05:51,100 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2024-04-21 03:05:51,153 - celery.apps.worker - INFO - celery@DESKTOP-POHF8L5 ready.
+2024-04-21 03:14:02,864 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-21 03:14:02,883 - celery.worker.consumer.connection - INFO - Connected to redis://localhost:6379//
+2024-04-21 03:14:02,885 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-21 03:14:02,895 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2024-04-21 03:14:03,948 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2024-04-21 03:14:03,996 - celery.apps.worker - INFO - celery@DESKTOP-POHF8L5 ready.
+2024-04-21 03:16:42,554 - celery.worker.strategy - INFO - Task app.tasks.add_to_database[1a1060d4-c52e-4f05-be02-43945c923e49] received
+2024-04-21 03:16:42,566 - celery.app.trace - ERROR - Task app.tasks.add_to_database[1a1060d4-c52e-4f05-be02-43945c923e49] raised unexpected: TypeError("add_to_database() got an unexpected keyword argument 'username'")
+Traceback (most recent call last):
+  File "D:\project\ta_project\env\Lib\site-packages\celery\app\trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\celery\app\trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: add_to_database() got an unexpected keyword argument 'username'
+2024-04-21 03:16:59,153 - celery.worker.strategy - INFO - Task app.tasks.add_to_database[2b930e48-2af9-4bfd-9c44-0d2fb7c815bd] received
+2024-04-21 03:16:59,159 - celery.app.trace - ERROR - Task app.tasks.add_to_database[2b930e48-2af9-4bfd-9c44-0d2fb7c815bd] raised unexpected: TypeError("add_to_database() got an unexpected keyword argument 'username'")
+Traceback (most recent call last):
+  File "D:\project\ta_project\env\Lib\site-packages\celery\app\trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\celery\app\trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: add_to_database() got an unexpected keyword argument 'username'
+2024-04-21 03:18:25,297 - celery.worker.strategy - INFO - Task app.tasks.add_to_database[20627fe7-c799-4f86-aea6-a88a7e66d047] received
+2024-04-21 03:18:25,301 - celery.app.trace - ERROR - Task app.tasks.add_to_database[20627fe7-c799-4f86-aea6-a88a7e66d047] raised unexpected: TypeError('add_to_database() takes 1 positional argument but 3 were given')
+Traceback (most recent call last):
+  File "D:\project\ta_project\env\Lib\site-packages\celery\app\trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\celery\app\trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: add_to_database() takes 1 positional argument but 3 were given
+2024-04-21 03:18:41,063 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-21 03:18:41,073 - celery.worker.consumer.connection - INFO - Connected to redis://localhost:6379//
+2024-04-21 03:18:41,074 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-21 03:18:41,090 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2024-04-21 03:18:42,135 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2024-04-21 03:18:42,164 - celery.apps.worker - INFO - celery@DESKTOP-POHF8L5 ready.
+2024-04-21 03:18:45,101 - celery.worker.strategy - INFO - Task app.tasks.add_to_database[a56436f4-3e2c-405e-81a2-bc1efdaa8282] received
+2024-04-21 03:18:45,131 - celery.app.trace - ERROR - Task app.tasks.add_to_database[a56436f4-3e2c-405e-81a2-bc1efdaa8282] raised unexpected: RuntimeError('Working outside of application context.\n\nThis typically means that you attempted to use functionality that needed\nthe current application. To solve this, set up an application context\nwith app.app_context(). See the documentation for more information.')
+Traceback (most recent call last):
+  File "D:\project\ta_project\env\Lib\site-packages\celery\app\trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\celery\app\trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\app\tasks.py", line 44, in add_to_database
+    db.session.add(Project(username=uname, project_name=p_name, description=desc))
+  File "D:\project\ta_project\env\Lib\site-packages\sqlalchemy\orm\scoping.py", line 378, in add
+    return self._proxied.add(instance, _warn=_warn)
+           ^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\sqlalchemy\orm\scoping.py", line 197, in _proxied
+    return self.registry()
+           ^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\sqlalchemy\util\_collections.py", line 632, in __call__
+    key = self.scopefunc()
+          ^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\flask_sqlalchemy\session.py", line 111, in _app_ctx_id
+    return id(app_ctx._get_current_object())  # type: ignore[attr-defined]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\werkzeug\local.py", line 508, in _get_current_object
+    raise RuntimeError(unbound_message) from None
+RuntimeError: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2024-04-21 03:22:54,500 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-21 03:22:54,514 - celery.worker.consumer.connection - INFO - Connected to redis://localhost:6379//
+2024-04-21 03:22:54,516 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-21 03:22:54,525 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2024-04-21 03:22:55,565 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2024-04-21 03:22:55,615 - celery.apps.worker - INFO - celery@DESKTOP-POHF8L5 ready.
+2024-04-21 03:22:57,690 - celery.worker.strategy - INFO - Task app.tasks.add_to_database[58de6534-12a0-4cf0-b5ac-0f1209025706] received
+2024-04-21 03:22:57,705 - celery.app.trace - ERROR - Task app.tasks.add_to_database[58de6534-12a0-4cf0-b5ac-0f1209025706] raised unexpected: RuntimeError('Working outside of application context.\n\nThis typically means that you attempted to use functionality that needed\nthe current application. To solve this, set up an application context\nwith app.app_context(). See the documentation for more information.')
+Traceback (most recent call last):
+  File "D:\project\ta_project\env\Lib\site-packages\celery\app\trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\celery\app\trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\app\tasks.py", line 45, in add_to_database
+    db.session.add(data)
+  File "D:\project\ta_project\env\Lib\site-packages\sqlalchemy\orm\scoping.py", line 378, in add
+    return self._proxied.add(instance, _warn=_warn)
+           ^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\sqlalchemy\orm\scoping.py", line 197, in _proxied
+    return self.registry()
+           ^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\sqlalchemy\util\_collections.py", line 632, in __call__
+    key = self.scopefunc()
+          ^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\flask_sqlalchemy\session.py", line 111, in _app_ctx_id
+    return id(app_ctx._get_current_object())  # type: ignore[attr-defined]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\werkzeug\local.py", line 508, in _get_current_object
+    raise RuntimeError(unbound_message) from None
+RuntimeError: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2024-04-21 03:24:41,028 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-21 03:24:41,042 - celery.worker.consumer.connection - INFO - Connected to redis://localhost:6379//
+2024-04-21 03:24:41,043 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-21 03:24:41,052 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2024-04-21 03:24:42,094 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2024-04-21 03:24:42,141 - celery.apps.worker - INFO - celery@DESKTOP-POHF8L5 ready.
+2024-04-21 03:24:48,288 - celery.worker.strategy - INFO - Task app.tasks.add_to_database[762fff8f-457a-400a-b6bf-22d79d86938f] received
+2024-04-21 03:24:48,307 - celery.app.trace - ERROR - Task app.tasks.add_to_database[762fff8f-457a-400a-b6bf-22d79d86938f] raised unexpected: RuntimeError('Working outside of application context.\n\nThis typically means that you attempted to use functionality that needed\nthe current application. To solve this, set up an application context\nwith app.app_context(). See the documentation for more information.')
+Traceback (most recent call last):
+  File "D:\project\ta_project\env\Lib\site-packages\celery\app\trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\celery\app\trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\app\tasks.py", line 45, in add_to_database
+    db.session.add(data)
+  File "D:\project\ta_project\env\Lib\site-packages\sqlalchemy\orm\scoping.py", line 378, in add
+    return self._proxied.add(instance, _warn=_warn)
+           ^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\sqlalchemy\orm\scoping.py", line 197, in _proxied
+    return self.registry()
+           ^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\sqlalchemy\util\_collections.py", line 632, in __call__
+    key = self.scopefunc()
+          ^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\flask_sqlalchemy\session.py", line 111, in _app_ctx_id
+    return id(app_ctx._get_current_object())  # type: ignore[attr-defined]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\werkzeug\local.py", line 508, in _get_current_object
+    raise RuntimeError(unbound_message) from None
+RuntimeError: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2024-04-21 03:25:40,746 - celery.worker.strategy - INFO - Task app.tasks.add_to_database[f1c4ff8e-9851-40d8-980d-a22e08932b38] received
+2024-04-21 03:25:40,753 - celery.app.trace - ERROR - Task app.tasks.add_to_database[f1c4ff8e-9851-40d8-980d-a22e08932b38] raised unexpected: RuntimeError('Working outside of application context.\n\nThis typically means that you attempted to use functionality that needed\nthe current application. To solve this, set up an application context\nwith app.app_context(). See the documentation for more information.')
+Traceback (most recent call last):
+  File "D:\project\ta_project\env\Lib\site-packages\celery\app\trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\celery\app\trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\app\tasks.py", line 45, in add_to_database
+    data = Project(username=uname, project_name=p_name, description=desc)
+    ^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\sqlalchemy\orm\scoping.py", line 378, in add
+    return self._proxied.add(instance, _warn=_warn)
+           ^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\sqlalchemy\orm\scoping.py", line 197, in _proxied
+    return self.registry()
+           ^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\sqlalchemy\util\_collections.py", line 632, in __call__
+    key = self.scopefunc()
+          ^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\flask_sqlalchemy\session.py", line 111, in _app_ctx_id
+    return id(app_ctx._get_current_object())  # type: ignore[attr-defined]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\werkzeug\local.py", line 508, in _get_current_object
+    raise RuntimeError(unbound_message) from None
+RuntimeError: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2024-04-21 03:25:47,578 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-21 03:25:47,592 - celery.worker.consumer.connection - INFO - Connected to redis://localhost:6379//
+2024-04-21 03:25:47,593 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-21 03:25:47,601 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2024-04-21 03:25:48,638 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2024-04-21 03:25:48,683 - celery.apps.worker - INFO - celery@DESKTOP-POHF8L5 ready.
+2024-04-21 03:25:51,452 - celery.worker.strategy - INFO - Task app.tasks.add_to_database[100bd06a-26d9-4855-a2c1-c935a73a7ba0] received
+2024-04-21 03:25:51,470 - celery.app.trace - ERROR - Task app.tasks.add_to_database[100bd06a-26d9-4855-a2c1-c935a73a7ba0] raised unexpected: AttributeError("'Celery' object has no attribute 'app_context'")
+Traceback (most recent call last):
+  File "D:\project\ta_project\env\Lib\site-packages\celery\app\trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\celery\app\trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\app\tasks.py", line 44, in add_to_database
+    with app.app_context():  # Manually push an application context
+         ^^^^^^^^^^^^^^^
+AttributeError: 'Celery' object has no attribute 'app_context'
+2024-04-21 03:32:38,305 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-21 03:32:38,318 - celery.worker.consumer.connection - INFO - Connected to redis://localhost:6379//
+2024-04-21 03:32:38,319 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-21 03:32:38,335 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2024-04-21 03:32:39,378 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2024-04-21 03:32:39,408 - celery.apps.worker - INFO - celery@DESKTOP-POHF8L5 ready.
+2024-04-21 03:32:43,982 - celery.worker.strategy - INFO - Task app.tasks.add_to_database[fbd24916-ba50-419d-bbbd-f000f7fad8b5] received
+2024-04-21 03:32:43,998 - celery.app.trace - ERROR - Task app.tasks.add_to_database[fbd24916-ba50-419d-bbbd-f000f7fad8b5] raised unexpected: RuntimeError('Working outside of application context.\n\nThis typically means that you attempted to use functionality that needed\nthe current application. To solve this, set up an application context\nwith app.app_context(). See the documentation for more information.')
+Traceback (most recent call last):
+  File "D:\project\ta_project\env\Lib\site-packages\celery\app\trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\celery\app\trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\app\tasks.py", line 45, in add_to_database
+    db.session.add(data)
+  File "D:\project\ta_project\env\Lib\site-packages\sqlalchemy\orm\scoping.py", line 378, in add
+    return self._proxied.add(instance, _warn=_warn)
+           ^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\sqlalchemy\orm\scoping.py", line 197, in _proxied
+    return self.registry()
+           ^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\sqlalchemy\util\_collections.py", line 632, in __call__
+    key = self.scopefunc()
+          ^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\flask_sqlalchemy\session.py", line 111, in _app_ctx_id
+    return id(app_ctx._get_current_object())  # type: ignore[attr-defined]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\werkzeug\local.py", line 508, in _get_current_object
+    raise RuntimeError(unbound_message) from None
+RuntimeError: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2024-04-21 03:34:43,803 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-21 03:34:43,818 - celery.worker.consumer.connection - INFO - Connected to redis://localhost:6379//
+2024-04-21 03:34:43,820 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-21 03:34:43,836 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2024-04-21 03:34:44,872 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2024-04-21 03:34:44,902 - celery.apps.worker - INFO - celery@DESKTOP-POHF8L5 ready.
+2024-04-21 03:34:49,439 - celery.worker.strategy - INFO - Task app.tasks.add_to_database[9fb9acdd-de7b-4659-9afb-2b90244ae529] received
+2024-04-21 03:34:49,456 - celery.app.trace - ERROR - Task app.tasks.add_to_database[9fb9acdd-de7b-4659-9afb-2b90244ae529] raised unexpected: RuntimeError('Working outside of application context.\n\nThis typically means that you attempted to use functionality that needed\nthe current application. To solve this, set up an application context\nwith app.app_context(). See the documentation for more information.')
+Traceback (most recent call last):
+  File "D:\project\ta_project\env\Lib\site-packages\celery\app\trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\celery\app\trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\app\tasks.py", line 45, in add_to_database
+    db.session.add(data)
+  File "D:\project\ta_project\env\Lib\site-packages\sqlalchemy\orm\scoping.py", line 378, in add
+    return self._proxied.add(instance, _warn=_warn)
+           ^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\sqlalchemy\orm\scoping.py", line 197, in _proxied
+    return self.registry()
+           ^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\sqlalchemy\util\_collections.py", line 632, in __call__
+    key = self.scopefunc()
+          ^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\flask_sqlalchemy\session.py", line 111, in _app_ctx_id
+    return id(app_ctx._get_current_object())  # type: ignore[attr-defined]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\werkzeug\local.py", line 508, in _get_current_object
+    raise RuntimeError(unbound_message) from None
+RuntimeError: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2024-04-21 04:07:11,563 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-21 04:07:11,574 - celery.worker.consumer.connection - INFO - Connected to redis://localhost:6379//
+2024-04-21 04:07:11,574 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-21 04:07:11,586 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2024-04-21 04:07:12,613 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2024-04-21 04:07:12,639 - celery.apps.worker - INFO - celery@DESKTOP-POHF8L5 ready.
+2024-04-21 04:08:44,650 - celery.worker.strategy - INFO - Task app.tasks.add_to_database[76c5676e-7803-4b61-adaa-8144e9acb3a8] received
+2024-04-21 04:08:44,668 - celery.app.trace - ERROR - Task app.tasks.add_to_database[76c5676e-7803-4b61-adaa-8144e9acb3a8] raised unexpected: TypeError("add_to_database() missing 1 required positional argument: 'desc'")
+Traceback (most recent call last):
+  File "D:\project\ta_project\env\Lib\site-packages\celery\app\trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\celery\app\trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: add_to_database() missing 1 required positional argument: 'desc'
+2024-04-21 04:08:54,516 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-21 04:08:54,526 - celery.worker.consumer.connection - INFO - Connected to redis://localhost:6379//
+2024-04-21 04:08:54,527 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-21 04:08:54,539 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2024-04-21 04:08:55,563 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2024-04-21 04:08:55,585 - celery.apps.worker - INFO - celery@DESKTOP-POHF8L5 ready.
+2024-04-21 04:08:57,370 - celery.worker.strategy - INFO - Task app.tasks.add_to_database[178775f5-8532-4d8d-a4e2-09e5f59e1fca] received
+2024-04-21 04:08:57,390 - celery.app.trace - ERROR - Task app.tasks.add_to_database[178775f5-8532-4d8d-a4e2-09e5f59e1fca] raised unexpected: RuntimeError('Working outside of application context.\n\nThis typically means that you attempted to use functionality that needed\nthe current application. To solve this, set up an application context\nwith app.app_context(). See the documentation for more information.')
+Traceback (most recent call last):
+  File "D:\project\ta_project\env\Lib\site-packages\celery\app\trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\celery\app\trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\app\tasks.py", line 45, in add_to_database
+    db.session.add(data)
+  File "D:\project\ta_project\env\Lib\site-packages\sqlalchemy\orm\scoping.py", line 378, in add
+    return self._proxied.add(instance, _warn=_warn)
+           ^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\sqlalchemy\orm\scoping.py", line 197, in _proxied
+    return self.registry()
+           ^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\sqlalchemy\util\_collections.py", line 632, in __call__
+    key = self.scopefunc()
+          ^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\flask_sqlalchemy\session.py", line 111, in _app_ctx_id
+    return id(app_ctx._get_current_object())  # type: ignore[attr-defined]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\werkzeug\local.py", line 508, in _get_current_object
+    raise RuntimeError(unbound_message) from None
+RuntimeError: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2024-04-21 04:09:21,689 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-21 04:09:21,699 - celery.worker.consumer.connection - INFO - Connected to redis://localhost:6379//
+2024-04-21 04:09:21,700 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-21 04:09:21,705 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2024-04-21 04:09:22,733 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2024-04-21 04:09:22,762 - celery.apps.worker - INFO - celery@DESKTOP-POHF8L5 ready.
+2024-04-21 04:09:25,240 - celery.worker.strategy - INFO - Task app.tasks.add_to_database[17d05f7c-619e-4e66-8478-ad415762462f] received
+2024-04-21 04:09:25,244 - celery.redirected - WARNING - error
+2024-04-21 04:09:25,256 - celery.app.trace - ERROR - Task app.tasks.add_to_database[17d05f7c-619e-4e66-8478-ad415762462f] raised unexpected: RuntimeError('Working outside of application context.\n\nThis typically means that you attempted to use functionality that needed\nthe current application. To solve this, set up an application context\nwith app.app_context(). See the documentation for more information.')
+Traceback (most recent call last):
+  File "D:\project\ta_project\env\Lib\site-packages\celery\app\trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\celery\app\trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\app\tasks.py", line 46, in add_to_database
+    db.session.add(data)
+  File "D:\project\ta_project\env\Lib\site-packages\sqlalchemy\orm\scoping.py", line 378, in add
+    return self._proxied.add(instance, _warn=_warn)
+           ^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\sqlalchemy\orm\scoping.py", line 197, in _proxied
+    return self.registry()
+           ^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\sqlalchemy\util\_collections.py", line 632, in __call__
+    key = self.scopefunc()
+          ^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\flask_sqlalchemy\session.py", line 111, in _app_ctx_id
+    return id(app_ctx._get_current_object())  # type: ignore[attr-defined]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\werkzeug\local.py", line 508, in _get_current_object
+    raise RuntimeError(unbound_message) from None
+RuntimeError: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+2024-04-21 04:10:37,565 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-21 04:10:37,574 - celery.worker.consumer.connection - INFO - Connected to redis://localhost:6379//
+2024-04-21 04:10:37,575 - py.warnings - WARNING - D:\project\ta_project\env\Lib\site-packages\celery\worker\consumer\consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+2024-04-21 04:10:37,581 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2024-04-21 04:10:38,619 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2024-04-21 04:10:38,645 - celery.apps.worker - INFO - celery@DESKTOP-POHF8L5 ready.
+2024-04-21 04:10:41,748 - celery.worker.strategy - INFO - Task app.tasks.add_to_database[5a139526-9896-47e0-b501-661201a216c4] received
+2024-04-21 04:10:41,762 - celery.app.trace - ERROR - Task app.tasks.add_to_database[5a139526-9896-47e0-b501-661201a216c4] raised unexpected: AttributeError("'Celery' object has no attribute 'app_context'")
+Traceback (most recent call last):
+  File "D:\project\ta_project\env\Lib\site-packages\celery\app\trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\celery\app\trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\app\tasks.py", line 45, in add_to_database
+    with app.app_context():
+         ^^^^^^^^^^^^^^^
+AttributeError: 'Celery' object has no attribute 'app_context'
+2024-04-21 04:11:45,303 - celery.worker.strategy - INFO - Task app.tasks.add_to_database[ec61a599-74e0-4718-a754-3ea2575ee138] received
+2024-04-21 04:11:45,313 - celery.app.trace - ERROR - Task app.tasks.add_to_database[ec61a599-74e0-4718-a754-3ea2575ee138] raised unexpected: AttributeError("'Celery' object has no attribute 'app_context'")
+Traceback (most recent call last):
+  File "D:\project\ta_project\env\Lib\site-packages\celery\app\trace.py", line 453, in trace_task
+    R = retval = fun(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\env\Lib\site-packages\celery\app\trace.py", line 736, in __protected_call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\ta_project\app\tasks.py", line 45, in add_to_database
+    with app.app_context():
+         ^^^^^^^^^^^^^^^
+AttributeError: 'Celery' object has no attribute 'app_context'
