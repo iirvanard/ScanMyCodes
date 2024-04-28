@@ -25,5 +25,7 @@ class Project(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
    
+    branches = db.relationship('GitBranch', back_populates='project')
+   
     def __repr__(self):
         return f"<Project {self.project_id}>"

@@ -1,0 +1,26 @@
+
+{% if content %}
+{% for severity, items in content.items() %}
+  {% for item in items %}
+    <details class="finding" close>
+      <summary>
+        <div class="head">
+          <h3 class="{{severity}}">
+            <span>{{item.title}}</span>
+            <span class="badge {{severity}} {{severity}}-bg">{{severity}}</span>
+          </h3>
+          <span class="cwe">
+            <strong>Rule ID:</strong> {{item.id}}&nbsp;&nbsp;<strong>CWE:</strong> CWE{{item.cwe_ids[0]}}&nbsp;&nbsp;<strong>Fingerprint:</strong> CWE {{item.fingerprint}}
+          </span>
+        </div>
+
+        <p class="filename">Filename: {{item.filename}}:{{item.line_number}}</p>
+        <div class="term-container">{{item.line_number}} {{item.code_extract}}</div>
+      </summary>
+      <div class="description">{{item.description|safe}}</div>
+    </details>
+  {% endfor %}
+{% endfor %}
+{% else %}
+<p>Data tidak ada</p>
+{% endif %}

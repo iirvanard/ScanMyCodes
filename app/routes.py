@@ -6,12 +6,12 @@
 # app.add_url_rule("/", view_func=about)
 # app.add_url_rule("/about", view_func=dashboard)
 
-from .modules import index, project,projects
+from .modules import index, project_details,projects
 from .modules.auth import auth
 from app import app
 
 app.register_blueprint(index.blueprint)
 app.register_blueprint(auth.auth_blueprint)
-app.register_blueprint(project.blueprint)
+app.register_blueprint(project_details.blueprint)
 app.register_blueprint(projects.blueprint)
 # app.register_blueprint(user.blueprint)

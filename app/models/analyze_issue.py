@@ -1,19 +1,23 @@
 from datetime import datetime
 from app.extensions import db
 from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import validates
+from .git_branch import GitBranch
 
-
-class GitRepository(db.Model):
-    __tablename__ = 'git_repository'
+class AnalyzeIssue(db.Model):
+    __tablename__ = 'analyze_issue'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    access_token = db.Column(db.String, nullable=True)
-    repo_url = db.Column(db.String, nullable=False)
-    default_branch = db.Column(db.String(30), nullable=True)
     project_id = db.Column(UUID(as_uuid=True),
                            db.ForeignKey('projects.project_id',
                                          ondelete='CASCADE'),
-                           unique=True,
                            nullable=False)
+    branch = db.Column(db.String, nullable=False)
     path_ = db.Column(db.String, nullable=False)
     update_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    @validates('branch')
+    def validate_branch(self, key, branch):
+        if not GitBranch.query.filter_by(project_id=self.project_id, remote=branch).first():
+            raise ValueError("Branch must exist in GitBranch table for the same project_id.")
+        return branch
