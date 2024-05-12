@@ -1,15 +1,18 @@
-from urllib.parse import urlparse
 import subprocess
 
-def split_url(url):
-    parsed_url = urlparse(url)
-    if parsed_url.netloc == 'github.com':
-        path_parts = parsed_url.path.strip('/').split('/')
-        if len(path_parts) >= 2:
-            repo_owner = path_parts[0]
-            repo_name = path_parts[1].rstrip('.git')
-            return repo_owner, repo_name
-    return None, None
+
+def split_url(url: str) -> str:
+    last_slash_index = url.rfind("/")
+    last_suffix_index = url.rfind(".git")
+    if last_suffix_index < 0:
+        last_suffix_index = len(url)
+
+    if last_slash_index < 0 or last_suffix_index <= last_slash_index:
+        raise Exception("Badly formatted url {}".format(url))
+
+    return url[:last_slash_index].split("/")[-1], url[last_slash_index +
+                                                      1:last_suffix_index]
+
 
 def run_wsl_command(source_path, filename):
     # # Command to run WSL
@@ -23,4 +26,6 @@ def run_wsl_command(source_path, filename):
     print(str(result))
     # Return the output
     return result.stdout.strip()
+
+
 # repo_owner, repo_name = get_repo_info_from_url(url) #use this

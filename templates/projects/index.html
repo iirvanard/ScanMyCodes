@@ -120,7 +120,7 @@
 </div>
 
    
-    <div class="py-4">
+    <div class="py-4x">
         <nav class="block">
             <ul class="flex pl-0 list-none flex-wrap justify-end gap-2">
                 {% if pagination.has_prev %}
@@ -134,13 +134,13 @@
                 {% for page in pagination.iter_pages() %}
                     {% if page %}
                         {% if page != pagination.page %}
-                            <li>
-                                <a href="?page={{ page }}" class="text-xs font-semibold flex justify-center items-center leading-tight bg-white border border-gray-300 text-gray-800 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent px-4 py-2">{{ page }}</a>
-                            </li>
-                        {% else %}
-                            <li>
-                                <a href="#" class="text-xs font-semibold flex justify-center items-center leading-tight bg-blue-500 text-white border border-gray-300 px-4 py-2">{{ page }}</a>
-                            </li>
+                        <li>
+                            <a href="?page={{ page }}" class="text-xs font-semibold flex justify-center items-center leading-tight bg-white border border-gray-300 text-gray-800 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent px-4 py-2">{{ page }}</a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="#" class="text-xs font-semibold flex justify-center items-center leading-tight bg-blue-500 text-white border border-gray-300 hover:bg-blue-600 px-4 py-2">{{ page }}</a>
+                        </li>
                         {% endif %}
                     {% else %}
                         <li>

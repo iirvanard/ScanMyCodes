@@ -23,6 +23,7 @@ class GitUtils:
         self.repo_url = f"https://github.com/{self.repo_owner}/{self.repo_name}.git"
 
         if self.check_repo_privacy() and not self.github_token:
+            print()
             raise ValueError("Access token required for private repository.")
 
         if self.github_token:
@@ -34,7 +35,6 @@ class GitUtils:
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         pass
-
 
     def check_repo_privacy(self):
         url = f"{self.GITHUB_API_BASE_URL}/repos/{self.repo_owner}/{self.repo_name}"
@@ -146,15 +146,14 @@ class GitUtils:
         commit_info = response.json()
         return commit_info['sha']
 
-
     def get_default_branch(self):
         url = f"{self.GITHUB_API_BASE_URL}/repos/{self.repo_owner}/{self.repo_name}"
         response = requests.get(url)
         response.raise_for_status()
         repo_info = response.json()
         return repo_info['default_branch']
-    
-    
+
+
 # if __name__ == "__main__":
 #     # GitHub repository details
 #     repo_owner = "irvan91110"

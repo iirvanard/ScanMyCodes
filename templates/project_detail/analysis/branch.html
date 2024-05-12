@@ -1,26 +1,175 @@
 
-{% if content %}
-{% for severity, items in content.items() %}
-  {% for item in items %}
-    <details class="finding" close>
-      <summary>
-        <div class="head">
-          <h3 class="{{severity}}">
-            <span>{{item.title}}</span>
-            <span class="badge {{severity}} {{severity}}-bg">{{severity}}</span>
-          </h3>
-          <span class="cwe">
-            <strong>Rule ID:</strong> {{item.id}}&nbsp;&nbsp;<strong>CWE:</strong> CWE{{item.cwe_ids[0]}}&nbsp;&nbsp;<strong>Fingerprint:</strong> CWE {{item.fingerprint}}
-          </span>
-        </div>
+<div class="flex">
+  <!-- Main content area -->
+<div class="mr-8 w-9/12"> 
+  {% if content %}
+    {% for severity, items in content.items() %}
+      {% for item in items %}
+        <details class="finding mb-8" id="parent-{{loop.index}}" close>
+          <summary>
+            <div class="head">
+              <h3 class="{{severity}}">
+                <span>{{item.title}}</span>
+                <span class="badge {{severity}} {{severity}}-bg">{{severity}}</span>
+              </h3>
+              <span class="cwe">
+                <strong>Rule ID:</strong> {{item.id}}&nbsp;&nbsp;<strong>CWE:</strong> CWE{{item.cwe_ids[0]}}&nbsp;&nbsp;<strong>Fingerprint:</strong> {{item.fingerprint}}
+              </span>
+            </div>
+            <p class="filename">Filename: {{item.filename.lower()}}:{{item.line_number}}</p>
+            {% autoescape false %}
 
-        <p class="filename">Filename: {{item.filename}}:{{item.line_number}}</p>
-        <div class="term-container">{{item.line_number}} {{item.code_extract}}</div>
-      </summary>
-      <div class="description">{{item.description|safe}}</div>
-    </details>
-  {% endfor %}
-{% endfor %}
-{% else %}
-<p>Data tidak ada</p>
-{% endif %}
+            <div class="term-container">{{item.code_extract | replace("        ", "")}}</div>
+            {% endautoescape %}
+
+          </summary>
+      
+          <div class="w-full border border-grey-400" >
+            <div class="flex divide-x divide-grey-400">
+                <button class="w-1/2 py-4 text-center font-medium text-gray-700 bg-gray-100 focus:outline-none active:bg-gray-200" onclick="toggleContent('parent-{{loop.index}}', 'tab1')">default</button>
+                <button class="w-1/2 py-4 text-center font-medium text-gray-700 bg-gray-100 focus:outline-none active:bg-gray-200" onclick="toggleContent('parent-{{loop.index}}', 'openai')">openai</button>
+              </div>
+          
+                <div id="tab1" class="tabcontent">
+                    <div class="description">{{item.description|safe}}</div>
+                </div>
+                <div id="openai" class="tabcontent" style="display: none;">
+                    <div id="OpenaiContent" >
+                      
+                    </div>
+      
+                </div>
+        </div>
+        
+
+     
+        </details>
+      {% endfor %}
+    {% endfor %}
+  {% else %}
+    <p>Data tidak ada</p>
+  {% endif %}
+</div>
+
+
+ 
+<div class="w-3/12 bg-white rounded-lg border border-gray-300 mb-2 p-4">
+
+  <div class="flex justify-between">
+    <h5 class="block antialiased tracking-normal font-sans text-xl font-semibold leading-snug text-gray-900">Filter</h5>
+    <div class="border border-red-400 rounded-lg px-2 hover:bg-red-50 cursor-pointer">
+      <span class="">Clear All Filters</span>
+    </div>
+  </div>
+
+  <hr class="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700">
+
+  <div class="flex items-center w-full h-8 rounded-lg bg-white border border-gray-300 focus-within:shadow-lg">
+    <div class="grid place-items-center h-full w-12 text-gray-300">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+    </div>
+    <input
+      class="peer h-full w-full outline-none text-sm text-gray-700 pr-2 rounded-lg"
+      type="text"
+      id="search"
+      placeholder="Search something.."
+    /> 
+  </div>
+
+  <div role="list">
+    <p class="mx-2 mt-3 text-gray-500 my-2">Type</p>
+    <div role="listitem" class="border border-gray-200 rounded px-2 mb-2 hover:border-2 hover:border-blue-300 cursor-pointer">Critical</div>
+    <div role="listitem" class="border border-gray-200 rounded px-2 mb-2 hover:border-2 hover:border-blue-300 cursor-pointer">High</div>
+    <div role="listitem" class="border border-gray-200 rounded px-2 mb-2 hover:border-2 hover:border-blue-300 cursor-pointer">Medium</div>
+  </div>
+
+  <div role="list">
+    <p class="mx-2 mt-3 text-gray-500 my-2">Language</p>
+    <div role="listitem" class="border border-gray-200 rounded px-2 mb-2 hover:border-2 hover:border-blue-300 cursor-pointer">Python</div>
+    <div role="listitem" class="border border-gray-200 rounded px-2 mb-2 hover:border-2 hover:border-blue-300 cursor-pointer">PHP</div>
+    <div role="listitem" class="border border-gray-200 rounded px-2 mb-2 hover:border-2 hover:border-blue-300 cursor-pointer">TypeScript</div>
+  </div>
+
+</div>
+
+  </div>
+
+
+
+
+
+  <script>
+
+
+    var md = window.markdownit({
+      html:         true,
+      breaks:       true,
+      linkify:      true,
+      typographer:  true,
+
+
+});
+
+    window.onload = function() {
+      var div = document.getElementsByClassName('description');
+      for(var i = 0; i < div.length; i++) {
+        var content = div[i].innerHTML;
+        document.getElementsByClassName('description')[i].innerHTML = md.render(content);
+      }
+    }
+    // JavaScript Function
+    function toggleContent(parentId, tabId,code=null) {
+      var parent = document.getElementById(parentId);
+      var tabs = parent.getElementsByClassName("tabcontent");
+      for (var i = 0; i < tabs.length; i++) {
+        tabs[i].style.display = "none";
+      }
+  
+      var item = parent.querySelector("#" + tabId);
+      item.style.display = "block";
+  
+      if (tabId == "openai") {
+        var code = parent.querySelector(".term-container").innerHTML;
+        var element = item.querySelector("#OpenaiContent");
+        
+console.log(element.innerHTML)
+if (element.innerHTML.trim() === '') {
+    fetch("/api/chat", {
+              method: "POST",
+              body: JSON.stringify({
+                  "source_code": code
+              }),
+              headers: {
+                  "Content-type": "application/json; charset=UTF-8"
+                }
+              })
+                .then((response) => response.json())
+                .then(json => {
+                  // response =json['data'];
+                  element.classList.add('description')
+                  response =json['data'].replace(/```(\w+)\s*([\s\S]*?)```/g, '\n\n```$1\n$2\n```\n\n');
+                  console.log(response);
+                  element.innerHTML =md.render(response);
+                })
+                .catch(error => {
+                  // Hide loader in case of error
+                  element.textContent ="failed";
+
+                  console.error('Error:', error);
+                }) .finally(() => {
+            // Hide loading spinner regardless of success or failure
+
+                });
+          
+  
+        
+        
+      }
+  }
+
+      
+    }
+  </script>
+  

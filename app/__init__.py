@@ -11,20 +11,16 @@ from flask_migrate import Migrate
 
 from .workers import make_celery
 
-
 app = Flask(__name__,
             template_folder='../templates',
             static_folder='../static')
-
+app.jinja_env.enable_async = True
 
 app.config['STATIC_FOLDER_1'] = 'data'
 
-app.config.update(
-    CELERY_BROKER_URL='redis://localhost:6379',
-    CELERY_RESULT_BACKEND='redis://localhost:6379'
-)
+app.config.update(CELERY_BROKER_URL='redis://localhost:6379',
+                  CELERY_RESULT_BACKEND='redis://localhost:6379')
 celery = make_celery(app)
-
 
 # Initialize configuration from CoolConfig
 app.config.from_object(CoolConfig)
@@ -41,12 +37,8 @@ migrate = Migrate(app, db)
 # Initialize login manager after db
 login_manager.init_app(app)
 
-
-
-
 # Import model setelah inisialisasi ekstensi db
 from app.models import *
 
 # Import routes setelah inisialisasi aplikasi
 from app import routes
-

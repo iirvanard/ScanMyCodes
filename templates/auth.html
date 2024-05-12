@@ -1,378 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
 
-    <!-- Roboto font -->
-    <link
-      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap"
-      rel="stylesheet" />
+<!-- Roboto font -->
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet">
 
-    <!-- TW Elements styles-->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
+<!-- Tailwind CSS config -->
+<link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
 
-    <!-- Tailwind CSS config -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          fontFamily: {
-            sans: ["Roboto", "sans-serif"],
-            body: ["Roboto", "sans-serif"],
-            mono: ["ui-monospace", "monospace"],
-          },
-        },
-        corePlugins: {
-          preflight: false,
-        },
-      };
-    </script>
-       <style>
-        /* CSS styling untuk form */
-        .authForm {
-            display: none; /* Semua formulir disembunyikan secara default */
-        }
-        .visible {
-            display: block; /* Menampilkan form dengan class 'visible' */
-        }
-        .shortform {
-  appearance: none;
-  display: block;
-  width: 100%;
-  background-color: #e0e0e0; /* Ubah ke warna abu-abu yang diinginkan */
-  color: #333; /* Ubah ke warna teks yang diinginkan */
-  border: 1px solid #e0e0e0; /* Ubah ke warna border yang diinginkan */
-  border-radius: 0.25rem; /* Ubah ke radius border yang diinginkan */
-  padding: 0.75rem 1rem; /* Ubah ke padding yang diinginkan */
-  line-height: 1.5; /* Sesuaikan ke line-height yang diinginkan */
-  outline: none;
+<style>
+/* CSS styling untuk form */
+.authForm {
+    display: none; /* Semua formulir disembunyikan secara default */
 }
-
-.shortform:focus {
-  background-color: #fff; /* Ubah ke warna latar belakang saat dalam fokus yang diinginkan */
-  border-color: #ccc; /* Ubah ke warna border saat dalam fokus yang diinginkan */
+.visible {
+    display: block; /* Menampilkan form dengan class 'visible' */
 }
-
+.shortform,
 .longform {
-  appearance: none;
-  display: block;
-  width: 100%;
-  background-color: #e0e0e0; /* Ubah ke warna abu-abu yang diinginkan */
-  color: #333; /* Ubah ke warna teks yang diinginkan */
-  border: 1px solid #e0e0e0; /* Ubah ke warna border yang diinginkan */
-  border-radius: 0.25rem; /* Ubah ke radius border yang diinginkan */
-  padding: 0.75rem 1rem; /* Ubah ke padding yang diinginkan */
-  margin-bottom: 1rem; /* Sesuaikan ke margin-bottom yang diinginkan */
-  line-height: 1.5; /* Sesuaikan ke line-height yang diinginkan */
-  outline: none;
+    appearance: none;
+    display: block;
+    width: 100%;
+    background-color: #e0e0e0; /* Ubah ke warna abu-abu yang diinginkan */
+    color: #333; /* Ubah ke warna teks yang diinginkan */
+    border: 1px solid #e0e0e0; /* Ubah ke warna border yang diinginkan */
+    border-radius: 0.25rem; /* Ubah ke radius border yang diinginkan */
+    padding: 0.75rem 1rem; /* Ubah ke padding yang diinginkan */
+    line-height: 1.5; /* Sesuaikan ke line-height yang diinginkan */
+    outline: none;
 }
-
+.shortform:focus,
 .longform:focus {
-  background-color: #fff; /* Ubah ke warna latar belakang saat dalam fokus yang diinginkan */
-  border-color: #ccc; /* Ubah ke warna border saat dalam fokus yang diinginkan */
+    background-color: #fff; /* Ubah ke warna latar belakang saat dalam fokus yang diinginkan */
+    border-color: #ccc; /* Ubah ke warna border saat dalam fokus yang diinginkan */
 }
-
 .textform {
-  display: block;
-  text-transform: uppercase;
-  letter-spacing: 0.05em; /* Ubah ke nilai tracking wide yang diinginkan */
-  color: #333; /* Ubah ke warna teks yang diinginkan */
-  font-size: 0.75rem; /* Ubah ke ukuran font yang diinginkan */
-  font-weight: bold; /* Sesuaikan ke bobot font yang diinginkan */
-  margin-bottom: 0.5rem; /* Sesuaikan ke margin-bottom yang diinginkan */
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.05em; /* Ubah ke nilai tracking wide yang diinginkan */
+    color: #333; /* Ubah ke warna teks yang diinginkan */
+    font-size: 0.75rem; /* Ubah ke ukuran font yang diinginkan */
+    font-weight: bold; /* Sesuaikan ke bobot font yang diinginkan */
+    margin-bottom: 0.5rem; /* Sesuaikan ke margin-bottom yang diinginkan */
 }
+</style>
 
-    </style>
-
-    
-  </head>
-  <header class="relative">
+</head>
+<body>
+<header class="relative">
     {% include 'nav.html' %}
-  </header>
-  
+</header>
 
-
-  <body>
-    <section class="h-screen">
-        <div class="container mx-auto h-full px-6 flex justify-center items-center">
-            <div
-            class="flex flex-wrap ">
+<section class="h-screen">
+    <div class="container mx-auto h-full px-6 flex justify-center items-center">
+        <div class="flex flex-wrap">
             <!-- Left column container with background-->
             <div class="mb-12 md:mb-0 md:w-8/12 lg:w-5/12">
-              <img
-                src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
-                class="w-full"
-                alt="Phone image" />
+                <img src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" class="w-full" alt="Phone image">
             </div>
-      
+
             <!-- Right column container with form -->
             <div class="md:w-8/12 lg:ms-6 lg:w-5/12">
-
-
-
-                <form id="loginForm" class="authForm" action="{{ url_for('auth.login') }}" method="post">
-                  <input type="hidden" name="csrf_token" value = "{{ csrf_token() }}" />  
-
-                        <!-- Tailwind CSS logo and text -->
-    <div class="flex flex-col items-center mb-8">
-        <h2 class="text-lg font-semibold">Login to Your Account</h2>
-    </div>
-    <div class=" flex-wrap -mx-3 mb-6">
-        <div class="w-full px-3">
-          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-email">
-            Email/username
-          </label>
-          <input class="longform" id="grid-email" type="text" placeholder="Your Email address / Username" name="email_or_username" required>
-        </div>
-      </div>
-
-<!-- password form input -->
-    <div class=" flex-wrap -mx-3 mb-6">
-        <div class="w-full px-3">
-          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password" >
-            Password
-          </label>
-          <input class="longform" id="grid-password" type="password" placeholder="******************" name="password" required>
-<!-- Flash messages -->
-{% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        <ul>
-            {% for category, message in messages %}
-                {% if category == 'success' %}
-                    <li class="text-green-600 text-xs italic">{{ message }}</li>
-                {% else %}
-                    <li class="text-red-600 text-xs italic">{{ message }}</li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-    {% endif %}
-{% endwith %}
- </div>
-      </div>
-
-              
-      
-          
-                <!-- Remember me checkbox -->
-                <div class="mb-6 flex items-center justify-between">
-                    <div class="mb-[0.125rem] block min-h-[1.5rem] ps-[1.5rem]">
-                        <input
-                          class="relative float-left -ms-[1.5rem] me-[6px] mt-[0.15rem] h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-secondary-500 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] checked:border-primary checked:bg-indigo-500 checked:before:opacity-[0.16] checked:after:absolute checked:after:-mt-px checked:after:ms-[0.25rem] checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:after:-mt-px checked:focus:after:ms-[0.25rem] checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-l-0 checked:focus:after:border-t-0 checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent rtl:float-right dark:border-neutral-400 dark:checked:border-primary dark:checked:bg-primary"
-                          type="checkbox"
-                          value=""
-                          id="exampleCheck3"
-                          checked />
-                        <label
-                          class="inline-block ps-[0.15rem] hover:cursor-pointer"
-                          for="exampleCheck3">
-                          Remember me
-                        </label>
-                      </div>
-      
-                </div>
-      
-                <!-- Submit button -->
-                  <input
-                  type="submit"
-                  class="inline-block w-full rounded bg-indigo-500 px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
-                  data-twe-ripple-init
-                  data-twe-ripple-color="light"
-                  value="login"
-                />
-
-                <a
-                href="#register"
-                id="registerToggle"
-                class="text-primary focus:outline-none dark:text-primary-400 ml-auto float-right"
-                style="margin-top: 10px;"
-                >register</a
-            >
-            
-              
-
-
-
-              </form>
-
-              <form id="registerForm" class="authForm" action="{{ url_for('auth.register') }}" method="post">
-                <input type="hidden" name="csrf_token" value = "{{ csrf_token() }}" />  
-
-    <!-- Tailwind CSS logo and text -->
-    <div class="flex flex-col items-center mb-8">
-        <h2 class="text-lg font-semibold">Register to Your Account</h2>
-    </div>
-
-                <!-- Email input -->
-                <div class="flex flex-wrap -mx-3 mb-6">
-                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
-                        First Name
-                      </label>
-                      <input class="shortform" id="grid-last-name" type="text" placeholder="Doe" name="first_name" required>
+                <form id="loginForm" class="authForm visible" action="{{ url_for('auth.login') }}" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                    <!-- Tailwind CSS logo and text -->
+                    <div class="flex flex-col items-center mb-8">
+                        <h2 class="text-lg font-semibold">Login to Your Account</h2>
                     </div>
-                    <div class="w-full md:w-1/2 px-3">
-                      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
-                        Last Name
-                      </label>
-                      <input class="shortform" id="grid-last-name" type="text" placeholder="Doe" name="last_name" required>
+                    <div class="flex flex-wrap -mx-3 mb-6">
+                        <div class="w-full px-3">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-email">Email/username</label>
+                            <input class="longform" id="grid-email" type="text" placeholder="Your Email address / Username" name="email_or_username" required>
+                        </div>
                     </div>
-                  </div>
 
+                    <!-- password form input -->
+                    <div class="flex flex-wrap -mx-3 mb-6">
+                        <div class="w-full px-3">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">Password</label>
+                            <input class="longform" id="grid-password" type="password" placeholder="******************" name="password" required>
+                            <!-- Flash messages -->
+                            {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                            <ul>
+                                {% for category, message in messages %}
+                                {% if category == 'success' %}
+                                <li class="text-green-600 text-xs italic">{{ message }}</li>
+                                {% else %}
+                                <li class="text-red-600 text-xs italic">{{ message }}</li>
+                                {% endif %}
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                            {% endwith %}
+                        </div>
+                    </div>
 
-            
+                    <!-- Remember me checkbox -->
+                    <div class="mb-6 flex items-center justify-between">
+                        <div class="mb-[0.125rem] block min-h-[1.5rem] ps-[1.5rem]">
+                            <input class="relative float-left -ms-[1.5rem] me-[6px] mt-[0.15rem] h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-secondary-500 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] checked:border-primary checked:bg-indigo-500 checked:before:opacity-[0.16] checked:after:absolute checked:after:-mt-px checked:after:ms-[0.25rem] checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:after:-mt-px checked:focus:after:ms-[0.25rem] checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-l-0 checked:focus:after:border-t-0 checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent rtl:float-right dark:border-neutral-400 dark:checked:border-primary dark:checked:bg-primary" type="checkbox" value="" id="exampleCheck3" checked>
+                            <label class="inline-block ps-[0.15rem] hover:cursor-pointer" for="exampleCheck3">Remember me</label>
+                        </div>
+                    </div>
 
-                <!-- username form input -->
-    <div class=" flex-wrap -mx-3 mb-6">
-        <div class="w-full px-3">
-          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password" >
-            Username
-          </label>
-          <input class="longform" id="grid-username" type="text" placeholder="Your Username!" name="username" required>
-          <!-- <p class="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p> -->
-        </div>
-      </div>
-      
+                    <!-- Submit button -->
+                    <input type="submit" class="inline-block w-full rounded bg-indigo-500 px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong" data-twe-ripple-init data-twe-ripple-color="light" value="login">
 
-                <!-- email form input -->
-    <div class=" flex-wrap -mx-3 mb-6">
-        <div class="w-full px-3">
-          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-email">
-            Email
-          </label>
-          <input class="longform" id="grid-email" type="email" placeholder="example@mail.com" name="email" required>
-          <!-- <p class="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p> -->
-        </div>
-      </div>
-      
+                    <a href="#register" id="registerToggle" class="text-primary focus:outline-none dark:text-primary-400 ml-auto float-right" style="margin-top: 10px;">register</a>
+                </form>
 
-                <!-- password form input -->
-    <div class=" flex-wrap -mx-3 mb-6">
-        <div class="w-full px-3">
-          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
-            Password
-          </label>
-          <input class="longform" id="grid-password" type="password" placeholder="******************" name="password" required>
-        
-    <!-- Flash messages -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            <ul>
-                {% for category, message in messages %}
-                    <li class="text-red-600 text-xs italic">{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
+                <form id="registerForm" class="authForm" action="{{ url_for('auth.register') }}" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
 
-      
-        </div>
-      </div>
+                    <!-- Tailwind CSS logo and text -->
+                    <div class="flex flex-col items-center mb-8">
+                        <h2 class="text-lg font-semibold">Register to Your Account</h2>
+                    </div>
 
+                    <!-- First and last name input -->
+                    <div class="flex flex-wrap -mx-3 mb-6">
+                        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">First Name</label>
+                            <input class="shortform" id="grid-first-name" type="text" placeholder="John" name="first_name" required>
+                        </div>
+                        <div class="w-full md:w-1/2 px-3">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">Last Name</label>
+                            <input class="shortform" id="grid-last-name" type="text" placeholder="Doe" name="last_name" required>
+                        </div>
+                    </div>
 
-                <!-- Remember me checkbox -->
-                <div class="mb-6 flex items-center justify-between">
-                    <div class="mb-[0.125rem] block min-h-[1.5rem] ps-[1.5rem]">
-                        <input
-                          class="relative float-left -ms-[1.5rem] me-[6px] mt-[0.15rem] h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-secondary-500 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] checked:border-primary checked:bg-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:-mt-px checked:after:ms-[0.25rem] checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:after:-mt-px checked:focus:after:ms-[0.25rem] checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-l-0 checked:focus:after:border-t-0 checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent rtl:float-right dark:border-neutral-400 dark:checked:border-primary dark:checked:bg-primary"
-                          type="checkbox"
-                          value=""
-                          id="exampleCheck3"
-                          checked />
-                        <label
-                          class="inline-block ps-[0.15rem] hover:cursor-pointer"
-                          for="exampleCheck3">
-                          Remember me
-                        </label>
-                      </div>
-      
-                </div>
-              
-                <!-- Submit button -->
-                <input
-                type="submit"
-                class="inline-block w-full rounded bg-primary px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
-                data-twe-ripple-init
-                data-twe-ripple-color="light"
-                value="register"
-              />
-              
-            
-           
-                <a
-                href="#login"
-                id="loginToggle"
-                class="text-primary focus:outline-none dark:text-primary-400 ml-auto float-right"
-                style="margin-top: 10px;"
-                >Login</a
-            >
-            
-              
+                    <!-- Username input -->
+                    <div class="flex flex-wrap -mx-3 mb-6">
+                        <div class="w-full px-3">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-username">Username</label>
+                            <input class="longform" id="grid-username" type="text" placeholder="Your Username!" name="username" required>
+                        </div>
+                    </div>
 
+                    <!-- Email input -->
+                    <div class="flex flex-wrap -mx-3 mb-6">
+                        <div class="w-full px-3">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-email">Email</label>
+                            <input class="longform" id="grid-email" type="email" placeholder="example@mail.com" name="email" required>
+                        </div>
+                    </div>
 
+                    <!-- Password input -->
+                    <div class="flex flex-wrap -mx-3 mb-6">
+                        <div class="w-full px-3">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">Password</label>
+                            <input class="longform" id="grid-password" type="password" placeholder="******************" name="password" required>
+                            <!-- Flash messages -->
+                            {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                            <ul>
+                                {% for category, message in messages %}
+                                <li class="text-red-600 text-xs italic">{{ message }}</li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                            {% endwith %}
+                        </div>
+                    </div>
 
-            
-              </form>
+                    <!-- Remember me checkbox -->
+                    <div class="mb-6 flex items-center justify-between">
+                        <div class="mb-[0.125rem] block min-h-[1.5rem] ps-[1.5rem]">
+                            <input class="relative float-left -ms-[1.5rem] me-[6px] mt-[0.15rem] h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-secondary-500 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-checkbox before:shadow-transparent before:content-[''] checked:border-primary checked:bg-indigo-500 checked:before:opacity-[0.16] checked:after:absolute checked:after:-mt-px checked:after:ms-[0.25rem] checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-black/60 focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:before:shadow-checkbox checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:after:-mt-px checked:focus:after:ms-[0.25rem] checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-l-0 checked:focus:after:border-t-0 checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent rtl:float-right dark:border-neutral-400 dark:checked:border-primary dark:checked:bg-primary" type="checkbox" value="" id="exampleCheck4" checked>
+                            <label class="inline-block ps-[0.15rem] hover:cursor-pointer" for="exampleCheck4">Remember me</label>
+                        </div>
+                    </div>
 
+                    <!-- Submit button -->
+                    <input type="submit" class="inline-block w-full rounded bg-indigo-500 px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong" data-twe-ripple-init data-twe-ripple-color="light" value="register">
 
-              
-    <script>
-        // Ambil elemen formulir
-        var loginForm = document.getElementById('loginForm');
-        var registerForm = document.getElementById('registerForm');
+                    <a href="#login" id="loginToggle" class="text-primary focus:outline-none dark:text-primary-400 ml-auto float-right" style="margin-top: 10px;">Login</a>
+                </form>
 
-        // Sembunyikan semua formulir
-        function hideAllForms() {
-            loginForm.classList.remove('visible');
-            registerForm.classList.remove('visible');
-        }
+                <script>
+                    // Ambil elemen formulir
+                    var loginForm = document.getElementById('loginForm');
+                    var registerForm = document.getElementById('registerForm');
 
-        // Tampilkan formulir login
-        function showLoginForm() {
-            hideAllForms();
-            loginForm.classList.add('visible');
-        }
+                    // Sembunyikan semua formulir
+                    function hideAllForms() {
+                        loginForm.classList.remove('visible');
+                        registerForm.classList.remove('visible');
+                    }
 
-        // Tampilkan formulir register
-        function showRegisterForm() {
-            hideAllForms();
-            registerForm.classList.add('visible');
-        }
+                    // Tampilkan formulir login
+                    function showLoginForm() {
+                        hideAllForms();
+                        loginForm.classList.add('visible');
+                    }
 
-        // Cek hash dan tampilkan formulir yang sesuai saat halaman dimuat
-        window.onload = function() {
-            var hash = window.location.hash;
-            if (hash === '#register') {
-                showRegisterForm();
-            } else {
-                showLoginForm(); // Default menampilkan login form
-            }
-        };
+                    // Tampilkan formulir register
+                    function showRegisterForm() {
+                        hideAllForms();
+                        registerForm.classList.add('visible');
+                    }
 
-        // Tambahkan event listener untuk tombol toggle login
-        document.getElementById('loginToggle').addEventListener('click', function(event) {
-            event.preventDefault(); // Menghentikan perilaku default dari tautan
-            showLoginForm();
-            window.location.hash = 'login'; // Perbarui hash URL
-        });
+                    // Cek hash dan tampilkan formulir yang sesuai saat halaman dimuat
+                    window.onload = function () {
+                        var hash = window.location.hash;
+                        if (hash === '#register') {
+                            showRegisterForm();
+                        } else {
+                            showLoginForm(); // Default menampilkan login form
+                        }
+                    };
 
-        // Tambahkan event listener untuk tombol toggle register
-        document.getElementById('registerToggle').addEventListener('click', function(event) {
-            event.preventDefault(); // Menghentikan perilaku default dari tautan
-            showRegisterForm();
-            window.location.hash = 'register'; // Perbarui hash URL
-        });
-    </script>
-   
+                    // Tambahkan event listener untuk tombol toggle login
+                    document.getElementById('loginToggle').addEventListener('click', function (event) {
+                        event.preventDefault(); // Menghentikan perilaku default dari tautan
+                        showLoginForm();
+                        window.location.hash = 'login'; // Perbarui hash URL
+                    });
+
+                    // Tambahkan event listener untuk tombol toggle register
+                    document.getElementById('registerToggle').addEventListener('click', function (event) {
+                        event.preventDefault(); // Menghentikan perilaku default dari tautan
+                        showRegisterForm();
+                        window.location.hash = 'register'; // Perbarui hash URL
+                    });
+                </script>
             </div>
-          </div>
         </div>
-      </section>
-    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
-  </body>
+    </div>
+</section>
+</body>
 </html>
