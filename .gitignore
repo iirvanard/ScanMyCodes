@@ -164,6 +164,7 @@ cython_debug/
 # data scanning
 data/repository/*
 data/scan/*
+data/logs/*
 
 # migrations
 migrations/
