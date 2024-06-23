@@ -1,42 +1,22 @@
 {% extends 'project_detail/layout.html' %}
 
 {% block content %}
-<<<<<<< HEAD
-
-<a href="{{ url_for('project.log',idproject=project.project_id) ~ '/' ~ logid }}" class="md:container md:mx-auto">
-=======
 {% for items in content %}
 <a href="{{ url_for('project.log', idproject=project.project_id) ~ '/' ~ items.id }}" class="md:container md:mx-auto">
->>>>>>> 57a24e6 (before revisi)
     <div class="max-w rounded overflow-hidden  bg-gray-100	">
         <div class="m-4">
             <div class="flex space-x-6">
                 <div class="type-section flex">
                     <div class="font-bold text-sm mr-1">Type:</div> 
-<<<<<<< HEAD
-                    <div class="text-sm">analysisanalysisanalysisanalysisanalysisanalysisanalysisanalysisanalysis</div>
-                </div>
-                <div class="type-section flex">
-                    <div class="font-bold text-sm mr-1">status:</div> 
-                    <div class="text-sm">failed</div>
-=======
                     <div class="text-sm">{{items.type}}</div>
                 </div>
                 <div class="type-section flex">
                     <div class="font-bold text-sm mr-1">status:</div> 
                     <div class="text-sm">{{items.status}}</div>
->>>>>>> 57a24e6 (before revisi)
                 </div>
             </div>
             <div class="info-section mt-5 flex">
                 <div class="font-bold text-sm mr-1">Created:</div> 
-<<<<<<< HEAD
-                <div class="text-sm">asdasdasdasdasdasdasdasdasdasd</div>
-            </div>
-            <div class="info-section flex">
-                <div class="font-bold text-sm mr-1">Duration:</div> 
-                <div class="text-sm">6 second</div>
-=======
                 <div class="text-sm">{{items.created_at}}</div>
             </div>
             <div class="info-section flex">
@@ -67,16 +47,11 @@
                 
                 <div class="text-sm">  {{ parts|join(', ') }}</div>
                 
->>>>>>> 57a24e6 (before revisi)
             </div>
             <hr>
         </div>
     </div>
 </a>
-<<<<<<< HEAD
-
-=======
 {% endfor %}
->>>>>>> 57a24e6 (before revisi)
 {% endblock %}
 

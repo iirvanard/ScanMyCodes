@@ -1,8 +1,5 @@
 import subprocess
-<<<<<<< HEAD
-=======
 import logging
->>>>>>> 57a24e6 (before revisi)
 
 
 def split_url(url: str) -> str:
@@ -17,21 +14,6 @@ def split_url(url: str) -> str:
     return url[:last_slash_index].split("/")[-1], url[last_slash_index +
                                                       1:last_suffix_index]
 
-<<<<<<< HEAD
-
-def run_wsl_command(source_path, filename):
-    # # Command to run WSL
-    wsl_command = f"C:/bearer/bearer.exe scan {source_path} --format json --output {filename}"
-
-    # Run the command and capture output
-    result = subprocess.run(wsl_command,
-                            shell=True,
-                            capture_output=True,
-                            text=True)
-    print(str(result))
-    # Return the output
-    return result.stdout.strip()
-=======
 def run_wsl_command(source_path, filename):
     # Command to run WSL
     wsl_command = f"bearer scan {source_path} --format json --output {filename}"
@@ -50,7 +32,6 @@ def run_wsl_command(source_path, filename):
     except subprocess.CalledProcessError as e:
         logging.error(f"Command '{wsl_command}' failed with error: {e.stderr}")
         raise
->>>>>>> 57a24e6 (before revisi)
 
 
 # repo_owner, repo_name = get_repo_info_from_url(url) #use this

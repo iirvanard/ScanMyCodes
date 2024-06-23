@@ -62,14 +62,9 @@
         .finding .description code.language-ruby,
         .finding .description code.language-javascript,
         .finding .description code.language-php,
-<<<<<<< HEAD
-        .finding .description code.language-java {
-        @apply flex p-2;
-=======
         .finding .description code.language-python,
         .finding .description code.language-java {
         @apply flex p-2 overflow-y-auto	;
->>>>>>> 57a24e6 (before revisi)
         font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
         }
         
@@ -123,13 +118,6 @@
         span.warning{
         color:#2A49CC;
         }
-<<<<<<< HEAD
-        
-        .term-container {
-            @apply font-mono text-gray-400 bg-gray-900 rounded-md p-1 mt-4 mb-8 ml-8 mr-8 whitespace-pre-wrap;
-        }
-=======
->>>>>>> 57a24e6 (before revisi)
         .term-fg34 { color: #8db7e0; } /* blue */
         .term-fg35 { color: #f271fb; } /* magenta */
         

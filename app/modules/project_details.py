@@ -1,11 +1,7 @@
 from functools import wraps
 from flask import Blueprint, abort, redirect, render_template, url_for
 from flask_login import current_user, login_required
-<<<<<<< HEAD
-from app.models import Project, GitBranch, GitRepository, AnalyzeIssue
-=======
 from app.models import Project, GitBranch, GitRepository, AnalyzeIssue,ProjectLog
->>>>>>> 57a24e6 (before revisi)
 from uuid import UUID
 import json
 
@@ -121,10 +117,6 @@ def analysis(idproject, branchid=None):
 
     stats, markdown_content = marksdown(idproject, branchid)
 
-<<<<<<< HEAD
-    analysis_content = render_template(
-        '/project_detail/analysis/branch.html',
-=======
     filterContent = {
             'Severity': {"high","medium"},
             'Language': {"python","php"},
@@ -134,7 +126,6 @@ def analysis(idproject, branchid=None):
         '/project_detail/analysis/branch.html',
         filterContent =filterContent
         ,
->>>>>>> 57a24e6 (before revisi)
         content=markdown_content) if branchid else None
     title = f"Branch Dev - {project.project_name}" if branchid else f"Analysis - {project.project_name}"
 
@@ -151,34 +142,18 @@ def analysis(idproject, branchid=None):
 @check_idproject
 def log(idproject):
     project = get_project_from_id(idproject)
-<<<<<<< HEAD
-    return render_template(
-        '/project_detail/log/log.html',
-        logid="asdasd",
-        title=f"log  - {project.project_name}",
-=======
     log = ProjectLog.query.filter_by(project_id=idproject).all()
  
     return render_template(
         '/project_detail/log/log.html',
         title=f"log  - {project.project_name}",
         content = log,
->>>>>>> 57a24e6 (before revisi)
         project=project,
     )
 
 
 @blueprint.route('/log/<string:logid>')
 @check_idproject
-<<<<<<< HEAD
-def log_by_id(idproject, logid):
-    project = get_project_from_id(idproject)
-    return render_template(
-        '/project_detail/log/log_item.html',
-        title=f"log details - {project.project_name}",
-        logid=logid,
-        project=project,
-=======
 def log_by_id(idproject,logid):
     project = get_project_from_id(idproject)
     log = ProjectLog.query.filter_by(id=logid).first()
@@ -196,7 +171,6 @@ def log_by_id(idproject,logid):
         project=project,
         content=log,
         logx=content
->>>>>>> 57a24e6 (before revisi)
     )
 
 
