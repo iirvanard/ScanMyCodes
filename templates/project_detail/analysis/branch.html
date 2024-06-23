@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 <div class="flex">
   <!-- Main content area -->
@@ -64,6 +65,100 @@
 
   <hr class="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700">
 
+=======
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+<style>
+  .rule-item {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  .rule-item strong {
+    color: #333;
+  }
+</style>
+
+<div class="flex">
+  <!-- Main content area -->
+
+
+<div class="mr-8 w-9/12"> 
+
+
+  {% if content %}
+  {% set all_items = [] %}
+  {% for severity, items in content.items() %}
+      {% for item in items %}
+          {% set _ = item.update({'severity': severity}) %}
+          {% set _ = all_items.append(item) %}
+      {% endfor %}
+  {% endfor %}
+  
+  {% set sorted_items = all_items | sort(attribute='title') %}
+  {% for item in sorted_items %}
+      <details language="{{ item.id.split('_')[0] }}" class="finding mb-8" id="parent-{{ loop.index0 }}" close>
+          <summary>
+              <div class="head">
+                  <h3 class="{{ item.severity }}">
+                      <span>{{ item.title }}</span>
+                      <span class="badge {{ item.severity }} {{ item.severity }}-bg">{{ item.severity }}</span>
+                  </h3>
+                  <span class="cwe rule-item">
+                      <strong>Rule ID:</strong> {{ item.id }}&nbsp;&nbsp;<strong>CWE:</strong> CWE{{ item.cwe_ids[0] }}&nbsp;&nbsp;<strong>Fingerprint:</strong> {{ item.fingerprint }}
+                  </span>
+              </div>
+              {% autoescape false %}
+
+
+              <div class="border border-gray-500 rounded-lg	bg-slate-500 m-4 term-container" style="color: white;" >
+                <div class="flex justify-between p-1.5  ">
+                  <p>Filename: {{ item.filename.lower() }}:{{ item.line_number }}</p>
+
+                  <button class="flex items-center">
+                    <span class="material-symbols-outlined">content_copy</span>
+                    <span>copy</span>
+                  </button>
+              </div>
+              <hr class="border-gray-500 ">
+              <div class="overflow-x-auto rounded-b-lg p-4 bg-slate-900		 ">
+             <pre><code style="color: white;">{{ item.code_extract }}</code></pre>
+              </div>
+            </div>
+
+            
+              {% endautoescape %}
+          </summary>
+          <div class="w-full border border-grey-400">
+              <div class="flex divide-x divide-grey-400">
+                  <button class="w-1/2 py-4 text-center font-medium text-gray-700 bg-gray-100 focus:outline-none active:bg-gray-200" onclick="toggleContent('parent-{{ loop.index0 }}', 'tab1')">default</button>
+                  <button class="w-1/2 py-4 text-center font-medium text-gray-700 bg-gray-100 focus:outline-none active:bg-gray-200" onclick="toggleContent('parent-{{ loop.index0 }}', 'openai')">openai</button>
+              </div>
+              <div id="tab1" class="tabcontent">
+                  <div class="description">{{ item.description | safe }}</div>
+              </div>
+              <div id="openai" class="tabcontent" style="display: none;">
+                  <div id="OpenaiContent"></div>
+              </div>
+          </div>
+      </details>
+  {% endfor %}
+  {% else %}
+
+  <p>Data tidak ada</p>
+
+  {% endif %}  <div id="noDataMessage" style="display: none;"><p>Data tidak ada silahkan hapus filter yang digunakan</p></div>
+</div>
+
+<div class="w-3/12 bg-white rounded-lg border border-gray-300 mb-2 p-4">
+  <div class="flex justify-between">
+    <h5 class="block antialiased tracking-normal font-sans text-xl font-semibold leading-snug text-gray-900">Filter</h5>
+    <div class="border border-red-400 rounded-lg px-2 hover:bg-red-50 cursor-pointer" id="clearFilters">
+      <span class="">Clear All Filters</span>
+    </div>
+  </div>
+  <hr class="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700">
+>>>>>>> 57a24e6 (before revisi)
   <div class="flex items-center w-full h-8 rounded-lg bg-white border border-gray-300 focus-within:shadow-lg">
     <div class="grid place-items-center h-full w-12 text-gray-300">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -77,6 +172,7 @@
       placeholder="Search something.."
     /> 
   </div>
+<<<<<<< HEAD
 
   <div role="list">
     <p class="mx-2 mt-3 text-gray-500 my-2">Type</p>
@@ -97,6 +193,123 @@
   </div>
 
 
+=======
+  {% for key, values in filterContent.items() %}
+  <div role="list" id="{{ key|lower }}Filter">
+      <p class="mx-2 mt-3 text-gray-500 my-2">{{ key }}</p>
+      
+      {% for value in values %}
+          <div role="listitem" class="filter-option border border-gray-200 rounded px-2 mb-2 hover:border-2 hover:border-blue-300 cursor-pointer">{{ value }}</div>
+      {% endfor %}
+  </div>
+  {% endfor %}
+  
+</div>
+
+
+  </div>
+
+
+  <script>
+    var selectedSeverity = [];
+    var selectedLanguage = [];
+    
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("search");
+        const clearFiltersBtn = document.getElementById("clearFilters");
+        const severityFilterOptions = document.querySelectorAll("#severityFilter .filter-option");
+        const languageFilterOptions = document.querySelectorAll("#languageFilter .filter-option");
+
+        const details = document.getElementsByClassName('finding');
+
+        clearFiltersBtn.addEventListener("click", function () {
+            clearFilters(severityFilterOptions);
+            clearFilters(languageFilterOptions);
+            searchInput.value = "";
+            applyFilters();
+        });
+
+        searchInput.addEventListener("input", function () {
+            const searchTerm = searchInput.value.toLowerCase();
+            filterOptions(severityFilterOptions, searchTerm);
+            filterOptions(languageFilterOptions, searchTerm);
+            applyFilters();
+        });
+
+        function clearFilters(options) {
+            options.forEach(function (option) {
+                option.classList.remove('selected');
+                option.classList.remove('bg-blue-300');
+                option.style.display = "block";
+            });
+            selectedSeverity = [];
+            selectedLanguage = [];
+        }
+
+        function filterOptions(options, searchTerm) {
+            options.forEach(function (option) {
+                const text = option.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    option.style.display = "block";
+                } else {
+                    option.style.display = "none";
+                }
+            });
+        }
+
+        severityFilterOptions.forEach(function (severityFilterOptions) {
+            severityFilterOptions.addEventListener("click", function () {
+                severityFilterOptions.classList.toggle('selected');
+                if (severityFilterOptions.classList.contains('selected')) {
+                    severityFilterOptions.classList.add('bg-blue-300');
+                    selectedSeverity.push(severityFilterOptions.textContent);
+                } else {
+                    severityFilterOptions.classList.remove('bg-blue-300');
+                    selectedSeverity = selectedSeverity.filter(filter => filter !== severityFilterOptions.textContent);
+                }
+                applyFilters();
+            });
+        });
+
+        languageFilterOptions.forEach(function (languageFilterOptions) {
+            languageFilterOptions.addEventListener("click", function () {
+                languageFilterOptions.classList.toggle('selected');
+                if (languageFilterOptions.classList.contains('selected')) {
+                    languageFilterOptions.classList.add('bg-blue-300');
+                    selectedLanguage.push(languageFilterOptions.textContent);
+                } else {
+                    languageFilterOptions.classList.remove('bg-blue-300');
+                    selectedLanguage = selectedLanguage.filter(filter => filter !== languageFilterOptions.textContent);
+                }
+                applyFilters();
+            });
+        });
+
+        function applyFilters() {
+    var foundVisibleDetail = false;
+    for (var i = 0; i < details.length; i++) {
+        var severity = details[i].querySelector('.badge').innerText;
+        if ((selectedSeverity.length === 0 || selectedSeverity.includes(severity)) && 
+        (selectedLanguage.length === 0 || selectedLanguage.includes(details[i].getAttribute('language')))) {
+            details[i].style.display = 'block';
+            foundVisibleDetail = true;
+        } else {
+            details[i].style.display = 'none';
+        }
+    }
+
+    // Tampilkan pesan "tidak ada data" jika tidak ada temuan yang ditampilkan
+    if (!foundVisibleDetail) {
+        document.getElementById("noDataMessage").style.display = "block";
+    } else {
+        document.getElementById("noDataMessage").style.display = "none";
+    }
+}
+
+    });
+
+</script>
+>>>>>>> 57a24e6 (before revisi)
 
 
 
@@ -111,7 +324,10 @@
 
 
 });
+<<<<<<< HEAD
 
+=======
+>>>>>>> 57a24e6 (before revisi)
     window.onload = function() {
       var div = document.getElementsByClassName('description');
       for(var i = 0; i < div.length; i++) {
@@ -119,13 +335,21 @@
         document.getElementsByClassName('description')[i].innerHTML = md.render(content);
       }
     }
+<<<<<<< HEAD
     // JavaScript Function
     function toggleContent(parentId, tabId,code=null) {
+=======
+
+    // JavaScript Function
+    function toggleContent(parentId, tabId,code=null) {
+      console.log(tabId)
+>>>>>>> 57a24e6 (before revisi)
       var parent = document.getElementById(parentId);
       var tabs = parent.getElementsByClassName("tabcontent");
       for (var i = 0; i < tabs.length; i++) {
         tabs[i].style.display = "none";
       }
+<<<<<<< HEAD
   
       var item = parent.querySelector("#" + tabId);
       item.style.display = "block";
@@ -137,6 +361,31 @@
 console.log(element.innerHTML)
 if (element.innerHTML.trim() === '') {
     fetch("/api/chat", {
+=======
+      var item = parent.querySelector("#" + tabId);
+      item.style.display = "block";
+      if (tabId == "openai") {
+        var code = parent.querySelector(".term-container").innerHTML;
+        var element = item.querySelector("#OpenaiContent");
+        if (element.innerHTML.trim() === '') {
+          element.innerHTML = `
+          <div class="p-4 w-full mx-auto">
+            <div class="animate-pulse flex space-x-4">
+              <div class="flex-1 space-y-6 py-1">
+                <div class="space-y-3">
+                  <div class="grid grid-cols-3 gap-4">
+                    <div class="h-3 bg-slate-700 rounded col-span-1"></div>
+                  </div>
+                  <div class="h-2 bg-slate-700 rounded"></div>
+                  <div class="h-2 bg-slate-700 rounded"></div>
+                  <div class="h-2 bg-slate-700 rounded"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+    `;
+        fetch("/api/chat", {
+>>>>>>> 57a24e6 (before revisi)
               method: "POST",
               body: JSON.stringify({
                   "source_code": code
@@ -149,11 +398,16 @@ if (element.innerHTML.trim() === '') {
                 .then(json => {
                   // response =json['data'];
                   element.classList.add('description')
+<<<<<<< HEAD
                   response =json['data'].replace(/```(\w+)\s*([\s\S]*?)```/g, '\n\n```$1\n$2\n```\n\n');
+=======
+                  response =json['data'];
+>>>>>>> 57a24e6 (before revisi)
                   console.log(response);
                   element.innerHTML =md.render(response);
                 })
                 .catch(error => {
+<<<<<<< HEAD
                   // Hide loader in case of error
                   element.textContent ="failed";
 
@@ -162,6 +416,14 @@ if (element.innerHTML.trim() === '') {
             // Hide loading spinner regardless of success or failure
 
                 });
+=======
+                  element.innerHTML = `
+  <div class="inline-block text-red-600">
+    <span>Error message: ${error}.</span>
+  </div>
+`;
+}) ;
+>>>>>>> 57a24e6 (before revisi)
           
   
         

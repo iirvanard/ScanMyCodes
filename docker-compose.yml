@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 57a24e6 (before revisi)
 version: "3.8"
 
 
@@ -6,11 +11,23 @@ volumes:
   postgres-db:
 
 
+<<<<<<< HEAD
+=======
+>>>>>>> 2fc3767 (before revision)
+>>>>>>> 57a24e6 (before revisi)
 services:
   postgres:
     image: postgres
     restart: always
     environment:
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+=======
+>>>>>>> 57a24e6 (before revisi)
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -23,16 +40,35 @@ services:
       interval: 10s
       timeout: 3s
       retries: 3
+<<<<<<< HEAD
+=======
+>>>>>>> 2fc3767 (before revision)
+>>>>>>> 57a24e6 (before revisi)
 
   web:
     build: .
     restart: always
     depends_on:
+<<<<<<< HEAD
       postgres:
         condition: service_healthy
     ports:
       - "5000:5000"
     environment:
+=======
+<<<<<<< HEAD
+      - postgres
+    ports:
+      - "5000:5000"
+    environment:
+      DATABASE_URL: "postgresql://myuser:mypassword@postgres:5432/mydatabase"
+=======
+      postgres:
+        condition: service_healthy
+    ports:
+      - "5000:5000"
+    environment:
+>>>>>>> 57a24e6 (before revisi)
       DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}"
     env_file:
       - .env
@@ -55,3 +91,7 @@ services:
     image: redis:6-alpine
 
 
+<<<<<<< HEAD
+=======
+>>>>>>> 2fc3767 (before revision)
+>>>>>>> 57a24e6 (before revisi)

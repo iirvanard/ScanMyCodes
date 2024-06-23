@@ -1,4 +1,9 @@
 # Byte-compiled / optimized / DLL files
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 57a24e6 (before revisi)
 __pycache__/
 *.py[cod]
 *$py.class
@@ -120,6 +125,10 @@ celerybeat.pid
 
 # SageMath parsed files
 *.sage.py
+<<<<<<< HEAD
+=======
+>>>>>>> 2fc3767 (before revision)
+>>>>>>> 57a24e6 (before revisi)
 
 # Environments
 .env
@@ -130,6 +139,15 @@ ENV/
 env.bak/
 venv.bak/
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+#cache 
+__pycache__/
+*.py[cod]
+*$py.class
+=======
+>>>>>>> 57a24e6 (before revisi)
 # Spyder project settings
 .spyderproject
 .spyproject
@@ -173,3 +191,7 @@ migrations/
 # nodejs
 node_modules/
 /node_modules/
+<<<<<<< HEAD
+=======
+>>>>>>> 2fc3767 (before revision)
+>>>>>>> 57a24e6 (before revisi)

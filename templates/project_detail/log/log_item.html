@@ -2,6 +2,7 @@
 
 {% block content %}
 <div class="mb-2"> 
+<<<<<<< HEAD
     type : analysis - failed</div>
 <div class="flex mr-32 mb-6 "> 
     <div class="overscroll-auto overflow-y-scroll w-full"> 
@@ -236,5 +237,20 @@
         }
     });
 </script>
+=======
+    type : {{content.type}} - {{content.status}}
+</div>
+<div class="flex mr-32 mb-6 "> 
+    <div class="overscroll-auto overflow-y-scroll w-full"> 
+        <div class="overflow-auto max-h-96 bg-gray-200 p-4 rounded">
+            {% block logx %}
+                {% for item in logx %}
+                    <div>{{ item }}</div>
+                {% endfor %}
+            {% endblock %}
+        </div>
+    </div> 
+</div> 
+>>>>>>> 57a24e6 (before revisi)
 
 {% endblock %}
