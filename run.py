@@ -4,7 +4,7 @@ import os
 
 if __name__ == "__main__":
     load_dotenv()  # Load environment variables from .env file
-   
+    print(os.getenv('HOST'))
     # Access environment variables using os.getenv
     HOST = os.getenv('HOST') or 'localhost'
     PORT = os.getenv('PORT') or '5000'

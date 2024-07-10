@@ -18,9 +18,8 @@ app.jinja_env.enable_async = True
 
 app.config['STATIC_FOLDER_1'] = 'data'
 
-app.config.update(CELERY_broker_url=os.getenv("CELERY_broker_url"),
-                  result_backend=os.getenv("result_backend"))
-
+app.config.update(CELERY_BROKER_URL=os.getenv("CELERY_BROKER_URL"),
+                  CELERY_RESULT_BACKEND=os.getenv("CELERY_RESULT_BACKEND"))
 celery = make_celery(app)
 
 # Initialize configuration from CoolConfig
