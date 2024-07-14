@@ -19,7 +19,7 @@ jobs:
       run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
       
     - name: Build the Docker image
-      run: docker compose -f local.yml build
+      run: docker compose -f local.yml -p scanmycode build
     - name: Push to Dockerhub
       run: docker push ivan91110/scanmycode:latest
     
