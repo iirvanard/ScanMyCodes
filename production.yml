@@ -7,6 +7,13 @@ volumes:
 
 
 services:
+
+  redis:
+    container_name: redis
+    image: redis
+    ports:
+      - "6379:6379"
+
   postgres:
     image: postgres
     restart: always
@@ -25,11 +32,13 @@ services:
       retries: 3
 
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: ./docker/production/application/Dockerfile
     restart: always
     depends_on:
-      postgres:
-        condition: service_healthy
+      - redis
+      - postgres
     ports:
       - "5000:5000"
     environment:
@@ -38,20 +47,18 @@ services:
       - .env
 
   worker:
-    build: .
-    command: celery --app project.server.tasks.celery worker --loglevel=info
+    build: 
+      context: .
+      dockerfile: ./docker/production/application/Dockerfile
+    command:  celery -A app:celery worker 
     volumes:
-      - .:/usr/src/app
+      - .:/usr/src/
     environment:
       - FLASK_DEBUG=1
-      - APP_SETTINGS=project.server.config.DevelopmentConfig
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
     depends_on:
       - web
       - redis
-
-  redis:
-    image: redis:6-alpine
 
 
