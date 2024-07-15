@@ -173,4 +173,4 @@ data/scan/*
 # dsstore
 .DS_Store
 
-.vscode/
+.vscode
