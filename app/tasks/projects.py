@@ -62,6 +62,8 @@ def add_2_database(self, user, proj_name, proj_url, description=None, access_tok
 @celery.task()
 def add(task_id, proj_url, log_id, proj_name, access_token=None):
     project_model = None  # Initialize project_model to ensure it's defined
+    default_branch = None
+    all_branches = None
 
     try:
         project_log = ProjectLog.query.filter_by(id=log_id).first()
