@@ -42,6 +42,8 @@ services:
       - postgres
     ports:
       - "5000:5000"
+    volumes:
+      - .:/usr/src/app
     environment:
       DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:5432/${POSTGRES_DB}"
     env_file:
@@ -55,7 +57,7 @@ services:
     image: ivan91110/worker:latest
     command:  celery -A app:celery worker 
     volumes:
-      - .:/usr/src/
+      - .:/usr/src/app
     environment:
       - FLASK_DEBUG=1
       - CELERY_BROKER_URL=redis://redis:6379/0
@@ -63,5 +65,3 @@ services:
     depends_on:
       - web
       - redis
-
-
