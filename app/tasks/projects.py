@@ -5,16 +5,14 @@ from datetime import datetime
 from sqlalchemy.exc import IntegrityError
 from app import celery, app
 from app.extensions import db
-from app.models import Project, AnalyzeIssue, GitBranch,ProjectLog
+from app.models import Project, AnalyzeIssue, GitBranch, ProjectLog
 from app.models.git_repository import GitRepository
 from app.utils.git_core import GitUtils
 from app.utils.utils import run_wsl_command, split_url
 
-
 class GitError(Exception):
     def __init__(self, message):
         self.message = message
-
 
 formatter = logging.Formatter('%(asctime)s - %(levelname)s: %(message)s')
 
@@ -52,9 +50,7 @@ def add_2_database(self, user, proj_name, proj_url, description=None, access_tok
         db.session.rollback()
         project_model = Project.query.filter_by(project_id=task_id).first()
 
-
-
-    project_log = ProjectLog(project_id=task_id,type="analyze",status="on progress",path_=log_file_path)
+    project_log = ProjectLog(project_id=task_id, type="analyze", status="on progress", path_=log_file_path)
     
     with db.session.begin_nested():
         db.session.add(project_log)
@@ -65,7 +61,9 @@ def add_2_database(self, user, proj_name, proj_url, description=None, access_tok
 
 @celery.task()
 def add(task_id, proj_url, log_id, proj_name, access_token=None):
-    try :
+    project_model = None  # Initialize project_model to ensure it's defined
+
+    try:
         project_log = ProjectLog.query.filter_by(id=log_id).first()
 
         # Reinitialize logger with the existing log file path
@@ -76,33 +74,28 @@ def add(task_id, proj_url, log_id, proj_name, access_token=None):
             logger.addHandler(fh)
             logger.setLevel(logging.INFO)
     
-            project_model = Project.query.filter_by(project_id=task_id).first()
-            if not project_model:
-                logger.error(f"Project with task ID {task_id} not found in the database.  [failed]")
-                return
-            
+        project_model = Project.query.filter_by(project_id=task_id).first()
+        if not project_model:
+            logger.error(f"Project with task ID {task_id} not found in the database.  [failed]")
+            return
+        
+        try:
+            dir_path = os.path.join(app.config['STATIC_FOLDER_1'], "repository", uuid.UUID(task_id).hex)
+            repo_owner, repo_name = split_url(proj_url)
+            logger.info(f"Cloning repository {repo_owner}/{repo_name}.  [done]")
 
-
-            try:
-                dir_path = os.path.join(app.config['STATIC_FOLDER_1'], "repository", uuid.UUID(task_id).hex)
-                repo_owner, repo_name = split_url(proj_url)
-                logger.info(f"Cloning repository {repo_owner}/{repo_name}.  [done]")
-
-                with GitUtils(repo_owner=repo_owner, repo_name=repo_name, base_directory=dir_path) as GitInit:
-                    
-                        GitInit.clone_all_branches()
-                        default_branch = GitInit.get_default_branch()
-                        all_branches = GitInit.get_github_branches()
-                        project_model.fetched_at = datetime.now()
-                        project_model.fetch_status = 'success'
-                        db.session.commit()
+            with GitUtils(repo_owner=repo_owner, repo_name=repo_name, base_directory=dir_path) as GitInit:
+                GitInit.clone_all_branches()
+                default_branch = GitInit.get_default_branch()
+                all_branches = GitInit.get_github_branches()
+                project_model.fetched_at = datetime.now()
+                project_model.fetch_status = 'success'
+                db.session.commit()
                         
-            except Exception as e:
-                    project_model.fetch_status  = 'failed'
-                    db.session.commit()
-                    raise ValueError(e)
-
-                    
+        except Exception as e:
+            project_model.fetch_status = 'failed'
+            db.session.commit()
+            raise ValueError(e)
 
         try:
             # Add repository to the database
@@ -124,8 +117,10 @@ def add(task_id, proj_url, log_id, proj_name, access_token=None):
             raise ValueError(e)
         
     except Exception as e:
-        project_log.status = 'failed'
-        project_model.analyze_status = 'failed'
+        if project_model:
+            project_model.analyze_status = 'failed'
+        if project_log:
+            project_log.status = 'failed'
         db.session.commit()
         
         logger.error(f'{e} [failed]')
