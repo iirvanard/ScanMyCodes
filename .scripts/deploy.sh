@@ -5,8 +5,8 @@ echo "Deployment started ..."
 
 git pull origin dev
 
-docker compose -f ./production.yml build --no-cache
+docker compose build --no-cache
 
-docker compose -f ./production.yml up -d
+docker compose up -d
 
 echo "Deployment finished!"
