@@ -13,8 +13,6 @@ blueprint = Blueprint('project',
 # Utility Functions
 def get_project_from_id(idproject):
     project = Project.query.filter_by(project_id=idproject).first()
-    if project:
-        project.project_id = project.project_id.hex
     return project
 
 
