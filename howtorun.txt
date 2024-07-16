@@ -1,7 +1,0 @@
-1. redis-server
-2. celery -A app:celery worker -l info
-3. open postgresql
-4. flask run --debug
-
-to build css 
-1. npx tailwindcss -i ./static/src/main.css -o ./static/css/main.css --watch
