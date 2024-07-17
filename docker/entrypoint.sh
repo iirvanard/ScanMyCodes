@@ -1,9 +1,7 @@
 #!/bin/bash
 
-if [ ! -f ./.env ]
-then
-  export $(cat ./.env | xargs)
-fi
+export $(grep -v '^#' .env | xargs)
+
 
 
 if [ ! -d "migrations" ]; then
