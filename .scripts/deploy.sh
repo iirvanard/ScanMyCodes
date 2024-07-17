@@ -5,7 +5,7 @@ echo "Deployment started ..."
 
 git pull origin dev
 
-docker compose build --no-cache
+docker compose build 
 
 docker compose up -d
 
