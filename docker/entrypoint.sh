@@ -11,7 +11,7 @@ flask db migrate -m 'create initial tables'
 flask db upgrade
 
 if [ "$FLASK_ENV" = "production" ]; then
-  gunicorn run:app -b 0.0.0.0:5000 --timeout 90
+  gunicorn --bind=0.0.0.0 --timeout 600 run:app
 else 
   flask run --debug
 fi
