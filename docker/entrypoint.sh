@@ -1,9 +1,10 @@
 #!/bin/bash
 
-if [ ! -f .env ]
+if [ ! -f ./.env ]
 then
   export $(cat ./.env | xargs)
 fi
+
 
 if [ ! -d "migrations" ]; then
   flask db init
