@@ -56,78 +56,68 @@ def add_2_database(self, user, proj_name, proj_url, description=None, access_tok
         db.session.add(project_log)
     db.session.commit()
 
-    # Pass only serializable data to the next task
-    return add.delay(task_id, proj_url, project_log.id, proj_name, access_token)
-
-@celery.task()
-def add(task_id, proj_url, log_id, proj_name, access_token=None):
-    project_model = None  # Initialize project_model to ensure it's defined
-    default_branch = None
-    all_branches = None
-
     try:
-        project_log = ProjectLog.query.filter_by(id=log_id).first()
+            project_log = ProjectLog.query.filter_by(id=project_log.id).first()
 
-        # Reinitialize logger with the existing log file path
-        logger = logging.getLogger(task_id)
-        if not logger.handlers:
-            fh = logging.FileHandler(project_log.path_)
-            fh.setFormatter(formatter)
-            logger.addHandler(fh)
-            logger.setLevel(logging.INFO)
-    
-        project_model = Project.query.filter_by(project_id=task_id).first()
-        if not project_model:
-            logger.error(f"Project with task ID {task_id} not found in the database.  [failed]")
-            return
+            # Reinitialize logger with the existing log file path
+            logger = logging.getLogger(task_id)
+            if not logger.handlers:
+                fh = logging.FileHandler(project_log.path_)
+                fh.setFormatter(formatter)
+                logger.addHandler(fh)
+                logger.setLevel(logging.INFO)
         
-        try:
-            dir_path = os.path.join(app.config['STATIC_FOLDER_1'], "repository", uuid.UUID(task_id).hex)
-            repo_owner, repo_name = split_url(proj_url)
-            logger.info(f"Cloning repository {repo_owner}/{repo_name}.  [done]")
+            project_model = Project.query.filter_by(project_id=task_id).first()
+            if not project_model:
+                logger.error(f"Project with task ID {task_id} not found in the database.  [failed]")
+                return
+            
+            try:
+                dir_path = os.path.join(app.config['STATIC_FOLDER_1'], "repository", uuid.UUID(task_id).hex)
+                repo_owner, repo_name = split_url(proj_url)
+                logger.info(f"Cloning repository {repo_owner}/{repo_name}.  [done]")
 
-            with GitUtils(repo_owner=repo_owner, repo_name=repo_name, base_directory=dir_path) as GitInit:
-                GitInit.clone_all_branches()
-                default_branch = GitInit.get_default_branch()
-                all_branches = GitInit.get_github_branches()
-                project_model.fetched_at = datetime.now()
-                project_model.fetch_status = 'success'
+                with GitUtils(repo_owner=repo_owner, repo_name=repo_name, base_directory=dir_path) as GitInit:
+                    GitInit.clone_all_branches()
+                    default_branch = GitInit.get_default_branch()
+                    all_branches = GitInit.get_github_branches()
+                    project_model.fetched_at = datetime.now()
+                    project_model.fetch_status = 'success'
+                    db.session.commit()
+                            
+            except Exception as e:
+                project_model.fetch_status = 'failed'
                 db.session.commit()
-                        
-        except Exception as e:
-            project_model.fetch_status = 'failed'
-            db.session.commit()
-            raise ValueError(e)
+                raise ValueError(e)
 
-        try:
-            # Add repository to the database
-            repo = add_to_database_repository(task_id, proj_url, default_branch, dir_path, logger, access_token)
+            try:
+                # Add repository to the database
+                repo = add_to_database_repository(task_id, proj_url, default_branch, dir_path, logger, access_token)
 
-            cloning(task_id, all_branches, repo.id, logger)
-            # Scan repository for analysis
-            scanning(task_id, all_branches, dir_path, logger)
+                cloning(task_id, all_branches, repo.id, logger)
+                # Scan repository for analysis
+                scanning(task_id, all_branches, dir_path, logger)
 
-            # Update project status in the database
-            project_model.analyze_status = 'success'
-            project_log.status = 'success'
-            project_model.analyze_at = datetime.now()
-            db.session.commit()
-            logger.info(f"Project {proj_name} analyzed successfully. [done]")
-        
-        except Exception as e:
-            db.session.rollback()
-            raise ValueError(e)
-        
+                # Update project status in the database
+                project_model.analyze_status = 'success'
+                project_log.status = 'success'
+                project_model.analyze_at = datetime.now()
+                db.session.commit()
+                logger.info(f"Project {proj_name} analyzed successfully. [done]")
+            
+            except Exception as e:
+                db.session.rollback()
+                raise ValueError(e)
+            
     except Exception as e:
         if project_model:
             project_model.analyze_status = 'failed'
         if project_log:
             project_log.status = 'failed'
-        db.session.commit()
-        
+        db.session.commit()   
         logger.error(f'{e} [failed]')
 
-    return "done"
+
 
 def add_to_database_repository(task_id, proj_url, default_branch, dir_path, logger, access_token=None):
     repo = GitRepository(repo_url=proj_url, access_token=access_token, default_branch=default_branch, project_id=task_id, path_=dir_path)

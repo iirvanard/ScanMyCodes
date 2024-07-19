@@ -56,11 +56,9 @@ def add():
     while not task_result.ready():
         time.sleep(1)
     
-    # Mendapatkan hasil dari tugas
-    result_value = task_result.result
     
-    hex_result = uuid.UUID(str(result.id)).hex  # Convert UUID to hexadecimal
-    return redirect(url_for('projects.index') + str(hex_result))
+    
+    return redirect(url_for('projects.index') + str(result.id))
 
 @blueprint.route("/update", methods=["POST"])
 def update():

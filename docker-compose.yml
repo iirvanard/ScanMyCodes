@@ -53,7 +53,7 @@ services:
       context: .    
       dockerfile: ./docker/dockerfile
     image: ivan91110/worker:latest
-    command:  celery -A app:celery worker 
+    command:  celery -A app:celery worker --loglevel INFO
     volumes:
       - .:/usr/src/app
     environment:
