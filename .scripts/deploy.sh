@@ -27,7 +27,7 @@ source venv/bin/activate
 
 # Menjalankan Celery worker
 echo "Menjalankan Celery worker..."
-celery -A app:celery worker --loglevel=info 
+celery -A app:celery worker --loglevel=info --detach
 sudo systemctl restart scanmycodes
 
 
