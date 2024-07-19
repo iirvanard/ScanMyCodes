@@ -1,6 +1,8 @@
 {% extends 'projects/layout.html' %}
 
 {% block content %}
+
+
 <div class="mx-16">
 
 
@@ -13,7 +15,7 @@
 <div id="popupForm" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center">
     <div class="bg-white p-6 rounded shadow-md w-6/12 max-w-lg"> <!-- Tambahkan kelas max-w-lg di sini -->
         <h2 class="text-lg font-semibold mb-4">Tambah Proyek Baru</h2>
-        <form action="{{ url_for('projects.add') }}" method="POST">
+        <form action="{{ url_for('projects.add') }}" method="POST" id="mainForm">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
 
             <div class="mb-4">
@@ -22,8 +24,9 @@
                 <label class="inline-flex items-center me-5 cursor-pointer" id="toggleLabel">
                     <input type="checkbox" value="private" class="sr-only peer" checked id="toggleCheckbox">
                     <div class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-red-300 dark:peer-focus:ring-red-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-600"></div>
-                    <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300" id="toggleText">private</span>
+                    <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300" id="toggleText">Public</span>
                 </label>
+            
             </div>
 
             <div class="mb-4">
@@ -33,6 +36,12 @@
             <div class="mb-4">
                 <label for="projectURL" class="block text-gray-700 font-bold mb-2">URL</label>
                 <input type="text" id="projectURL" name="projectURL" class="border rounded px-3 py-2 w-full">
+            </div>
+
+
+            <div class="mb-4" id="formContainer">
+                <label for="personal_token" class="block text-gray-700 font-bold mb-2">Personal Access Token</label>
+                <input type="text" id="personal_token" name="personal_token" class="border rounded px-3 py-2 w-full" required>
             </div>
 
             <div class="mb-4">
@@ -53,20 +62,43 @@
     </div>
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const formContainer = document.getElementById('formContainer');
+        const toggleCheckbox = document.getElementById('toggleCheckbox');
+        const toggleText = document.getElementById('toggleText');
+        const personal_tokenInput = document.getElementById('personal_token');
+        const mainForm = document.getElementById('mainForm');
 
-  <script>
-    const toggleCheckbox = document.getElementById('toggleCheckbox');
-    const toggleLabel = document.getElementById('toggleLabel');
-    const toggleText = document.getElementById('toggleText');
-    
-    toggleCheckbox.addEventListener('change', function() {
-        if (toggleCheckbox.checked) {
-            toggleText.textContent = 'Private';
-        } else {
-            toggleText.textContent = 'Public';
+        function toggleFormRequirement() {
+            if (toggleCheckbox.checked) {
+                formContainer.style.display = 'block';
+                toggleText.textContent = 'Private';
+            } else {
+                formContainer.style.display = 'none';
+                personal_tokenInput.removeAttribute('required');
+                personal_tokenInput.value = ''; // Clear the value if switching to public
+                toggleText.textContent = 'Public';
+            }
         }
+
+        // Initialize form requirement on page load
+        toggleFormRequirement();
+
+        // Add event listener for the checkbox toggle
+        toggleCheckbox.addEventListener('change', toggleFormRequirement);
+
+        // Add form submission handler
+        mainForm.addEventListener('submit', function(event) {
+            if (toggleCheckbox.checked && !projectNameInput.value) {
+                event.preventDefault();
+                alert('The Personal Access Token field is required for private projects.');
+            }
+        });
     });
-    </script>
+</script>
+
+
  
   <script>
     const addProjectButton = document.getElementById('addProjectButton');

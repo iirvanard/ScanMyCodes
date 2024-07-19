@@ -72,22 +72,23 @@ class DatabaseManager:
         db.session.commit()
 
 class GitHandler:
-    def __init__(self, task_id, proj_url, logger):
+    def __init__(self, task_id, proj_url, logger,access_token=None):
         self.task_id = task_id
         self.proj_url = proj_url
         self.logger = logger
+        self.access_token = access_token
 
     def clone_repository(self, dir_path):
         repo_owner, repo_name = split_url(self.proj_url)
         self.logger.info(f"Cloning repository {repo_owner}/{repo_name}.  [done]")
-        with GitUtils(repo_owner=repo_owner, repo_name=repo_name, base_directory=dir_path) as GitInit:
+        with GitUtils(repo_owner=repo_owner, repo_name=repo_name, base_directory=dir_path,github_token=self.access_token) as GitInit:
             GitInit.clone_all_branches()
             default_branch = GitInit.get_default_branch()
             all_branches = GitInit.get_github_branches()
         return default_branch, all_branches
 
-    def add_repository_to_db(self, default_branch, dir_path, access_token):
-        repo = GitRepository(repo_url=self.proj_url, access_token=access_token, default_branch=default_branch, project_id=self.task_id, path_=dir_path)
+    def add_repository_to_db(self, default_branch, dir_path):
+        repo = GitRepository(repo_url=self.proj_url, access_token=self.access_token, default_branch=default_branch, project_id=self.task_id, path_=dir_path)
         try:
             with db.session.begin_nested():
                 db.session.add(repo)
@@ -129,8 +130,8 @@ def add(task_id, proj_url, log_id, proj_name, access_token=None):
             return
         
         dir_path = os.path.join(app.config['STATIC_FOLDER_1'], "repository", uuid.UUID(task_id).hex)
-        git_handler = GitHandler(task_id, proj_url, logger)
-        default_branch, all_branches = git_handler.clone_repository(dir_path)
+        git_handler = GitHandler(task_id, proj_url, logger,access_token=access_token)
+        default_branch, all_branches = git_handler.clone_repository(dir_path,access_token=access_token)
 
         project_model.fetched_at = datetime.now()
         project_model.fetch_status = 'success'

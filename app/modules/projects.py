@@ -48,7 +48,7 @@ def add():
     project_name = request.form.get('projectName')
     project_url = request.form.get('projectURL')
     description = request.form.get('description')
-    access_token = request.form.get('accessToken')  # Diambil dari form
+    access_token = request.form.get('personal_token')  # Diambil dari form
     result = add_2_database.delay(current_user.username, project_name, project_url, description, access_token)
     
     # Menunggu sampai tugas selesai

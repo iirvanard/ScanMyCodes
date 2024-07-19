@@ -73,7 +73,8 @@ class GitUtils:
         clone_dir = os.path.join(self.base_directory, branch_name)
 
         try:
-            Repo.clone_from(self.repo_url,
+            github_url = self.repo_url.replace('https://', f'https://{self.github_token}@')
+            Repo.clone_from(github_url,
                             clone_dir,
                             branch=branch_name,
                             depth=1)
@@ -140,15 +141,21 @@ class GitUtils:
             raise ValueError(f"Failed to pull branch '{branch_name}': {e}")
 
     def get_latest_commit_sha(self, branch):
+        headers = {
+            "Authorization": f"token {self.github_token}"
+        } if self.github_token else {}
         url = f"{self.GITHUB_API_BASE_URL}/repos/{self.repo_owner}/{self.repo_name}/commits/{branch}"
-        response = requests.get(url)
+        response = requests.get(url,headers=headers)
         response.raise_for_status()
         commit_info = response.json()
         return commit_info['sha']
 
     def get_default_branch(self):
+        headers = {
+            "Authorization": f"token {self.github_token}"
+        } if self.github_token else {}
         url = f"{self.GITHUB_API_BASE_URL}/repos/{self.repo_owner}/{self.repo_name}"
-        response = requests.get(url)
+        response = requests.get(url,headers=headers)
         response.raise_for_status()
         repo_info = response.json()
         return repo_info['default_branch']
