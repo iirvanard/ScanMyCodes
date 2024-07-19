@@ -23,4 +23,4 @@ celery -A app:celery worker --loglevel=info --detach
 sudo systemctl restart scanmycodes
 
 
-# echo "Deployment finished!"
+echo "Deployment finished!"
