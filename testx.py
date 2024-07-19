@@ -137,3 +137,5 @@ def parse_github_url(url: str) -> GithubUrl:
 
 if __name__ == "__main__":
     print(parse_github_url("https://github.com/iirvanard/nafan"))
+
+    #test
