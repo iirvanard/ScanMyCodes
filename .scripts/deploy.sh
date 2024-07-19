@@ -23,12 +23,11 @@ else
 fi
 
 # Mengaktifkan virtual environment
-source source tugas_akhir/venv/bin/activate
+source venv/bin/activate
 
 # Menjalankan Celery worker
 echo "Menjalankan Celery worker..."
-celery -A app:celery worker --loglevel=info --detach
-
+celery -A app:celery worker --loglevel=info 
 sudo systemctl restart scanmycodes
 
 
