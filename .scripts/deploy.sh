@@ -14,10 +14,19 @@ git pull origin dev
 
 # restarting the celery 
 
-sudo pkill -9 -f 'celery worker'
+# Memeriksa apakah ada proses Celery worker yang berjalan
+if pgrep -f 'celery worker' > /dev/null; then
+    echo "Celery worker ditemukan. Menghentikan proses yang ada..."
+    sudo pkill -9 -f 'celery worker'
+else
+    echo "Tidak ada Celery worker yang berjalan."
+fi
 
+# Mengaktifkan virtual environment
 source source tugas_akhir/venv/bin/activate
 
+# Menjalankan Celery worker
+echo "Menjalankan Celery worker..."
 celery -A app:celery worker --loglevel=info --detach
 
 sudo systemctl restart scanmycodes
