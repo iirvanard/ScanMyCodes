@@ -14,11 +14,11 @@ git pull origin dev
 
 # restarting the celery 
 
-# sudo pkill -9 -f 'celery worker'
+sudo pkill -9 -f 'celery worker'
 
-# source source tugas_akhir/venv/bin/activate
+source source tugas_akhir/venv/bin/activate
 
-# celery -A app:celery worker --loglevel=info --detach
+celery -A app:celery worker --loglevel=info --detach
 
 sudo systemctl restart scanmycodes
 
