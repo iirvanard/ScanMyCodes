@@ -1,12 +1,26 @@
 #!/bin/bash
 set -e
-
 echo "Deployment started ..."
 
 git pull origin dev
 
-docker compose build 
+# for docker
+# docker compose build 
 
-docker compose up -d
+# docker compose up -d
 
-echo "Deployment finished!"
+
+# native flask
+
+# restarting the celery 
+
+sudo pkill -9 -f 'celery worker'
+
+source source tugas_akhir/venv/bin/activate
+
+celery -A app:celery worker --loglevel=info --detach
+
+sudo systemctl restart scanmycodes
+
+
+# echo "Deployment finished!"
