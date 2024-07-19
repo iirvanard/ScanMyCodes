@@ -12,6 +12,7 @@ services:
     image: redis
     ports:
       - "6379:6379"
+    stop_grace_period: 5s
 
   postgres:
     image: postgres

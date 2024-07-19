@@ -14,123 +14,150 @@ class GitError(Exception):
     def __init__(self, message):
         self.message = message
 
-formatter = logging.Formatter('%(asctime)s - %(levelname)s: %(message)s')
+class LoggerSetup:
+    def __init__(self, task_id, proj_name, user):
+        self.task_id = task_id
+        self.proj_name = proj_name
+        self.user = user
+        self.logger = logging.getLogger(task_id)
+        self.log_file_path = None
+        self.setup_logger()
 
-def setup_logger(task_id, proj_name, user):
-    """Set up logger for the given task."""
-    logger = logging.getLogger(task_id)  # Use task_id as logger name to avoid conflicts
-    logger.setLevel(logging.INFO)
+    def setup_logger(self):
+        formatter = logging.Formatter('%(asctime)s - %(levelname)s: %(message)s')
+        self.logger.setLevel(logging.INFO)
 
-    dir_path = os.path.join(app.config['STATIC_FOLDER_1'], "log")
-    os.makedirs(dir_path, exist_ok=True)
-    
-    log_file_path = os.path.join(dir_path, f"{uuid.uuid4().hex}.log")
-    
-    fh = logging.FileHandler(log_file_path)
-    fh.setFormatter(formatter)  # Apply the global formatter
-    logger.addHandler(fh)
-    
-    logger.info(f"Task {task_id} started for project {proj_name} by user {user}.  [done]")
+        dir_path = os.path.join(app.config['STATIC_FOLDER_1'], "log")
+        os.makedirs(dir_path, exist_ok=True)
+        
+        self.log_file_path = os.path.join(dir_path, f"{uuid.uuid4().hex}.log")
+        
+        fh = logging.FileHandler(self.log_file_path)
+        fh.setFormatter(formatter)
+        self.logger.addHandler(fh)
+        
+        self.logger.info(f"Task {self.task_id} started for project {self.proj_name} by user {self.user}.  [done]")
 
-    return logger, log_file_path
+    def get_logger(self):
+        return self.logger, self.log_file_path
+
+class DatabaseManager:
+    @staticmethod
+    def add_project(task_id, user, proj_name, description):
+        project_model = Project(project_id=task_id, username=user, project_name=proj_name, description=description)
+        try:
+            with db.session.begin_nested():
+                db.session.add(project_model)
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            project_model = Project.query.filter_by(project_id=task_id).first()
+        return project_model
+
+    @staticmethod
+    def add_project_log(task_id, log_file_path):
+        project_log = ProjectLog(project_id=task_id, type="analyze", status="on progress", path_=log_file_path)
+        with db.session.begin_nested():
+            db.session.add(project_log)
+        db.session.commit()
+        return project_log
+
+    @staticmethod
+    def update_project_status(project_model, status, fetched_at=None, analyze_at=None):
+        project_model.analyze_status = status
+        if fetched_at:
+            project_model.fetched_at = fetched_at
+        if analyze_at:
+            project_model.analyze_at = analyze_at
+        db.session.commit()
+
+class GitHandler:
+    def __init__(self, task_id, proj_url, logger):
+        self.task_id = task_id
+        self.proj_url = proj_url
+        self.logger = logger
+
+    def clone_repository(self, dir_path):
+        repo_owner, repo_name = split_url(self.proj_url)
+        self.logger.info(f"Cloning repository {repo_owner}/{repo_name}.  [done]")
+        with GitUtils(repo_owner=repo_owner, repo_name=repo_name, base_directory=dir_path) as GitInit:
+            GitInit.clone_all_branches()
+            default_branch = GitInit.get_default_branch()
+            all_branches = GitInit.get_github_branches()
+        return default_branch, all_branches
+
+    def add_repository_to_db(self, default_branch, dir_path, access_token):
+        repo = GitRepository(repo_url=self.proj_url, access_token=access_token, default_branch=default_branch, project_id=self.task_id, path_=dir_path)
+        try:
+            with db.session.begin_nested():
+                db.session.add(repo)
+            db.session.commit()
+            self.logger.info(f"Repository {self.proj_url} added to the database. [done]")
+            return repo
+        except IntegrityError:
+            db.session.rollback()
+            self.logger.warning(f"Repository {self.proj_url} already exists in the database. [failed]")
+            return None
 
 @celery.task(bind=True, autoretry_for=(Exception,), retry_kwargs={'max_retries': 3})
 def add_2_database(self, user, proj_name, proj_url, description=None, access_token=None):
     task_id = celery.current_task.request.id
     
-    logger, log_file_path = setup_logger(task_id, proj_name, user)
+    logger_setup = LoggerSetup(task_id, proj_name, user)
+    logger, log_file_path = logger_setup.get_logger()
 
-    project_model = Project(project_id=task_id, username=user, project_name=proj_name, description=description)
+    project_model = DatabaseManager.add_project(task_id, user, proj_name, description)
+    project_log = DatabaseManager.add_project_log(task_id, log_file_path)
 
+    return add.delay(task_id, proj_url, project_log.id, proj_name, access_token)
+
+@celery.task()
+def add(task_id, proj_url, log_id, proj_name, access_token=None):
     try:
-        with db.session.begin_nested():
-            db.session.add(project_model)
-        db.session.commit()
-    except IntegrityError:
-        db.session.rollback()
-        project_model = Project.query.filter_by(project_id=task_id).first()
+        project_log = ProjectLog.query.filter_by(id=log_id).first()
 
-    project_log = ProjectLog(project_id=task_id, type="analyze", status="on progress", path_=log_file_path)
+        logger = logging.getLogger(task_id)
+        if not logger.handlers:
+            fh = logging.FileHandler(project_log.path_)
+            fh.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s: %(message)s'))
+            logger.addHandler(fh)
+            logger.setLevel(logging.INFO)
     
-    with db.session.begin_nested():
-        db.session.add(project_log)
-    db.session.commit()
-
-    try:
-            project_log = ProjectLog.query.filter_by(id=project_log.id).first()
-
-            # Reinitialize logger with the existing log file path
-            logger = logging.getLogger(task_id)
-            if not logger.handlers:
-                fh = logging.FileHandler(project_log.path_)
-                fh.setFormatter(formatter)
-                logger.addHandler(fh)
-                logger.setLevel(logging.INFO)
+        project_model = Project.query.filter_by(project_id=task_id).first()
+        if not project_model:
+            logger.error(f"Project with task ID {task_id} not found in the database.  [failed]")
+            return
         
-            project_model = Project.query.filter_by(project_id=task_id).first()
-            if not project_model:
-                logger.error(f"Project with task ID {task_id} not found in the database.  [failed]")
-                return
-            
-            try:
-                dir_path = os.path.join(app.config['STATIC_FOLDER_1'], "repository", uuid.UUID(task_id).hex)
-                repo_owner, repo_name = split_url(proj_url)
-                logger.info(f"Cloning repository {repo_owner}/{repo_name}.  [done]")
+        dir_path = os.path.join(app.config['STATIC_FOLDER_1'], "repository", uuid.UUID(task_id).hex)
+        git_handler = GitHandler(task_id, proj_url, logger)
+        default_branch, all_branches = git_handler.clone_repository(dir_path)
 
-                with GitUtils(repo_owner=repo_owner, repo_name=repo_name, base_directory=dir_path) as GitInit:
-                    GitInit.clone_all_branches()
-                    default_branch = GitInit.get_default_branch()
-                    all_branches = GitInit.get_github_branches()
-                    project_model.fetched_at = datetime.now()
-                    project_model.fetch_status = 'success'
-                    db.session.commit()
-                            
-            except Exception as e:
-                project_model.fetch_status = 'failed'
-                db.session.commit()
-                raise ValueError(e)
+        project_model.fetched_at = datetime.now()
+        project_model.fetch_status = 'success'
+        db.session.commit()
 
-            try:
-                # Add repository to the database
-                repo = add_to_database_repository(task_id, proj_url, default_branch, dir_path, logger, access_token)
+        repo = git_handler.add_repository_to_db(default_branch, dir_path, access_token)
+        if repo:
+            cloning(task_id, all_branches, repo.id, logger)
+            scanning(task_id, all_branches, dir_path, logger)
 
-                cloning(task_id, all_branches, repo.id, logger)
-                # Scan repository for analysis
-                scanning(task_id, all_branches, dir_path, logger)
+            DatabaseManager.update_project_status(project_model, 'success', analyze_at=datetime.now())
+            project_log.status = 'success'
+            db.session.commit()
+            logger.info(f"Project {proj_name} analyzed successfully. [done]")
+        else:
+            raise ValueError("Failed to add repository to the database.")
 
-                # Update project status in the database
-                project_model.analyze_status = 'success'
-                project_log.status = 'success'
-                project_model.analyze_at = datetime.now()
-                db.session.commit()
-                logger.info(f"Project {proj_name} analyzed successfully. [done]")
-            
-            except Exception as e:
-                db.session.rollback()
-                raise ValueError(e)
-            
     except Exception as e:
         if project_model:
-            project_model.analyze_status = 'failed'
+            DatabaseManager.update_project_status(project_model, 'failed')
         if project_log:
             project_log.status = 'failed'
-        db.session.commit()   
+        db.session.commit()
+        
         logger.error(f'{e} [failed]')
 
-
-
-def add_to_database_repository(task_id, proj_url, default_branch, dir_path, logger, access_token=None):
-    repo = GitRepository(repo_url=proj_url, access_token=access_token, default_branch=default_branch, project_id=task_id, path_=dir_path)
-    try:
-        with db.session.begin_nested():
-            db.session.add(repo)
-        db.session.commit()
-        logger.info(f"Repository {proj_url} added to the database. [done]")
-        return repo
-    except IntegrityError:
-        db.session.rollback()
-        logger.warning(f"Repository {proj_url} already exists in the database. [failed]")
-        return None
+    return "done"
 
 def cloning(task_id, all_branches, repo_id, logger):
     try:

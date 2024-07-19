@@ -57,7 +57,6 @@ def add():
         time.sleep(1)
     
     
-    
     return redirect(url_for('projects.index') + str(result.id))
 
 @blueprint.route("/update", methods=["POST"])
