@@ -8,8 +8,7 @@ class CodeAnalyzer:
     def __init__(self, model=None):
         openai.api_key = os.getenv('OPENAI_KEY')
         openai.base_url = os.getenv('OPENAI_BASE_URL')
-        # openai.base_url = "asdasd"
-        self.model = model or "pai-001"
+        self.model = os.getenv('OPENAI_MODEL')
 
     def analyze_code_vulnerabilities(self, code, language=None):
 

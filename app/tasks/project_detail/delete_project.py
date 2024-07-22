@@ -3,7 +3,7 @@ import uuid
 import logging
 from app import celery, app
 from app.extensions import db
-from app.models import Project, AnalyzeIssue, GitBranch, ProjectLog
+from app.models import Project, AnalyzeIssue, GitBranch, ProjectLog,OpenaiProject
 from app.models.git_repository import GitRepository
 
 @celery.task()
@@ -29,11 +29,17 @@ def delete_project_task(project_id):
             except Exception as e:
                 logger.error(f"Error removing file {project_file}: {e}")
 
+        # Delete openai_project
+        OpenaiProject.query.filter_by(project_id=project_id).delete()
+        db.session.commit()
+        logger.info(f"Deleted analyze issues for project {project_id}.")
+        
         # Delete AnalyzeIssues
         AnalyzeIssue.query.filter_by(project_id=project_id).delete()
         db.session.commit()
         logger.info(f"Deleted analyze issues for project {project_id}.")
         
+
         # Delete GitBranches
         GitBranch.query.filter_by(project_id=project_id).delete()
         db.session.commit()

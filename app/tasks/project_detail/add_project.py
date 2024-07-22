@@ -6,8 +6,7 @@ from datetime import datetime
 from sqlalchemy.exc import IntegrityError
 from app import celery, app
 from app.extensions import db
-from app.models import Project,  ProjectLog
-from app.models.git_repository import GitRepository
+from app.models import Project,  ProjectLog,OpenaiProject,GitRepository
 from app.utils.git_core import GitUtils
 from app.utils.utils import split_url
 
@@ -49,6 +48,14 @@ class DatabaseManager:
             project_model.analyze_at = analyze_at
         db.session.commit()
 
+    @staticmethod
+    def add_project_openai(task_id, openai_model,openai_key,openai_url):
+        project_openai = OpenaiProject(project_id=task_id, openai_model=openai_model,openai_key=openai_key,openai_url=openai_url)
+        with db.session.begin_nested():
+            db.session.add(project_openai)
+        db.session.commit()
+        return project_openai
+    
 class GitHandler:
     def __init__(self, task_id, proj_url, logger,privacy, access_token=None):
         self.task_id = task_id
@@ -90,11 +97,13 @@ def add_2_database(self, user,privacy, proj_name, proj_url, description=None, ac
     task_id = celery.current_task.request.id
     
     logger_setup = LoggerSetup(task_id, proj_name, user)
-    __, log_file_path = logger_setup.get_logger()
+    _, log_file_path = logger_setup.get_logger()
 
-    _ = DatabaseManager.add_project(task_id, user, proj_name, description)
+    __ = DatabaseManager.add_project(task_id, user, proj_name, description)
     project_log = DatabaseManager.add_project_log(task_id, log_file_path)
-
+    ___ = DatabaseManager.add_project_openai(task_id=task_id,openai_model=os.getenv('OPENAI_MODEL'),openai_key=os.getenv('OPENAI_KEY'),openai_url=os.getenv('OPENAI_BASE_URL'))
+   
+   
     return add.delay(task_id=task_id,privacy=privacy, proj_url=proj_url, log_id=project_log.id, proj_name=proj_name, access_token =access_token)
 
 @celery.task()

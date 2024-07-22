@@ -1,10 +1,10 @@
 from functools import wraps
 import os
-from flask import Blueprint, abort, jsonify, redirect, render_template, url_for
+from flask import Blueprint, abort, jsonify, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
-from app.models import Project, GitBranch, GitRepository, AnalyzeIssue,ProjectLog
+from app.models import Project, GitBranch, GitRepository, OpenaiProject,AnalyzeIssue,ProjectLog
 from uuid import UUID
-from app.tasks.project_detail import delete_project_task
+from app.tasks.project_detail import update_project_task,delete_project_task
 import json
 
 from celery.result import AsyncResult
@@ -97,6 +97,7 @@ def check_idproject(func):
 @check_idproject
 def index(idproject):
     project = get_project_from_id(idproject)
+
     return redirect(url_for('project.analysis', idproject=project.project_id))
 
 
@@ -185,12 +186,13 @@ def log_by_id(idproject,logid):
 @check_idproject
 def settings(idproject):
     project = get_project_from_id(idproject)
-    repo_url = GitRepository.query.filter_by(project_id=str(UUID(idproject))).first().repo_url if GitRepository.query.filter_by(project_id=str(UUID(idproject))).first() else None
-
+    repo = GitRepository.query.filter_by(project_id=str(UUID(idproject))).first()
+    openai_data = OpenaiProject.query.filter_by(project_id=str(UUID(idproject))).first()
     return render_template(
         '/project_detail/settings/index.html',
         project=project,
-        repo_url=repo_url
+        repository=repo,
+        openai=openai_data
     )
 
 
@@ -217,4 +219,18 @@ def delete_project(idproject):
 @blueprint.route("/update", methods=["POST"])
 @check_idproject
 def update_project(idproject):
-    return "update"
+    # Start the task
+    task = update_project_task.delay(project_id=idproject,requests=(request.form))
+
+    # Poll for task completion
+    while True:
+        result = AsyncResult(task.id, app=celery)
+        if result.state == 'SUCCESS':
+            # Task succeeded, redirect
+            return redirect(request.referrer)
+        elif result.state == 'FAILURE':
+            # Task failed, handle failure
+            return jsonify({'error': 'Task failed'}), 500
+        else:
+            # Task is still pending or in progress, wait a bit and check again
+            time.sleep(1)

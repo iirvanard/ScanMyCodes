@@ -1,80 +1,70 @@
 <div class="flex-1 max-w-full divide-y divide-gray-200 border border-gray-300" id="content-advanced" hidden>
 {% set ChangePrivacy %}
   <p class="text-base mb-4">If your repository is already public, adjusting the privacy settings is not necessary, as access to the repository is automatically provided through these tools.</p>
+  <form action="{{ url_for('project.update_project', idproject=project.project_id) }}" method="POST">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    <input type="hidden" name="privacy" value="true"/>
+
   <button class="w-full bg-white hover:bg-gray-800 text-gray-800 hover:text-white font-semibold py-2 px-4 border border-gray-400 hover:border-gray-800 rounded shadow">
-    I want to make this repository public
-</button>  
-{% endset %}
-
-{% set openai %}
-<form class="w-full">
-
-<label for="inputField" class=" text-gray-700 font-semibold ">models</label>
-
-<select name="color" onchange="showInputField(this.value)" class="w-full p-2 border border-gray-300 rounded mb-4  focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-transparent">
-    <option value="red">Red</option>
-    <option value="blue">Blue</option>
-    <option value="others">Others</option>
-</select>
-
-<div class="hidden" id="ModelsInput" >
-    <label for="inputField" class=" text-gray-700 font-semibold mb-2">openai url</label>
-
-    <input type="text" class="w-full p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-transparent" placeholder="Name" >
-    <label for="inputField" class=" text-gray-700 font-semibold mb-2">openai token</label>
-
-    <input type="text" class="w-full p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-transparent" placeholder="Name" >
-</div>
-    <button class="w-full bg-white hover:bg-gray-800 text-gray-800 hover:text-white font-semibold py-2 px-4 border border-gray-400 hover:border-gray-800 rounded shadow">
-        I want to make this repository public
-      </button>  
-      <button class="mt-3">reset to default</button>
-
+    I want to make this repository {{ "private" if not repository.privacy else "public" }}
+</button>
 </form>
-  
-
 {% endset %}
 
-{% set personal_token %}
-<form >
+{% set openai_content %}
+<form action="{{ url_for('project.update_project', idproject=project.project_id) }}" class="w-full" method="POST">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
 
-<label class="font-medium block mb-1 mt-6 text-gray-700" for="password">
+  <label for="openai_forms" class="text-gray-700 font-semibold">Models</label>
+  <select id="openai_forms" onchange="showInputField(this.value)" class="w-full p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-transparent" name="openai_forms">
+    <option value="pai-001" {{ 'selected' if openai.openai_model == 'pai-001' else '' }}>pai-001</option>
+    <option value="others" {{ 'selected' if openai.openai_model != 'pai-001' else '' }}>Others</option>
+  </select>
+
+  <div id="ModelsInput" class="{{ '' if openai.openai_model != 'pai-001' else 'hidden' }}">
+    <label for="openai_model" class="text-gray-700 font-semibold mb-2">OpenAI Model</label>
+    <input id="openai_model" type="text" class="w-full p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-transparent" placeholder="Name" name="openai_model" required>
+
+    <label for="openai_token" class="text-gray-700 font-semibold mb-2">OpenAI Token</label>
+    <input id="openai_token" type="text" class="w-full p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-transparent" placeholder="Token" name="openai_token" required>
+
+    <label for="openai_url" class="text-gray-700 font-semibold mb-2">OpenAI URL</label>
+    <input id="openai_url" type="text" class="w-full p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-transparent" placeholder="URL" name="openai_url" required>
+  </div>
+
+  <button class="w-full bg-white hover:bg-gray-800 text-gray-800 hover:text-white font-semibold py-2 px-4 border border-gray-400 hover:border-gray-800 rounded shadow">
+    Change
+  </button>
+</form>
+{% endset %}
+
+
+{% set personal_token %}
+<form action="{{ url_for('project.update_project', idproject=project.project_id) }}" method="POST">
+  <label class="font-medium block mb-1 mt-6 text-gray-700" for="password">
     Personal Access Token
   </label>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+
   <div class="relative w-full mb-8">
     <div class="absolute inset-y-0 right-0 flex items-center px-2 ">
       <input class="hidden js-password-toggle" id="toggle" type="checkbox" />
       <label class="bg-gray-300 hover:bg-gray-400 rounded px-2 py-1 text-sm text-gray-600 font-mono cursor-pointer js-password-label" for="toggle">show</label>
     </div>
-    <input class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-transparent js-password" id="personal_token" type="password" autocomplete="off"
-    />
+    <input 
+    class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-transparent js-password" 
+    id="personal_token" 
+    value="{{ repository.access_token if repository.access_token else '' }}" 
+    type="password" name="personal_token"
+    autocomplete="off" 
+/>
+
+
   </div>
   <button class="w-full bg-white hover:bg-gray-800 text-gray-800 hover:text-white font-semibold py-2 px-4 border border-gray-400 hover:border-gray-800 rounded shadow">
     I want to make this repository public
   </button>  
   </form>
-
-{% endset %}
-
-{% set personal_token %}
-<form >
-
-<label class="font-medium block mb-1 mt-6 text-gray-700" for="password">
-    Personal Access Token
-  </label>
-  <div class="relative w-full mb-8">
-    <div class="absolute inset-y-0 right-0 flex items-center px-2 ">
-      <input class="hidden js-password-toggle" id="toggle" type="checkbox" />
-      <label class="bg-gray-300 hover:bg-gray-400 rounded px-2 py-1 text-sm text-gray-600 font-mono cursor-pointer js-password-label" for="toggle">show</label>
-    </div>
-    <input class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-transparent js-password" id="personal_token" type="password" autocomplete="off"
-    />
-  </div>
-  <button class="w-full bg-white hover:bg-gray-800 text-gray-800 hover:text-white font-semibold py-2 px-4 border border-gray-400 hover:border-gray-800 rounded shadow">
-    I want to make this repository public
-  </button>  
-  </form>
-
 {% endset %}
 
 
@@ -84,8 +74,6 @@
     <p class="text-red-600  text-sm border border-red-600 p-4 rounded-md bg-red-50 text-justify">
         This will permanently delete the iirvanard/tugas_akhir repository, wiki, issues, comments, packages, secrets, workflow runs, and remove all collaborator associations.
       </p>
-      
-
         <input type="hidden" name="_method" value="DELETE" />
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
         <button class="w-full mt-4 bg-white hover:bg-gray-800 text-gray-800 hover:text-white font-semibold py-2 px-4 border border-gray-400 hover:border-gray-800 rounded shadow">
@@ -105,7 +93,7 @@
         <div class="m-4 flex justify-between items-center">
             <div>
                 <strong>Change project privacy</strong>
-                <p>This repository is currently private.</p>
+                <p>This repository is currently {{ "private" if repository.privacy else "public" }}.</p>
             </div>
             {% with popup_title=" Change project privacy  ", popup_id='privacy', popup_content=ChangePrivacy %}
                 <button onclick="openPopup('{{ popup_id }}')" class="px-2 py-1 text-sm bg-red-500 text-white rounded hover:bg-white hover:text-red-500 border border-red-500">Change</button>
@@ -123,7 +111,7 @@
               <strong> Change Openai Api Key </strong>
               <p> If your repository is public, you do not need to add it to your new personal access token. </p >
           </div>
-          {% with popup_title="Change openai api key ", popup_id='openai', popup_content=openai %}
+          {% with popup_title="Change openai api key ", popup_id='openai', popup_content=openai_content %}
           <button onclick="openPopup('{{ popup_id }}')" class="px-2 py-1 text-sm bg-red-500 text-white rounded hover:bg-white hover:text-red-500 border border-red-500">Change</button>
               {% include "widgets/popup.html" %}
           {% endwith %}
@@ -140,8 +128,11 @@
                     <p> If your repository is public, you do not need to add it to your new personal access token. </p >
                 </div>
                 {% with popup_title="Change personal access token", popup_id='personal_token', popup_content= personal_token%}
-                <button onclick="openPopup('{{ popup_id }}')" class="px-2 py-1 text-sm bg-red-500 text-white rounded hover:bg-white hover:text-red-500 border border-red-500">Change</button>
-                    {% include "widgets/popup.html" %}
+                <button onclick="openPopup('{{ popup_id }}')" class="px-2 py-1 text-sm bg-red-500 text-white rounded hover:bg-white hover:text-red-500 border border-red-500" {{ 'disabled' if not repository.privacy }}>
+                  Change
+              </button>
+             
+                                  {% include "widgets/popup.html" %}
                 {% endwith %}
             </div>
         </li>
@@ -151,7 +142,7 @@
             <div class="m-4 flex justify-between items-center">
                 <div>
                     <strong> Delete this repository </strong>
-                    <p> Once you delete a repository, there is no going back. Please be certain. .</p >
+                    <p> Once you delete a repository, there is no going back. Please be certain.</p >
                 </div>
                 {% with popup_title="Delete this repository", popup_id='delete_repository', popup_content=delete_component %}
                 <button onclick="openPopup('{{ popup_id }}')" class="px-2 py-1 text-sm bg-red-500 text-white rounded hover:bg-white hover:text-red-500 border border-red-500">delete</button>
