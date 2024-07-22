@@ -13,8 +13,8 @@ class AnalyzeIssue(db.Model):
                            nullable=False)
     branch = db.Column(db.String, nullable=False)
     path_ = db.Column(db.String, nullable=False)
-    update_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    update_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
+    created_at = db.Column(db.DateTime, default=datetime.now)
     
     @validates('branch')
     def validate_branch(self, key, branch):

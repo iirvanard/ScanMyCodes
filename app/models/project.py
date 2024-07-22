@@ -15,15 +15,15 @@ class Project(db.Model):
                          nullable=False)
     fetch_status = db.Column(db.String, nullable=False, default='in_progress')
     analyze_status = db.Column(db.String, nullable=False, default='in_progress')
-    analysis_request_at = db.Column(db.Date, default=datetime.utcnow)
+    analysis_request_at = db.Column(db.Date, default=datetime.now)
     description = db.Column(db.Text, nullable=True)
     project_name = db.Column(db.String(255), nullable=False)
     fetched_at = db.Column(db.Date, nullable=True)
     analyze_at = db.Column(db.Date, nullable=True)
     source = db.Column(db.String(50), nullable=False, default="git")
     configuration = db.Column(db.String, nullable=True)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
+    created_at = db.Column(db.DateTime, default=datetime.now)
    
     branches = db.relationship('GitBranch', back_populates='project')
    

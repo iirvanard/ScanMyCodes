@@ -18,8 +18,8 @@ class GitBranch(db.Model):
     
     # Menambahkan kolom last_analyze_at
     last_analyze_at = db.Column(db.DateTime, nullable=True)
-    update_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    update_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
+    created_at = db.Column(db.DateTime, default=datetime.now)
     
     @property
     def last_analyze_at(self):

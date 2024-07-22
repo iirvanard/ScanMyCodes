@@ -1,9 +1,16 @@
 from functools import wraps
-from flask import Blueprint, abort, redirect, render_template, url_for
+import os
+from flask import Blueprint, abort, jsonify, redirect, render_template, url_for
 from flask_login import current_user, login_required
 from app.models import Project, GitBranch, GitRepository, AnalyzeIssue,ProjectLog
 from uuid import UUID
+from app.tasks.project_detail import delete_project_task
 import json
+
+from celery.result import AsyncResult
+from app import celery,app
+import time
+
 
 blueprint = Blueprint('project',
                       __name__,
@@ -48,11 +55,12 @@ def check_branch(func):
 
 def marksdown(idproject, branch):
     try:
-        file_path = (AnalyzeIssue.query.filter_by(project_id=str(
+        filename = (AnalyzeIssue.query.filter_by(project_id=str(
             UUID(idproject)),
                                                   branch=branch).first()).path_
-
-        with open(file_path, encoding='utf-8') as user_file:
+        
+        dir_destination = os.path.join(app.config['STATIC_FOLDER_1'], "scan", filename)
+        with open(dir_destination, encoding='utf-8') as user_file:
             filejson = user_file.read()
 
         stats = {
@@ -155,9 +163,10 @@ def log(idproject):
 def log_by_id(idproject,logid):
     project = get_project_from_id(idproject)
     log = ProjectLog.query.filter_by(id=logid).first()
-
+    dir_path = os.path.join(app.config['STATIC_FOLDER_1'], "log")
+    log_file_path = os.path.join(dir_path, log.path_)
     try:
-        with open(log.path_, 'r') as file:
+        with open(log_file_path, 'r') as file:
             # Read the contents of the file and split into lines
             content = [line.rstrip('\n') for line in file]
     except FileNotFoundError:
@@ -176,10 +185,36 @@ def log_by_id(idproject,logid):
 @check_idproject
 def settings(idproject):
     project = get_project_from_id(idproject)
+    repo_url = GitRepository.query.filter_by(project_id=str(UUID(idproject))).first().repo_url if GitRepository.query.filter_by(project_id=str(UUID(idproject))).first() else None
+
     return render_template(
         '/project_detail/settings/index.html',
         project=project,
+        repo_url=repo_url
     )
 
 
-#api
+
+@blueprint.route("/settings/delete", methods=["POST"])
+@check_idproject
+def delete_project(idproject):
+    # Start the task
+    task = delete_project_task.delay(idproject)
+    
+    # Poll for task completion
+    while True:
+        result = AsyncResult(task.id, app=celery)
+        if result.state == 'SUCCESS':
+            # Task succeeded, redirect
+            return redirect(url_for('projects.index'))
+        elif result.state == 'FAILURE':
+            # Task failed, handle failure
+            return jsonify({'error': 'Task failed'}), 500
+        else:
+            # Task is still pending or in progress, wait a bit and check again
+            time.sleep(1)
+
+@blueprint.route("/update", methods=["POST"])
+@check_idproject
+def update_project(idproject):
+    return "update"

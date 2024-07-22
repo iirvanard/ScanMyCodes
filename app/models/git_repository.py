@@ -6,6 +6,7 @@ from sqlalchemy.dialects.postgresql import UUID
 class GitRepository(db.Model):
     __tablename__ = 'git_repository'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    privacy = db.Column(db.Boolean, nullable=False)
     access_token = db.Column(db.String, nullable=True)
     repo_url = db.Column(db.String, nullable=False)
     default_branch = db.Column(db.String(30), nullable=True)
@@ -15,5 +16,5 @@ class GitRepository(db.Model):
                            unique=True,
                            nullable=False)
     path_ = db.Column(db.String, nullable=False)
-    update_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    update_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
+    created_at = db.Column(db.DateTime, default=datetime.now)

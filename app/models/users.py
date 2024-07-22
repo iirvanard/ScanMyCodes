@@ -15,8 +15,8 @@ class User(db.Model, UserMixin):
     )
     email = db.Column(db.String(), unique=True, nullable=False)
     password = db.Column(db.String(), nullable=False)
-    update_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    update_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
+    created_at = db.Column(db.DateTime, default=datetime.now)
 
     def __repr__(self):
         return f"<User {self.username}>"

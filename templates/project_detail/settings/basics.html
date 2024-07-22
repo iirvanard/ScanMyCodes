@@ -1,0 +1,34 @@
+<div class="flex-1 max-w-full divide-y divide-gray-200 border border-gray-300" id="content-basics" hidden>
+
+<div class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase">basics</div>
+        <div class="bg-white divide-y divide-gray-200">
+            <div class="px-6 py-4 whitespace-nowrap">
+            
+                    <form action="{{ url_for('project.update_project', idproject=project.project_id) }}" method="POST">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+
+                        <div class="mb-4">
+                            <label for="projectName" class="block text-gray-700 font-bold mb-2">Project Name</label>
+                            <input type="text" id="projectName" name="projectName" class="border rounded px-3 py-2 w-full" value="{{ project.project_name }}">
+                        </div>
+                        <div class="mb-4">
+                            <label for="projectName" class="block text-gray-700 font-bold mb-2">Project URL</label>
+                            <input type="text" id="projectName" name="projectName" class="border rounded px-3 py-2 w-full"  value="{{ repo_url}}">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="description" class="block text-gray-700 font-bold mb-2">Deskripsi (opsional)</label>
+                            <textarea id="description" name="description" class="border rounded px-3 py-2 w-full" >{{ project.description}}</textarea>
+                        </div>
+            
+                        <!-- Add more form fields as needed -->
+                        <div class="flex ">
+                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                update
+                            </button>
+                        
+                        </div>
+                    </form>
+            </div>
+        </div>
+    </div>

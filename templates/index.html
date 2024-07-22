@@ -17,6 +17,23 @@
 <header class="relative">
     {% include 'nav.html' %}
 </header>
-test ubah body
+<div class="w-full max-w-sm">
+    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+    <div class="relative mt-1">
+      <input id="password" type="password" class="block w-full pr-10 text-sm border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+      <button id="togglePassword" type="button" class="absolute inset-y-0 right-0 flex items-center px-3 text-sm leading-5 text-gray-700">
+        Show
+      </button>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('togglePassword').addEventListener('click', function () {
+      const passwordInput = document.getElementById('password');
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      this.textContent = type === 'password' ? 'Show' : 'Hide';
+    });
+  </script>
 </body>
 </html>

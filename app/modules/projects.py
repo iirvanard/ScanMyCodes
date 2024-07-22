@@ -1,7 +1,7 @@
 from flask import Blueprint, redirect, request, render_template, url_for
 from app.models.project import Project
 from flask_login import current_user
-from app.tasks.projects import add_2_database  # Import Celery task
+from app.tasks.project_detail.add_project import add_2_database  # Import Celery task
 import uuid
 from flask_login import login_required
 from celery.result import AsyncResult
@@ -48,8 +48,10 @@ def add():
     project_name = request.form.get('projectName')
     project_url = request.form.get('projectURL')
     description = request.form.get('description')
-    access_token = request.form.get('personal_token')  # Diambil dari form
-    result = add_2_database.delay(current_user.username, project_name, project_url, description, access_token)
+    access_token = request.form.get('personal_token') or None
+    privacy = request.form.get('privacy') is not None
+
+    result = add_2_database.delay(user=current_user.username,privacy=privacy, proj_name=project_name,proj_url=project_url, description=description, access_token=access_token)
     
     # Menunggu sampai tugas selesai
     task_result = AsyncResult(result.id, app=celery)
@@ -59,6 +61,3 @@ def add():
     
     return redirect(url_for('projects.index') + str(result.id))
 
-@blueprint.route("/update", methods=["POST"])
-def update():
-    return "update"

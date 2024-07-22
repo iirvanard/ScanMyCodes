@@ -3,8 +3,8 @@
 {% block content %}
 {% for items in content %}
 <a href="{{ url_for('project.log', idproject=project.project_id) ~ '/' ~ items.id }}" class="md:container md:mx-auto">
-    <div class="max-w rounded overflow-hidden  bg-gray-100	">
-        <div class="m-4">
+    <div class="max-w rounded overflow-hidden  bg-gray-100 border-2  border-gray-200 ">
+        <div class="m-4 ">
             <div class="flex space-x-6">
                 <div class="type-section flex">
                     <div class="font-bold text-sm mr-1">Type:</div> 
@@ -48,8 +48,8 @@
                 <div class="text-sm">  {{ parts|join(', ') }}</div>
                 
             </div>
-            <hr>
-        </div>
+            <hr class="border-gray-300 mt-2 mb-2">
+                </div>
     </div>
 </a>
 {% endfor %}
