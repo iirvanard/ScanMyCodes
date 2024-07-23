@@ -1,26 +1,39 @@
 
 from app.extensions import db
-from app.utils.utils import run_wsl_command
-import uuid
-from datetime import datetime
-import os
-from app.models import GitRepository,OpenaiProject
-from app import celery, app
 
+from app.models import GitRepository,OpenaiProject,Project
+from app import celery
 @celery.task()
 def update_project_task(project_id, requests):
     repository = GitRepository.query.filter_by(project_id=project_id).first()
     openai = OpenaiProject.query.filter_by(project_id=project_id).first()
-    
+    project = Project.query.filter_by(project_id=project_id).first()
+
+    if project is not None:
+        project_name = requests.get('projectName')
+        if project_name and project_name != project.project_name:
+            project.project_name = project_name
+
+        project_url = requests.get('projectUrl')
+        if project_url and project_url != repository.repo_url:
+            repository.repo_url = project_url
+
+        description = requests.get('description')
+        if description and description != project.description:
+            project.description = description
+
     if (requests.get("privacy")):
         repository.privacy = not repository.privacy
-
-    if (requests.get("personal_token")):
-        if (repository.privacy):
-            repository.access_token = requests.get("personal_token")
+    
+    personal_token = requests.get('personal_token')
+    # Periksa dan update access_token jika repository privacy dan personal_token berbeda
+    if personal_token:
+        if repository.privacy:
+            if personal_token != repository.access_token:
+                repository.access_token = personal_token
         else:
-            return "privacy need to be private to set access token"
-        
+            return "Privacy needs to be set to private to set access token"
+    
 
     # Dapatkan data dari request
     openai_forms = requests.get("openai_forms")

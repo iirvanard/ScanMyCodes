@@ -5,6 +5,7 @@ from app import celery, app
 from app.extensions import db
 from app.models import Project, AnalyzeIssue, GitBranch, ProjectLog,OpenaiProject
 from app.models.git_repository import GitRepository
+import shutil
 
 @celery.task()
 def delete_project_task(project_id):
@@ -80,7 +81,7 @@ def delete_project_task(project_id):
         # Remove project files
         project_dir = os.path.join(app.config['STATIC_FOLDER_1'], "repository", uuid.UUID(project_id).hex)
         if os.path.exists(project_dir):
-            os.system(f'rm -rf {project_dir}')
+            shutil.rmtree(project_dir)
             logger.info(f"Deleted project directory {project_dir}.")
 
         logger.info(f"Project {project_id} deletion completed successfully.")
