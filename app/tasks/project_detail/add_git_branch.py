@@ -2,7 +2,7 @@
 from app.extensions import db
 from app.models import GitBranch
 
-def cloning(task_id, all_branches, repo_id, logger):
+def addGitBranch(task_id, all_branches, repo_id, logger):
     try:
         with db.session.begin_nested():
             for branch_name in all_branches:

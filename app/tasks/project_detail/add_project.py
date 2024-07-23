@@ -6,14 +6,13 @@ from datetime import datetime
 from sqlalchemy.exc import IntegrityError
 from app import celery, app
 from app.extensions import db
-from app.models import Project,  ProjectLog,OpenaiProject,GitRepository
-from app.utils.git_core import GitUtils
-from app.utils.utils import split_url
+from app.models import Project, ProjectLog,OpenaiProject,GitRepository
 
-from .cloning_project import cloning
+
+from .add_git_branch import addGitBranch
 from .scanning_project import scanning
 from .logger import LoggerSetup
-
+from .git_handler import GitHandler
 class GitError(Exception):
     def __init__(self, message):
         self.message = message
@@ -55,42 +54,6 @@ class DatabaseManager:
             db.session.add(project_openai)
         db.session.commit()
         return project_openai
-    
-class GitHandler:
-    def __init__(self, task_id, proj_url, logger,privacy, access_token=None):
-        self.task_id = task_id
-        self.proj_url = proj_url
-        self.logger = logger
-        self.privacy = privacy
-        self.access_token = access_token
-
-    def clone_repository(self, dir_path):
-        repo_owner, repo_name = split_url(self.proj_url)
-        self.logger.info(f"Cloning repository {repo_owner}/{repo_name}.")
-        
-        # Check if access_token is None and handle accordingly
-        github_token = self.access_token if self.access_token else None
-
-        with GitUtils(repo_owner=repo_owner, repo_name=repo_name, base_directory=dir_path, github_token=github_token) as GitInit:
-            GitInit.clone_all_branches()
-            default_branch = GitInit.get_default_branch()
-            all_branches = GitInit.get_github_branches()
-        
-        self.logger.info(f"Cloning repository {repo_owner}/{repo_name} [done]")
-        return default_branch, all_branches
-
-    def add_repository_to_db(self, default_branch, dir_path):
-        repo = GitRepository(repo_url=self.proj_url,privacy=self.privacy, access_token=self.access_token, default_branch=default_branch, project_id=self.task_id, path_=dir_path)
-        # try:
-        with db.session.begin_nested():
-            db.session.add(repo)
-        db.session.commit()
-        self.logger.info(f"Repository {self.proj_url} added to the database. [done]")
-        return repo
-        # except IntegrityError:
-        #     db.session.rollback()
-        #     self.logger.warning(f"Repository {self.proj_url} already exists in the database. [failed]")
-        #     return None
 
 @celery.task(bind=True, autoretry_for=(Exception,), retry_kwargs={'max_retries': 3})
 def add_2_database(self, user,privacy, proj_name, proj_url, description=None, access_token=None):
@@ -134,7 +97,7 @@ def add(task_id, privacy,proj_url, log_id, proj_name, access_token=None):
 
         repo = git_handler.add_repository_to_db(default_branch, dir_path)
         if repo:
-            cloning(task_id, all_branches, repo.id, logger)
+            addGitBranch(task_id, all_branches, repo.id, logger)
             scanning(task_id, all_branches, dir_path, logger)
 
             DatabaseManager.update_project_status(project_model, 'success', analyze_at=datetime.now())

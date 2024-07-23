@@ -4,7 +4,7 @@ from flask import Blueprint, abort, jsonify, redirect, render_template, request,
 from flask_login import current_user, login_required
 from app.models import Project, GitBranch, GitRepository, OpenaiProject,AnalyzeIssue,ProjectLog
 from uuid import UUID
-from app.tasks.project_detail import update_project_task,delete_project_task
+from app.tasks.project_detail import updateProject,delete_project_task
 import json
 
 from celery.result import AsyncResult
@@ -220,7 +220,7 @@ def delete_project(idproject):
 @check_idproject
 def update_project(idproject):
     # Start the task
-    task = update_project_task.delay(project_id=idproject,requests=(request.form))
+    task = updateProject.delay(project_id=idproject,requests=(request.form))
 
     # Poll for task completion
     while True:

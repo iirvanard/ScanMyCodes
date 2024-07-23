@@ -22,7 +22,7 @@ def index():
 
     # Sorting projects by creation date in descending order
     query = query.order_by(Project.created_at.desc())
-
+    
     if search:
         search_terms = search.split()
         for term in search_terms:
@@ -32,9 +32,6 @@ def index():
                                          per_page=10,
                                          error_out=False)
     projects = projects_pagination.items
-
-    for project in projects:
-        project.project_id = project.project_id.hex
 
     return render_template("projects/index.html",
                            proj_list=projects,
