@@ -13,7 +13,7 @@ class GitUtils:
     def __init__(self,
                  repo_owner,
                  repo_name,
-                 base_directory,
+                 base_directory=None,
                  github_token=None):
         self.repo_owner = repo_owner
         self.repo_name = repo_name
@@ -106,21 +106,15 @@ class GitUtils:
             if latest_commit_sha != local_commit_sha:
                 self.logger.info(f"Updates found in branch '{branch}'.")
                 self.pull_github_branch(branch)
+                
             else:
                 self.logger.info(f"No updates found in branch '{branch}'.")
             self.logger.info("Update check completed.")
         except Exception as e:
-            print(str(e))
             self.logger.error(
                 f"An error occurred while checking for updates: {e}")
             raise ValueError(
                 f"An error occurred while checking for updates: {e}")
-
-    def get_local_branches(self):
-        return [
-            d for d in os.listdir(self.base_directory)
-            if os.path.isdir(os.path.join(self.base_directory, d))
-        ]
 
     def get_local_commit_sha(self, branch):
         repo_dir = os.path.join(self.base_directory, branch)
@@ -135,7 +129,6 @@ class GitUtils:
             origin.pull()
             self.logger.info(
                 f"Branch '{branch_name}' was pulled successfully.")
-            return True
         except GitCommandError as e:
             self.logger.error(f"Failed to pull branch '{branch_name}': {e}")
             raise ValueError(f"Failed to pull branch '{branch_name}': {e}")
@@ -145,7 +138,7 @@ class GitUtils:
             "Authorization": f"token {self.github_token}"
         } if self.github_token else {}
         url = f"{self.GITHUB_API_BASE_URL}/repos/{self.repo_owner}/{self.repo_name}/commits/{branch}"
-        response = requests.get(url,headers=headers)
+        response = requests.get(url, headers=headers)
         response.raise_for_status()
         commit_info = response.json()
         return commit_info['sha']
@@ -155,26 +148,20 @@ class GitUtils:
             "Authorization": f"token {self.github_token}"
         } if self.github_token else {}
         url = f"{self.GITHUB_API_BASE_URL}/repos/{self.repo_owner}/{self.repo_name}"
-        response = requests.get(url,headers=headers)
+        response = requests.get(url, headers=headers)
         response.raise_for_status()
         repo_info = response.json()
         return repo_info['default_branch']
 
+    def pull_all_branches(self):
+        try:
+            branches = self.get_github_branches()
+            self.logger.info("Pulling all branches for updates:")
+            for branch in branches.keys():
+                self.logger.info(f"Checking updates for branch '{branch}'...")
+                self.check_for_updates(branch)
+            self.logger.info("All branches checked and updated successfully.")
+        except Exception as e:
+            self.logger.error(f"An error occurred while pulling branches: {e}")
+            raise ValueError(f"An error occurred while pulling branches: {e}")
 
-# if __name__ == "__main__":
-#     # GitHub repository details
-#     repo_owner = "irvan91110"
-#     repo_name = "tugas_akhir"
-
-#     # GitHub personal access token (optional)
-#     github_token = None  # Set to your GitHub personal access token if needed
-
-#     # Directory to clone the repository into
-#     base_directory = "D:/gitpythontest"
-
-#     # Create an instance of GitUtils
-#     repo_cloner = GitUtils(repo_owner, repo_name, base_directory,
-#                                    github_token)
-
-#     # Check for updates in local branches
-#     repo_cloner.check_for_updates("main")

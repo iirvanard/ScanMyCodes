@@ -21,12 +21,11 @@
                     <h1>{{ project.project_name }}</h1>
                 </a>
                 <div class="flex justify-between"> 
-                    {% if project.fetch_status == "success" and project.analyze_status == "success" %}
-                        check for new commits
-                    {% else %}
-                    asdasd
-                    {% endif %}
-               
+                    <form method="POST" action="{{ url_for('project.check_remote', idproject=project.project_id) }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+
+                        <button type="submit" class="pt-2 text-red font-semibold" title="Check for latest Commits">Check for new commits</button>
+                    </form>
                 {% if stats %}
                 <div>
                     <span class="badge critical critical-bg">C</span>
@@ -63,14 +62,45 @@
                 </a>
             </li>
         </ul>
-        
+        {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+           
+                {% for category, message in messages %}
+              <!-- Toast Container -->
+  <div id="toast" class="fixed bottom-4 right-4 bg-gray-800 text-white p-4 rounded-lg shadow-lg opacity-0 translate-y-4 transition-all duration-300">
+    <span>{{message}}</span>
+    <button id="toast-close" class="ml-4 text-gray-400 hover:text-white focus:outline-none">✕</button>
+  </div>
+                                {% endfor %}
+            
+        {% endif %}
+    {% endwith %}
         
         <hr class="border-t border-gray-200 mt-4">
         <div class="my-4">
             {% block content %}
             {% endblock %}
         </div>
-
+        <script>
+            // Show toast for demonstration purposes
+            document.addEventListener('DOMContentLoaded', () => {
+              const toast = document.getElementById('toast');
+              toast.classList.remove('opacity-0', 'translate-y-4');
+              toast.classList.add('opacity-100', 'translate-y-0');
+        
+              // Automatically hide toast after 3 seconds
+              setTimeout(() => {
+                toast.classList.remove('opacity-100', 'translate-y-0');
+                toast.classList.add('opacity-0', 'translate-y-4');
+              }, 3000); // Hide after 3 seconds
+        
+              // Close button event listener
+              document.getElementById('toast-close').addEventListener('click', () => {
+                toast.classList.remove('opacity-100', 'translate-y-0');
+                toast.classList.add('opacity-0', 'translate-y-4');
+              });
+            });
+          </script>
     </div>
 </body>
 </html>

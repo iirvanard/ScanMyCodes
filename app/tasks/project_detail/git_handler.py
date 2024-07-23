@@ -4,7 +4,7 @@ from app.utils.utils import split_url
 from app.extensions import db
 
 class GitHandler:
-    def __init__(self, task_id, proj_url, logger,privacy, access_token=None):
+    def __init__(self, task_id, proj_url=None, logger=None, privacy=None, access_token=None):
         self.task_id = task_id
         self.proj_url = proj_url
         self.logger = logger
@@ -38,3 +38,28 @@ class GitHandler:
         #     db.session.rollback()
         #     self.logger.warning(f"Repository {self.proj_url} already exists in the database. [failed]")
         #     return None
+
+
+    def git_pull(self, basedir):
+        try:
+            repo_owner, repo_name = split_url(self.proj_url)
+            github_token = self.access_token if self.access_token else None
+
+            with GitUtils(repo_owner=repo_owner, repo_name=repo_name, base_directory=basedir, github_token=github_token) as GitInit:
+                GitInit.pull_all_branches()
+                
+        except Exception as e:
+            # Handle the exception (e.g., log it, re-raise it, return a specific error message, etc.)
+            return f"An error occurred: {str(e)}"
+        
+    def all_branch(self, basedir):
+        try:
+            repo_owner, repo_name = split_url(self.proj_url)
+            github_token = self.access_token if self.access_token else None
+
+            with GitUtils(repo_owner=repo_owner, repo_name=repo_name, base_directory=basedir, github_token=github_token) as GitInit:
+                return GitInit.get_github_branches()
+            
+        except Exception as e:
+            # Handle the exception (e.g., log it, re-raise it, return a specific error message, etc.)
+            return f"An error occurred: {str(e)}"

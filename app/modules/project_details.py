@@ -1,10 +1,10 @@
 from functools import wraps
 import os
-from flask import Blueprint, abort, jsonify, redirect, render_template, request, url_for
+from flask import Blueprint,flash, abort, jsonify, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 from app.models import Project, GitBranch, GitRepository, OpenaiProject,AnalyzeIssue,ProjectLog
 from uuid import UUID
-from app.tasks.project_detail import updateProject,delete_project_task
+from app.tasks.project_detail import updateProject,delete_project_task,checkRemote
 import json
 
 from celery.result import AsyncResult
@@ -227,6 +227,26 @@ def update_project(idproject):
         result = AsyncResult(task.id, app=celery)
         if result.state == 'SUCCESS':
             # Task succeeded, redirect
+            return redirect(request.referrer)
+        elif result.state == 'FAILURE':
+            # Task failed, handle failure
+            return jsonify({'error': 'Task failed'}), 500
+        else:
+            # Task is still pending or in progress, wait a bit and check again
+            time.sleep(1)
+
+
+
+@blueprint.route("/check", methods=["POST"])
+@check_idproject
+def check_remote(idproject):
+    # Start the task
+    task = checkRemote.delay(idproject)
+
+    while True:
+        result = AsyncResult(task.id, app=celery)
+        if result.state == 'SUCCESS':
+            flash('You were success checking commits!', 'success_check_commits')
             return redirect(request.referrer)
         elif result.state == 'FAILURE':
             # Task failed, handle failure
