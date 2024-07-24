@@ -28,16 +28,22 @@ def check_remote_task(id_project):
     Celery task to check for remote updates and log them.
     """
     try:
+        # Retrieve project and set initial status
         project = Project.query.filter_by(project_id=id_project).first()
+        if not project:
+            raise ValueError(f"Project with ID {id_project} not found.")
+        
+        project.fetch_status = "in_progress"
+        project.analyze = "in_progress"
+        db.session.commit()
 
-        # Konfigurasi logger
-        logger_instance = LoggerSetup(id_project, project.project_name, "test1")
-
+        # Configure logger
+        logger_instance = LoggerSetup(id_project, project.project_name, "update")
         logger, filename = logger_instance.get_logger()
+        logger.info(f"Logging initialized for project {id_project}")
 
-        logger.info(filename)
-        # Setup logging
-        project_log = process_project(id_project, filename)
+        # Process project updates and log information
+        project_log = DatabaseManager.add_project_log(id_project, filename, log_type="update")
         
         # Retrieve repository information
         repository = GitRepository.query.filter_by(project_id=id_project).first()
@@ -49,14 +55,21 @@ def check_remote_task(id_project):
                                  access_token=repository.access_token, logger=logger)
         git_handler.check_for_update()
 
-        # Optional scanning (commented out)
+        # Optional scanning (commented out for now)
         # scanning(task_id=id_project, all_branches=git_handler.all_branch(basedir=repository.path_),
         #          dir_path=repository.path_, logger=logger, filename="c9b48348a57b4b7b9295951f7b75a026_20240723_203010_main.json")
-        project_log.status="success"
+        
+        # Update project status and commit changes
+        project_log.status = "success"
+        project.fetch_status = "success"
+        project.analyze = "success"
         db.session.commit()
+
         return f"Project {id_project} successfully updated"
 
     except Exception as e:
+        # Rollback database changes on error
         db.session.rollback()
-        
-        return f"An error occurred: {str(e)}"
+        error_msg = f"An error occurred: {str(e)}"
+        logger.error(error_msg)  # Log the error
+        return error_msg

@@ -28,35 +28,27 @@ def add_2_database(self, user,privacy, proj_name, proj_url, description=None, ac
 
     _, log_file_path = logger_instance.get_logger()
 
-    
 
     __ = DatabaseManager.add_project(task_id, user, proj_name, description)
-    project_log = DatabaseManager.add_project_log(task_id, log_file_path,log_type="analyze")
-    ___ = DatabaseManager.add_project_openai(task_id=task_id,openai_model=os.getenv('OPENAI_MODEL'),openai_key=os.getenv('OPENAI_KEY'),openai_url=os.getenv('OPENAI_BASE_URL'))
+    ___ = DatabaseManager.add_project_log(task_id, log_file_path,log_type="analyze")
+    ____ = DatabaseManager.add_project_openai(task_id=task_id,openai_model=os.getenv('OPENAI_MODEL'),openai_key=os.getenv('OPENAI_KEY'),openai_url=os.getenv('OPENAI_BASE_URL'))
    
    
-    return add.delay(task_id=task_id,privacy=privacy, proj_url=proj_url, log_id=project_log.id, proj_name=proj_name, access_token =access_token)
-
+    return add.delay(task_id=task_id,privacy=privacy, proj_url=proj_url, proj_name=proj_name,log_file_path=log_file_path ,access_token =access_token)
 @celery.task()
-def add(task_id, privacy,proj_url, log_id, proj_name, access_token=None):
+def add(task_id, privacy, proj_url, proj_name,log_file_path, access_token=None):
     try:
-        project_log = ProjectLog.query.filter_by(id=log_id).first()
-        dir_path = os.path.join(app.config['STATIC_FOLDER_1'], "log",project_log.path_)
+        log_path = os.path.join(app.config['STATIC_FOLDER_1'], "log",log_file_path)
+        project_log = ProjectLog.query.filter_by(project_id=task_id,path_=log_file_path).first()
 
-        logger = logging.getLogger(task_id)
-        if not logger.handlers:
-            fh = logging.FileHandler(dir_path)
-            fh.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s: %(message)s'))
-            logger.addHandler(fh)
-            logger.setLevel(logging.INFO)
-    
+        logger =LoggerSetup.get_logger_filename(task_id=task_id,path=log_path)
+
         project_model = Project.query.filter_by(project_id=task_id).first()
         if not project_model:
-            logger.error(f"Project with task ID {task_id} not found in the database.  [failed]")
-            return
-        
+            return "Project not found"
+
         dir_path = os.path.join(app.config['STATIC_FOLDER_1'], "repository", uuid.UUID(task_id).hex)
-        git_handler = GitHandler(task_id=task_id,privacy=privacy, proj_url=proj_url, logger=logger,access_token=access_token)
+        git_handler = GitHandler(task_id=task_id, privacy=privacy, proj_url=proj_url, logger=logger, access_token=access_token)
         default_branch, all_branches = git_handler.clone_repository(dir_path)
 
         project_model.fetched_at = datetime.now()
@@ -69,19 +61,21 @@ def add(task_id, privacy,proj_url, log_id, proj_name, access_token=None):
             scanning(task_id, all_branches, dir_path, logger)
 
             DatabaseManager.update_project_status(project_model, 'success', analyze_at=datetime.now())
-            project_log.status = 'success'
             db.session.commit()
             logger.info(f"Project {proj_name} analyzed successfully. [done]")
+
+            project_log.status="success"
+            db.session.commit()
+            return "done"
         else:
             raise ValueError("Failed to add repository to the database.")
 
     except Exception as e:
+        project_log.status="failed"
+
         if project_model:
             DatabaseManager.update_project_status(project_model, 'failed')
-        if project_log:
-            project_log.status = 'failed'
-        db.session.commit()
         
+        db.session.commit()
         logger.error(f'{e} [failed]')
-
-    return "done"
+        return str(e)

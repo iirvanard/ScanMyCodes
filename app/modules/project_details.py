@@ -141,8 +141,8 @@ def analysis(idproject, branchid=None):
     stats, markdown_content = marksdown(idproject, branchid)
 
     filterContent = {
-            'Severity': {"high","medium"},
-            'Language': {"python","php"},
+            'Severity': {"high","medium","critical","low","weak"},
+            'Language': {"python","php","javascript"},
         }
 
     analysis_content = render_template(
