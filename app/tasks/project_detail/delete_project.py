@@ -18,6 +18,8 @@ def delete_project_task(project_id):
 
         # Loop through the results
         for analyze in project_analyze:
+
+            logger.info("1")
             # Build the full path to the project file
             project_file = os.path.join(app.config['STATIC_FOLDER_1'], "scan", analyze.path_)
 

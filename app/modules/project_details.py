@@ -10,7 +10,7 @@ import json
 from celery.result import AsyncResult
 from app import celery,app
 import time
-
+from sqlalchemy import desc
 
 blueprint = Blueprint('project',
                       __name__,
@@ -55,23 +55,39 @@ def check_branch(func):
 
 def marksdown(idproject, branch):
     try:
-        filename = (AnalyzeIssue.query.filter_by(project_id=str(
-            UUID(idproject)),
-                                                  branch=branch).first()).path_
+        print(branch)
+        branchx = GitBranch.query.filter_by(project_id=idproject, remote=branch).first()
+        filename = AnalyzeIssue.query.filter_by(project_id=idproject, branch=branchx.id).first()
+
+        dir_destination = os.path.join(app.config['STATIC_FOLDER_1'], "scan", filename.path_)
         
-        dir_destination = os.path.join(app.config['STATIC_FOLDER_1'], "scan", filename)
+        # Check if the file exists and is not empty
+        if not os.path.exists(dir_destination) or os.path.getsize(dir_destination) == 0:
+            raise FileNotFoundError(f"The file at {dir_destination} is empty or does not exist.")
+        
+        # Read and parse the JSON file
         with open(dir_destination, encoding='utf-8') as user_file:
             filejson = user_file.read()
-
+            
+            # Check if the file content is valid JSON
+            if not filejson.strip():
+                raise ValueError("The file is empty.")
+            
+            try:
+                data = json.loads(filejson)
+            except json.JSONDecodeError:
+                raise ValueError("The file contains invalid JSON.")
+        
+        # Calculate the statistics
         stats = {
-            'C': len(json.loads(filejson).get('critical', [])),
-            'H': len(json.loads(filejson).get('high', [])),
-            'M': len(json.loads(filejson).get('medium', [])),
-            'L': len(json.loads(filejson).get('low', [])),
-            'W': len(json.loads(filejson).get('weak', []))
+            'C': len(data.get('critical', [])),
+            'H': len(data.get('high', [])),
+            'M': len(data.get('medium', [])),
+            'L': len(data.get('low', [])),
+            'W': len(data.get('weak', []))
         }
 
-        return stats, json.loads(filejson)
+        return stats, data
 
     except Exception as e:
         print(f"Error: {e}")
@@ -149,8 +165,7 @@ def analysis(idproject, branchid=None):
 @check_idproject
 def log(idproject):
     project = get_project_from_id(idproject)
-    log = ProjectLog.query.filter_by(project_id=idproject).all()
- 
+    log = ProjectLog.query.filter_by(project_id=idproject).order_by(desc(ProjectLog.created_at)).all() 
     return render_template(
         '/project_detail/log/log.html',
         title=f"log  - {project.project_name}",

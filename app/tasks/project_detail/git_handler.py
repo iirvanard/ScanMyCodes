@@ -1,7 +1,15 @@
-from app.models import GitRepository
+import os
+import shutil
+import uuid
+
+import requests
+from app.models import GitRepository,AnalyzeIssue
+from app.models.git_branch import GitBranch
+from .scanning_project import scanning
 from app.utils.git_core import GitUtils
 from app.utils.utils import split_url
-from app.extensions import db
+from app.extensions import db,SQLAlchemyError
+from app import app
 
 class GitHandler:
     def __init__(self, task_id, proj_url=None, logger=None, privacy=None, access_token=None):
@@ -15,19 +23,24 @@ class GitHandler:
         repo_owner, repo_name = split_url(self.proj_url)
         self.logger.info(f"Cloning repository {repo_owner}/{repo_name}.")
         
-        # Check if access_token is None and handle accordingly
         github_token = self.access_token if self.access_token else None
 
-        with GitUtils(repo_owner=repo_owner, repo_name=repo_name, base_directory=dir_path, github_token=github_token) as GitInit:
-            GitInit.clone_all_branches()
-            default_branch = GitInit.get_default_branch()
-            all_branches = GitInit.get_github_branches()
+        with GitUtils(repo_owner=repo_owner, repo_name=repo_name, base_directory=dir_path, github_token=github_token) as git_init:
+            git_init.clone_all_branches()
+            default_branch = git_init.get_default_branch()
+            all_branches = git_init.get_github_branches()
         
         self.logger.info(f"Cloning repository {repo_owner}/{repo_name} [done]")
         return default_branch, all_branches
 
     def add_repository_to_db(self, default_branch, dir_path):
-        repo = GitRepository(repo_url=self.proj_url,privacy=self.privacy, access_token=self.access_token, default_branch=default_branch, project_id=self.task_id, path_=dir_path)
+        repo = GitRepository(
+            repo_url=self.proj_url,
+            privacy=self.privacy,
+            access_token=self.access_token,
+            default_branch=default_branch,
+            project_id=self.task_id,
+        )
         # try:
         with db.session.begin_nested():
             db.session.add(repo)
@@ -40,26 +53,70 @@ class GitHandler:
         #     return None
 
 
-    def git_pull(self, basedir):
-        try:
-            repo_owner, repo_name = split_url(self.proj_url)
-            github_token = self.access_token if self.access_token else None
 
-            with GitUtils(repo_owner=repo_owner, repo_name=repo_name, base_directory=basedir, github_token=github_token) as GitInit:
-                GitInit.pull_all_branches()
-                
-        except Exception as e:
-            # Handle the exception (e.g., log it, re-raise it, return a specific error message, etc.)
-            return f"An error occurred: {str(e)}"
+    def check_for_update(self):
+        self.logger.info("Starting update check process.")
         
-    def all_branch(self, basedir):
-        try:
-            repo_owner, repo_name = split_url(self.proj_url)
-            github_token = self.access_token if self.access_token else None
+        branches = GitBranch.query.filter_by(project_id=self.task_id).all()
+        self.logger.info(f"Found {len(branches)} branches for project ID {self.task_id}.")
+        
+        directory = os.path.join(app.config['STATIC_FOLDER_1'], "repository", self.task_id)
+        
+        repo_owner, repo_name = split_url(self.proj_url)
+        self.logger.info(f"Repository info: owner: {repo_owner}, name: {repo_name}.")
+        
+        github_token = self.access_token if self.access_token else None
+        git_utils = GitUtils(repo_owner=repo_owner, repo_name=repo_name, github_token=github_token, base_directory=directory)
+        self.logger.info("GitUtils initialized.")
 
-            with GitUtils(repo_owner=repo_owner, repo_name=repo_name, base_directory=basedir, github_token=github_token) as GitInit:
-                return GitInit.get_github_branches()
+        for branch in branches:
+            self.logger.info(f"Processing branch: {branch.remote}")
             
-        except Exception as e:
-            # Handle the exception (e.g., log it, re-raise it, return a specific error message, etc.)
-            return f"An error occurred: {str(e)}"
+            try:
+                # Check if remote repository is up-to-date
+                is_up_to_date = git_utils.async_remote_repo(branch=branch.remote, local_latest_commits=branch.latest_commits)
+                self.logger.info(f"Branch {branch.remote} up-to-date status: {is_up_to_date}.")
+                
+                if not is_up_to_date:
+                    latest_commit = git_utils.get_latest_commit_sha(branch=branch.remote)
+                    self.logger.info(f"Branch {branch.remote} has a new commit: {latest_commit}.")
+                    
+                    branch.latest_commits = latest_commit
+                    self.logger.info(f"Updated branch {branch.remote} latest commits in database.")
+
+                    self.logger.info(f"Cloning repository {repo_owner}/{repo_name} branch {branch.remote}.")
+                    try:
+                        git_utils.clone_github_branch(branch.remote)
+                        self.logger.info(f"Successfully cloned branch {branch.remote}.")
+                        
+                        analyze = AnalyzeIssue.query.filter_by(project_id=self.task_id, branch=branch.id).all()
+                        self.logger.info(f"Found {len(analyze)} analysis issues for branch {branch.remote}.")
+                        
+                        for analysis in analyze:
+                            self.logger.info(f"Running scanning on {analysis.path_}.")
+                            scanning(task_id=self.task_id, all_branches=[branch.remote], dir_path=directory, filename=analysis.path_, logger=self.logger)
+                        
+                    except Exception as clone_err:
+                        self.logger.error(f"Error cloning branch {branch.remote}: {clone_err}")
+                        shutil.rmtree(directory)
+                        self.logger.info(f"Removed directory {directory} due to cloning error.")
+                    
+                    db.session.commit()
+                    self.logger.info(f"Database commit successful after processing branch {branch.remote}.")
+
+            except requests.exceptions.HTTPError as http_err:
+                if http_err.response.status_code == 404:
+                    self.logger.warning(f"Branch {branch.remote} not found on remote. Deleting from local database.")
+                    db.session.delete(branch)
+                    db.session.commit()
+                    self.logger.info(f"Branch {branch.remote} deleted from database.")
+                else:
+                    self.logger.error(f"HTTP error occurred: {http_err}")
+                    raise
+
+            except Exception as e:
+                db.session.rollback()
+                self.logger.error(f"Unexpected error occurred: {e}")
+                return f"An error occurred during the update check: {e}"
+
+        self.logger.info("Update check process completed.")

@@ -14,6 +14,9 @@ class GitBranch(db.Model):
                            db.ForeignKey('git_repository.id',
                                          ondelete='CASCADE'),  
                            nullable=False)
+    
+    latest_commits = db.Column(db.String, nullable=False)
+
     project = db.relationship('Project', back_populates='branches')
     
     # Menambahkan kolom last_analyze_at

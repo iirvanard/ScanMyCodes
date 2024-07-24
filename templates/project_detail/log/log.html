@@ -3,7 +3,7 @@
 {% block content %}
 {% for items in content %}
 <a href="{{ url_for('project.log', idproject=project.project_id) ~ '/' ~ items.id }}" class="md:container md:mx-auto">
-    <div class="max-w rounded overflow-hidden  bg-gray-100 border-2  border-gray-200 ">
+    <div class="max-w rounded overflow-hidden  bg-gray-100 border-2  border-gray-200  mb-4 ">
         <div class="m-4 ">
             <div class="flex space-x-6">
                 <div class="type-section flex">

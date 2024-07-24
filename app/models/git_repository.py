@@ -15,6 +15,5 @@ class GitRepository(db.Model):
                                          ondelete='CASCADE'),
                            unique=True,
                            nullable=False)
-    path_ = db.Column(db.String, nullable=False)
     update_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
     created_at = db.Column(db.DateTime, default=datetime.now)

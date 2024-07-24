@@ -13,57 +13,25 @@ from .add_git_branch import addGitBranch
 from .scanning_project import scanning
 from .logger import LoggerSetup
 from .git_handler import GitHandler
+from .database_manager import DatabaseManager
+
 class GitError(Exception):
     def __init__(self, message):
         self.message = message
 
-class DatabaseManager:
-    @staticmethod
-    def add_project(task_id, user, proj_name, description):
-        project_model = Project(project_id=task_id, username=user, project_name=proj_name, description=description)
-        try:
-            with db.session.begin_nested():
-                db.session.add(project_model)
-            db.session.commit()
-        except IntegrityError:
-            db.session.rollback()
-            project_model = Project.query.filter_by(project_id=task_id).first()
-        return project_model
-
-    @staticmethod
-    def add_project_log(task_id, log_file_path):
-        project_log = ProjectLog(project_id=task_id, type="analyze", status="on progress", path_=log_file_path)
-        with db.session.begin_nested():
-            db.session.add(project_log)
-        db.session.commit()
-        return project_log
-
-    @staticmethod
-    def update_project_status(project_model, status, fetched_at=None, analyze_at=None):
-        project_model.analyze_status = status
-        if fetched_at:
-            project_model.fetched_at = fetched_at
-        if analyze_at:
-            project_model.analyze_at = analyze_at
-        db.session.commit()
-
-    @staticmethod
-    def add_project_openai(task_id, openai_model,openai_key,openai_url):
-        project_openai = OpenaiProject(project_id=task_id, openai_model=openai_model,openai_key=openai_key,openai_url=openai_url)
-        with db.session.begin_nested():
-            db.session.add(project_openai)
-        db.session.commit()
-        return project_openai
-
 @celery.task(bind=True, autoretry_for=(Exception,), retry_kwargs={'max_retries': 3})
 def add_2_database(self, user,privacy, proj_name, proj_url, description=None, access_token=None):
     task_id = celery.current_task.request.id
+ 
+        # Konfigurasi logger
+    logger_instance = LoggerSetup(task_id, proj_name, user)
+
+    _, log_file_path = logger_instance.get_logger()
+
     
-    logger_setup = LoggerSetup(task_id, proj_name, user)
-    _, log_file_path = logger_setup.get_logger()
 
     __ = DatabaseManager.add_project(task_id, user, proj_name, description)
-    project_log = DatabaseManager.add_project_log(task_id, log_file_path)
+    project_log = DatabaseManager.add_project_log(task_id, log_file_path,log_type="analyze")
     ___ = DatabaseManager.add_project_openai(task_id=task_id,openai_model=os.getenv('OPENAI_MODEL'),openai_key=os.getenv('OPENAI_KEY'),openai_url=os.getenv('OPENAI_BASE_URL'))
    
    
