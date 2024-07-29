@@ -2,7 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  @apply min-h-screen;
+}
+
 @layer components {
+
     .dropdown:hover .dropdown-menu {
         @apply block;
 

@@ -4,36 +4,17 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login</title>
-
+<title>{{ title }}</title>
 <!-- Roboto font -->
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet">
 
 <!-- Tailwind CSS config -->
 <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
 
-</head>
-<body>
+<body >
 <header class="relative">
     {% include 'nav.html' %}
 </header>
-<div class="w-full max-w-sm">
-    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-    <div class="relative mt-1">
-      <input id="password" type="password" class="block w-full pr-10 text-sm border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
-      <button id="togglePassword" type="button" class="absolute inset-y-0 right-0 flex items-center px-3 text-sm leading-5 text-gray-700">
-        Show
-      </button>
-    </div>
-  </div>
-
-  <script>
-    document.getElementById('togglePassword').addEventListener('click', function () {
-      const passwordInput = document.getElementById('password');
-      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-      passwordInput.setAttribute('type', type);
-      this.textContent = type === 'password' ? 'Show' : 'Hide';
-    });
-  </script>
+body analysis akun disini
 </body>
 </html>
