@@ -63,7 +63,6 @@ class GitHandler:
         directory = os.path.join(app.config['STATIC_FOLDER_1'], "repository", self.task_id)
         
         repo_owner, repo_name = split_url(self.proj_url)
-        self.logger.info(f"Repository info: owner: {repo_owner}, name: {repo_name}.")
         
         github_token = self.access_token if self.access_token else None
         git_utils = GitUtils(repo_owner=repo_owner, repo_name=repo_name, github_token=github_token, base_directory=directory)

@@ -1,0 +1,70 @@
+{% set add_collaborators %}
+
+<div class="flex items-center justify-center">
+  <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+    width="54" height="54" viewBox="0 0 849.971 849.971" xml:space="preserve" class="fill-current text-black">
+    <g>
+      <g>
+        <path d="M808.483,638.435c1.8,0.4,3.5,0.6,5.3,0.6c13.4,0,24.9-10.898,24.9-25V164.135c0-10.9-7-20.5-17.4-23.8
+          c-22.399-7.2-64.899-19-117.399-25.5v128.9c0,12.2-13.801,19.3-23.7,12.2l-33.7-24c-5.2-3.7-12.2-3.7-17.4,0l-33.699,24
+          c-9.9,7.1-23.7,0-23.7-12.2v-130.3c-58.7,6.1-106.3,19.4-130.2,27.1v501.101c40.8-10.701,110.8-17.801,190.3-17.801
+          C703.083,623.835,766.783,629.435,808.483,638.435z"/>
+        <path d="M36.183,638.935c1.7,0,3.5-0.199,5.3-0.6c41.8-8.9,105.4-14.6,176.7-14.6c79.5,0,149.5,7.1,190.3,17.799v-501
+          c-31.6-10.1-104.9-30.2-190.3-30.2c-84.7,0-157.5,19.8-189.5,30c-10.4,3.3-17.4,12.9-17.4,23.8v449.8
+          C11.283,628.034,22.783,638.935,36.183,638.935z"/>
+        <path d="M2.383,711.335c2.7,13.5,15.8,22.4,29.4,19.699l4.9-1c43.1-8.5,106.6-13.398,174.1-13.398c100.5,0,174.9,10.6,204,21.199
+          c3.3,1.199,6.8,1.801,10.2,1.801c3.401,0,6.901-0.602,10.201-1.801c29.1-10.5,103.5-21.199,204-21.199
+          c67.5,0,131,4.898,174.1,13.398l4.9,1c13.5,2.701,26.7-6.1,29.399-19.699l1.9-9.801c2.7-13.5-6.1-26.699-19.7-29.398l-4.899-1
+          c-0.2,0-0.301-0.102-0.5-0.102c-46.801-9.199-114.2-14.5-185.2-14.5c-89,0-169.3,8.102-214.201,21.4
+          c-44.9-13.299-125.2-21.4-214.2-21.4c-71,0-138.5,5.301-185.2,14.5c-0.2,0-0.3,0.102-0.5,0.102l-4.9,1
+          c-13.5,2.699-22.4,15.799-19.7,29.398L2.383,711.335z"/>
+      </g>
+    </g>
+  </svg>
+</div>
+
+  <form action="{{ url_for('project.add_collaborator', idproject=project.project_id) }}" method="POST" class="rounded-lg shadow-lg">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    <div class="mb-4">
+      <label for="search" class="block text-sm font-medium text-gray-700">Search by username, full name, or email</label>
+      <input id="search" type="text" name="collaborator_user" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Find People">
+    </div>
+    <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Select a collaborator above</button>
+
+  </form>
+
+{% endset %}
+
+<section class="flex-1 max-w-full divide-y divide-gray-200 border border-gray-300" id="content-collaborators" hidden>
+  <header class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase">
+    Manage access
+  </header>
+  <div class="bg-white divide-y divide-gray-200">
+
+    {% if True %}
+    {% with popup_title="Add a collaborator to "~ project.project_name, popup_id='collaborators', popup_content=add_collaborators %}
+      <div class="px-6 py-4 whitespace-nowrap flex flex-col items-center max-w-lg mx-auto">
+        <img class="w-14 h-14 object-cover rounded-lg" src="https://github.githubassets.com/assets/permissions-4a54b38b5f93.png" alt="Collaborators icon">
+        <p class="mt-2 text-gray-600">You haven't invited any collaborators yet</p>
+        <button onclick="openPopup('{{ popup_id }}')" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+          Change
+        </button>
+      </div>
+      {% include "widgets/popup.html" %}
+    {% endwith %}
+    {% else %}
+    <p>Please log in.</p>
+    {% endif %}
+
+  </div>
+</section>
+
+<script>
+  function openPopup(id) {
+    document.getElementById(id).classList.remove('hidden');
+  }
+  
+  function closePopup(id) {
+    document.getElementById(id).classList.add('hidden');
+  }
+</script>

@@ -4,7 +4,7 @@ from flask_login import current_user, login_required
 
 blueprint = Blueprint('index', __name__, url_prefix='/')
 
-from app.models.users import User
+from app.models import User
 
 
 @blueprint.route("/", methods=["GET"])

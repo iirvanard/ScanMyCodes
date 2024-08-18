@@ -17,12 +17,18 @@
         <a href="?option=advanced" class="pl-2 py-3 text-left text-xs font-medium text-gray-500 uppercase">
             Advanced
         </a>
+        <hr class="border-gray-300 my-0"> <!-- Divider -->
+        <a href="?option=collaborators" class="pl-2 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+            Collaborators
+        </a>
     </div>
-
-        {% include 'project_detail/settings/basics.html' %}
-        
-        {% include 'project_detail/settings/advanced.html' %}
+     
     
+    {% include 'project_detail/settings/basics.html' %}
+        
+    {% include 'project_detail/settings/advanced.html' %}
+   
+    {% include 'project_detail/settings/collaborators.html' %}
 
  
 </div>
@@ -67,7 +73,7 @@
     document.addEventListener("DOMContentLoaded", function() {
         const urlParams = new URLSearchParams(window.location.search);
         let option = urlParams.get('option');
-        const validOptions = ['basics', 'advanced']; // Daftar opsi yang valid
+        const validOptions = ['basics', 'advanced','collaborators']; // Daftar opsi yang valid
     
         if (!validOptions.includes(option)) {
             option = 'basics'; // Gunakan basics jika option tidak valid

@@ -2,20 +2,22 @@ import errno
 import os
 import uuid
 import logging
-from app import app  # Pastikan import ini sudah sesuai dengan struktur aplikasi Anda
+from app import app
+from app.models import User
 
 class LoggerSetup:
     def __init__(self, task_id, proj_name, user):
         self.task_id = task_id
         self.proj_name = proj_name
-        self.user = user
+        self.user_id = user
+        self.user = None
         self.logger = logging.getLogger(task_id)
         self.setup_logger()
 
     def setup_logger(self):
         formatter = logging.Formatter('%(asctime)s - %(levelname)s: %(message)s')
         self.logger.setLevel(logging.INFO)
-
+        self.user = User.query.filter_by(id=self.user_id).first()
         log_file_path = self._get_log_file_path()
         fh = logging.FileHandler(log_file_path)
         fh.setFormatter(formatter)
@@ -28,7 +30,7 @@ class LoggerSetup:
         # Tambahkan handler ke logger
         self.logger.addHandler(fh)
 
-        self.logger.info(f"Task {self.task_id} started for project {self.proj_name} by user {self.user}. [done]")
+        self.logger.info(f"Task {self.task_id} started for project {self.proj_name} by user {self.user.username}. [done]")
 
     def _get_log_file_path(self):
         log_dir = self._get_log_directory()

@@ -29,8 +29,8 @@ def add_2_database(self, user,privacy, proj_name, proj_url, description=None, ac
     _, log_file_path = logger_instance.get_logger()
 
 
-    __ = DatabaseManager.add_project(task_id, user, proj_name, description)
-    ___ = DatabaseManager.add_project_log(task_id, log_file_path,log_type="analyze")
+    __ = DatabaseManager.add_project(task_id=task_id, user_id=user, proj_name=proj_name, description=description)
+    ___ = DatabaseManager.add_project_log(task_id, log_file_path,log_type="analyze",user_id=user)
     ____ = DatabaseManager.add_project_openai(task_id=task_id,openai_model=os.getenv('OPENAI_MODEL'),openai_key=os.getenv('OPENAI_KEY'),openai_url=os.getenv('OPENAI_BASE_URL'))
    
    

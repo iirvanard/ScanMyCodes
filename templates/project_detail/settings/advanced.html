@@ -1,4 +1,5 @@
-<div class="flex-1 max-w-full divide-y divide-gray-200 border border-gray-300" id="content-advanced" hidden>
+
+
 {% set ChangePrivacy %}
   <p class="text-base mb-4">If your repository is already public, adjusting the privacy settings is not necessary, as access to the repository is automatically provided through these tools.</p>
   <form action="{{ url_for('project.update_project', idproject=project.project_id) }}" method="POST">
@@ -81,98 +82,109 @@
         </button>    </form>
      
   </form>
-
 {% endset %}
 
 
-<div class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase">Advanced Settings</div>
-
-    <ul class="bg-white  w-full text-gray-900">
-  
+<section class="flex-1 max-w-full divide-y divide-gray-200 border border-gray-300" id="content-advanced" hidden>
+  <header class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase">
+      Advanced Settings
+  </header>
+  <ul class="bg-white w-full text-gray-900">
+      
+      <!-- Change Project Privacy -->
       <li class="border-b border-gray-200">
-        <div class="m-4 flex justify-between items-center">
-            <div>
-                <strong>Change project privacy</strong>
-                <p>This repository is currently {{ "private" if repository.privacy else "public" }}.</p>
-            </div>
-            {% with popup_title=" Change project privacy  ", popup_id='privacy', popup_content=ChangePrivacy %}
-                <button onclick="openPopup('{{ popup_id }}')" class="px-2 py-1 text-sm bg-red-500 text-white rounded hover:bg-white hover:text-red-500 border border-red-500">Change</button>
-                {% include "widgets/popup.html" %}
-            {% endwith %}
-        </div>
-    </li>
-    
-     
-
-
-    <li class="border-b border-gray-200">
-      <div class="m-4 flex justify-between items-center">
-          <div>
-              <strong> Change Openai Api Key </strong>
-              <p> If your repository is public, you do not need to add it to your new personal access token. </p >
+          <div class="m-4 flex justify-between items-center">
+              <div>
+                  <strong>Change project privacy</strong>
+                  <p>This repository is currently {{ "private" if repository.privacy else "public" }}.</p>
+              </div>
+              {% with popup_title="Change project privacy", popup_id='privacy', popup_content=ChangePrivacy %}
+                  <button onclick="openPopup('{{ popup_id }}')" class="px-2 py-1 text-sm bg-red-500 text-white rounded hover:bg-white hover:text-red-500 border border-red-500">
+                      Change
+                  </button>
+                  {% include "widgets/popup.html" %}
+              {% endwith %}
           </div>
-          {% with popup_title="Change openai api key ", popup_id='openai', popup_content=openai_content %}
-          <button onclick="openPopup('{{ popup_id }}')" class="px-2 py-1 text-sm bg-red-500 text-white rounded hover:bg-white hover:text-red-500 border border-red-500">Change</button>
-              {% include "widgets/popup.html" %}
-          {% endwith %}
-      </div>
-  </li>
+      </li>
 
+      <!-- Change OpenAI API Key -->
+      <li class="border-b border-gray-200">
+          <div class="m-4 flex justify-between items-center">
+              <div>
+                  <strong>Change OpenAI API Key</strong>
+                  <p>If your repository is public, you do not need to add it to your new personal access token.</p>
+              </div>
+              {% with popup_title="Change OpenAI API Key", popup_id='openai', popup_content=openai_content %}
+                  <button onclick="openPopup('{{ popup_id }}')" class="px-2 py-1 text-sm bg-red-500 text-white rounded hover:bg-white hover:text-red-500 border border-red-500">
+                      Change
+                  </button>
+                  {% include "widgets/popup.html" %}
+              {% endwith %}
+          </div>
+      </li>
 
-       
+      <!-- Change Personal Access Token -->
+      <li class="border-b border-gray-200">
+          <div class="m-4 flex justify-between items-center">
+              <div>
+                  <strong>Change Personal Access Token</strong>
+                  <p>If your repository is public, you do not need to add it to your new personal access token.</p>
+              </div>
+              {% with popup_title="Change Personal Access Token", popup_id='personal_token', popup_content=personal_token %}
+                  <button onclick="openPopup('{{ popup_id }}')" class="px-2 py-1 text-sm bg-red-500 text-white rounded hover:bg-white hover:text-red-500 border border-red-500" {{ 'disabled' if not repository.privacy }}>
+                      Change
+                  </button>
+                  {% include "widgets/popup.html" %}
+              {% endwith %}
+          </div>
+      </li>
 
-          <li class="border-b border-gray-200">
-            <div class="m-4 flex justify-between items-center">
-                <div>
-                    <strong> Change personal access token </strong>
-                    <p> If your repository is public, you do not need to add it to your new personal access token. </p >
-                </div>
-                {% with popup_title="Change personal access token", popup_id='personal_token', popup_content= personal_token%}
-                <button onclick="openPopup('{{ popup_id }}')" class="px-2 py-1 text-sm bg-red-500 text-white rounded hover:bg-white hover:text-red-500 border border-red-500" {{ 'disabled' if not repository.privacy }}>
-                  Change
-              </button>
-             
-                                  {% include "widgets/popup.html" %}
-                {% endwith %}
-            </div>
-        </li>
+      <!-- Delete Repository -->
+      <li class="border-b border-gray-200">
+          <div class="m-4 flex justify-between items-center">
+              <div>
+                  <strong>Delete this repository</strong>
+                  <p>Once you delete a repository, there is no going back. Please be certain.</p>
+              </div>
+              {% with popup_title="Delete this repository", popup_id='delete_repository', popup_content=delete_component %}
+                  <button onclick="openPopup('{{ popup_id }}')" class="px-2 py-1 text-sm bg-red-500 text-white rounded hover:bg-white hover:text-red-500 border border-red-500">
+                      Delete
+                  </button>
+                  {% include "widgets/popup.html" %}
+              {% endwith %}
+          </div>
+      </li>
 
+  </ul>
+</section>
 
-          <li class="border-b border-gray-200">
-            <div class="m-4 flex justify-between items-center">
-                <div>
-                    <strong> Delete this repository </strong>
-                    <p> Once you delete a repository, there is no going back. Please be certain.</p >
-                </div>
-                {% with popup_title="Delete this repository", popup_id='delete_repository', popup_content=delete_component %}
-                <button onclick="openPopup('{{ popup_id }}')" class="px-2 py-1 text-sm bg-red-500 text-white rounded hover:bg-white hover:text-red-500 border border-red-500">delete</button>
-                    {% include "widgets/popup.html" %}
-                {% endwith %}
-            </div>
-        </li>
-        
-        
-     
-     
-    </ul>
-    </div>
-
-    <script>
-        const passwordToggle = document.querySelector('.js-password-toggle')
-    
-    passwordToggle.addEventListener('change', function() {
-      const password = document.querySelector('.js-password'),
-        passwordLabel = document.querySelector('.js-password-label')
-    
-      if (password.type === 'password') {
-        password.type = 'text'
-        passwordLabel.innerHTML = 'hide'
-      } else {
-        password.type = 'password'
-        passwordLabel.innerHTML = 'show'
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const passwordToggle = document.querySelector('.js-password-toggle');
+      if (passwordToggle) {
+          passwordToggle.addEventListener('change', function() {
+              const password = document.querySelector('.js-password');
+              const passwordLabel = document.querySelector('.js-password-label');
+              if (password.type === 'password') {
+                  password.type = 'text';
+                  passwordLabel.innerHTML = 'Hide';
+              } else {
+                  password.type = 'password';
+                  passwordLabel.innerHTML = 'Show';
+              }
+              password.focus();
+          });
       }
-    
-      password.focus()
-    })
-    
-      </script>
+  });
+</script>
+
+
+<script>
+  function openPopup(id) {
+      document.getElementById(id).classList.remove('hidden');
+  }
+
+  function closePopup(id) {
+      document.getElementById(id).classList.add('hidden');
+  }
+</script>

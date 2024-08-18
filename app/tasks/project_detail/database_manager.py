@@ -5,8 +5,8 @@ from app.models import Project, ProjectLog,OpenaiProject,GitRepository
 
 class DatabaseManager:
     @staticmethod
-    def add_project(task_id, user, proj_name, description):
-        project_model = Project(project_id=task_id, username=user, project_name=proj_name, description=description)
+    def add_project(task_id, user_id, proj_name, description):
+        project_model = Project(project_id=task_id, user_id=user_id, project_name=proj_name, description=description)
         try:
             with db.session.begin_nested():
                 db.session.add(project_model)
@@ -17,8 +17,8 @@ class DatabaseManager:
         return project_model
 
     @staticmethod
-    def add_project_log(task_id, log_file_path,log_type):
-        project_log = ProjectLog(project_id=task_id, type=log_type, status="on progress", path_=log_file_path)
+    def add_project_log(task_id, log_file_path,log_type,user_id):
+        project_log = ProjectLog(project_id=task_id, user_id=user_id,type=log_type, status="on progress", path_=log_file_path)
         with db.session.begin_nested():
             db.session.add(project_log)
         db.session.commit()

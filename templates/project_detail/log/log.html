@@ -1,57 +1,64 @@
 {% extends 'project_detail/layout.html' %}
 
 {% block content %}
-{% for items in content %}
-<a href="{{ url_for('project.log', idproject=project.project_id) ~ '/' ~ items.id }}" class="md:container md:mx-auto">
-    <div class="max-w rounded overflow-hidden  bg-gray-100 border-2  border-gray-200  mb-4 ">
-        <div class="m-4 ">
-            <div class="flex space-x-6">
-                <div class="type-section flex">
-                    <div class="font-bold text-sm mr-1">Type:</div> 
-                    <div class="text-sm">{{items.type}}</div>
+{% if content %}
+    {% for items in content %}
+    <a href="{{ url_for('project.log', idproject=project.project_id) ~ '/' ~ items.id }}" class="md:container md:mx-auto">
+        <div class="max-w rounded overflow-hidden bg-gray-100 border-2 border-gray-200 mb-4 ">
+            <div class="m-4 ">
+                <div class="flex space-x-6">
+                    <div class="type-section flex">
+                        <div class="font-bold text-sm mr-1">Type:</div> 
+                        <div class="text-sm">{{ items.type }}</div>
+                    </div>
+                    <div class="type-section flex">
+                        <div class="font-bold text-sm mr-1">Status:</div> 
+                        <div class="text-sm">{{ items.status }}</div>
+                    </div>
                 </div>
-                <div class="type-section flex">
-                    <div class="font-bold text-sm mr-1">status:</div> 
-                    <div class="text-sm">{{items.status}}</div>
+                <div class="info-section mt-5 flex">
+                    <div class="font-bold text-sm mr-1">Created:</div> 
+                    <div class="text-sm">{{ items.created_at }}</div>
                 </div>
-            </div>
-            <div class="info-section mt-5 flex">
-                <div class="font-bold text-sm mr-1">Created:</div> 
-                <div class="text-sm">{{items.created_at}}</div>
-            </div>
-            <div class="info-section flex">
-                <div class="font-bold text-sm mr-1">Duration:</div>
-                {% set duration = items.update_at - items.created_at %}
-                
-                {% set days = duration.days %}
-                {% set hours = duration.seconds // 3600 %}
-                {% set minutes = (duration.seconds % 3600) // 60 %}
-                {% set seconds = duration.seconds % 60 %}
-                {% set milliseconds = duration.microseconds / 1000 %}
-                {% set fractional_seconds = seconds + (duration.microseconds / 1000000) %}
-                
-                {% set parts = [] %}
-                
-                {% if days > 0 %}
-                    {% set parts = parts + [days ~ " days"] %}
-                {% endif %}
-                {% if hours > 0 %}
-                    {% set parts = parts + [hours ~ " hours"] %}
-                {% endif %}
-                {% if minutes > 0 %}
-                    {% set parts = parts + [minutes ~ " minutes"] %}
-                {% endif %}
-                {% if fractional_seconds > 0 %}
-                    {% set parts = parts + [fractional_seconds ~ " seconds"] %}
-                {% endif %}
-                
-                <div class="text-sm">  {{ parts|join(', ') }}</div>
-                
-            </div>
-            <hr class="border-gray-300 mt-2 mb-2">
+                <div class="info-section flex">
+                    <div class="font-bold text-sm mr-1">Duration:</div>
+                    {% set duration = items.update_at - items.created_at %}
+                    
+                    {% set days = duration.days %}
+                    {% set hours = duration.seconds // 3600 %}
+                    {% set minutes = (duration.seconds % 3600) // 60 %}
+                    {% set seconds = duration.seconds % 60 %}
+                    {% set milliseconds = duration.microseconds / 1000 %}
+                    {% set fractional_seconds = seconds + (duration.microseconds / 1000000) %}
+                    
+                    {% set parts = [] %}
+                    
+                    {% if days > 0 %}
+                        {% set parts = parts + [days ~ " days"] %}
+                    {% endif %}
+                    {% if hours > 0 %}
+                        {% set parts = parts + [hours ~ " hours"] %}
+                    {% endif %}
+                    {% if minutes > 0 %}
+                        {% set parts = parts + [minutes ~ " minutes"] %}
+                    {% endif %}
+                    {% if fractional_seconds > 0 %}
+                        {% set parts = parts + [fractional_seconds ~ " seconds"] %}
+                    {% endif %}
+                    
+                    <div class="text-sm">  {{ parts|join(', ') }}</div>
+                    
                 </div>
+                <hr class="border-gray-300 mt-2 mb-2">
+            </div>
+        </div>
+    </a>
+    {% endfor %}
+{% else %}
+    <div class="md:container md:mx-auto">
+        <div class="max-w rounded overflow-hidden bg-gray-100 border-2 border-gray-200 mb-4 p-4 text-center">
+            <div class="text-sm text-gray-500">No data available</div>
+        </div>
     </div>
-</a>
-{% endfor %}
+{% endif %}
 {% endblock %}
-

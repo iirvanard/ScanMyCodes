@@ -6,16 +6,17 @@
 # app.add_url_rule("/", view_func=about)
 # app.add_url_rule("/about", view_func=dashboard)
 
-from .modules import index, project_details, projects
+from .modules import dashboard, project_details, projects,profile_page
 from .modules.auth import auth
 
 from .modules.api import chat_openai
 from app import app
 
-app.register_blueprint(index.blueprint)
+app.register_blueprint(dashboard.blueprint)
 app.register_blueprint(auth.auth_blueprint)
 app.register_blueprint(project_details.blueprint)
 app.register_blueprint(projects.blueprint)
 app.register_blueprint(chat_openai.blueprint)
+app.register_blueprint(profile_page.blueprint)
 
 # app.register_blueprint(user.blueprint)

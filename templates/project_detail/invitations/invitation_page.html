@@ -1,0 +1,60 @@
+{% extends 'project_detail/layout.html' %}
+
+{% block content %}
+<div class="flex items-center justify-center mt-12 ">
+    <div class="w-full max-w-md">
+        <div class="text-center">
+            <!-- First level: Images and icon centered -->
+            <div class="mb-6 flex items-center justify-center space-x-4">
+                <img src="{{ g.collaborator.inviter.image_profile or 'https://via.placeholder.com/150' }}" 
+                alt="Profile Image" 
+                class="w-20 h-20 rounded-full object-cover"/>                
+                <svg aria-hidden="true" viewBox="0 0 16 16" version="1.1" width="14" class="octicon octicon-plus text-black h-6">
+                    <path d="M7.75 2a.75.75 0 0 1 .75.75V7h4.25a.75.75 0 0 1 0 1.5H8.5v4.25a.75.75 0 0 1-1.5 0V8.5H2.75a.75.75 0 0 1 0-1.5H7V2.75A.75.75 0 0 1 7.75 2Z"></path>
+                </svg>
+                <img src="{{ g.collaborator.collaborator.image_profile or 'https://via.placeholder.com/150' }}" 
+                alt="Profile Image" 
+                class="w-20 h-20 rounded-full object-cover"/>                  
+            </div>
+            
+            <!-- Second level: Title -->
+            <h1 class="text-xl mb-4 text-gray-900">{{g.collaborator.inviter.username}} invited you to collaborate</h1>
+            
+            
+           
+            
+                <form action="{{ url_for('project.manage_invitation', idproject=project.project_id)}}" method="POST" >
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+
+            <div class="mb-6 flex justify-center space-x-2">
+                <button name="confirmed" class="flex-[2] py-1.5 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-150 ease-in-out">
+                    Accept invitation
+                </button>
+                
+                <button name="rejected" class="flex-[1] py-1.5 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition duration-150 ease-in-out">
+                    Decline
+                </button>
+                </div>
+            </form>
+            
+            
+            <div class="pl-5 text-gray-800 text-left">
+                <p class="mb-2">Owners of {{g.collaborator.project.project_name}} will be able to see:</p> 
+                <ul class="list-disc list-inside">
+                    <li>Your public profile information</li>
+                    <li>Certain activity within this repository</li>
+                    <li>Country of request origin</li>
+                    <li>Your access level for this repository</li>
+                    <li>Your IP address</li>
+                </ul>
+            </div>
+            
+            <!-- Third level: Divider -->
+            <hr class="my-6 border-t border-gray-300">
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+

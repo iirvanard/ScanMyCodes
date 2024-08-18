@@ -1,7 +1,7 @@
 import os
 from app.extensions import db
-from app.models import GitRepository, Project
-from app import app,celery
+from app.models import GitRepository, Project,ProjectCollaborator
+from app import app, celery
 from .database_manager import DatabaseManager
 from .git_handler import GitHandler
 from .scanning_project import scanning
@@ -9,24 +9,35 @@ from .logger import LoggerSetup
 import logging
 
 
+@celery.task()
+def checkRemote(id_project, user_id):
+    # Fetch project details
+    project = Project.query.filter_by(project_id=id_project).first()
+    if not project:
+        return "Project not found"
 
-def process_project(id_project, log_file_path):
-    """
-    Process the project updates and log information.
-    """
-    project_log = DatabaseManager.add_project_log(id_project, log_file_path, log_type="update")
-    return project_log
+    # Fetch collaborators for the project
+    project_collaborators = ProjectCollaborator.query.filter_by(project_id=id_project).all()
+    collaborator_ids = {collaborator.collaborator_id for collaborator in project_collaborators}
+
+    # Check if user_id is either the project's user_id or one of the collaborator_ids
+    if user_id == project.user_id or user_id in collaborator_ids:
+        # Trigger the remote task
+        check_remote_task.delay(id_project=id_project, user_id=user_id)
+        return "Success trigger task"
+    else:
+        return "User is not authorized to check this project"
+
 
 @celery.task()
-def checkRemote(id_project):
-    check_remote_task.delay(id_project=id_project)
-    return "success trigger task"
-
-@celery.task()
-def check_remote_task(id_project):
+def check_remote_task(id_project,user_id):
     """
     Celery task to check for remote updates and log them.
     """
+    # Initialize the logger with a default logger in case of errors
+    logger = logging.getLogger('default')
+    logger.setLevel(logging.INFO)
+    
     try:
         # Retrieve project and set initial status
         project = Project.query.filter_by(project_id=id_project).first()
@@ -38,12 +49,12 @@ def check_remote_task(id_project):
         db.session.commit()
 
         # Configure logger
-        logger_instance = LoggerSetup(id_project, project.project_name, "update")
+        logger_instance = LoggerSetup(id_project, project.project_name, user_id)
         logger, filename = logger_instance.get_logger()
         logger.info(f"Logging initialized for project {id_project}")
 
         # Process project updates and log information
-        project_log = DatabaseManager.add_project_log(id_project, filename, log_type="update")
+        project_log = DatabaseManager.add_project_log(task_id=id_project, log_file_path=filename, log_type="update", user_id=user_id) 
         
         # Retrieve repository information
         repository = GitRepository.query.filter_by(project_id=id_project).first()

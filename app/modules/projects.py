@@ -18,7 +18,7 @@ def index():
     page = request.args.get('page', 1, type=int)
     search = request.args.get('search', '', type=str).strip()
 
-    query = Project.query.filter(Project.username == current_user.username)
+    query = Project.query.filter(Project.user_id == current_user.id)
 
     # Sorting projects by creation date in descending order
     query = query.order_by(Project.created_at.desc())
@@ -48,7 +48,7 @@ def add():
     access_token = request.form.get('personal_token') or None
     privacy = request.form.get('privacy') is not None
 
-    result = add_2_database.delay(user=current_user.username,privacy=privacy, proj_name=project_name,proj_url=project_url, description=description, access_token=access_token)
+    result = add_2_database.delay(user=current_user.id,privacy=privacy, proj_name=project_name,proj_url=project_url, description=description, access_token=access_token)
     
     # Menunggu sampai tugas selesai
     task_result = AsyncResult(result.id, app=celery)

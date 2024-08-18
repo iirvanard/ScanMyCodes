@@ -4,6 +4,8 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import validates
 from .git_branch import GitBranch
 
+
+
 class AnalyzeIssue(db.Model):
     __tablename__ = 'analyze_issue'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
