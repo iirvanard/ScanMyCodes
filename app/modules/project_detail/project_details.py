@@ -1,143 +1,8 @@
-import os
-import json
-import time
-from uuid import UUID
-from functools import wraps
+from . import *
+from .utils import *
 
-from flask import Blueprint, flash, abort, g, jsonify, redirect, render_template, request, url_for
-from flask_login import current_user, login_required
-from sqlalchemy import desc
-from celery.result import AsyncResult
-
-from app import celery, app
-from app.extensions import db
-from app.models import Project, GitBranch, GitRepository, OpenaiProject, AnalyzeIssue, ProjectLog, User,CollaboratorAccess
-from app.models.project_collaborator import ProjectCollaborator
-from app.tasks.project_detail import updateProject, delete_project_task, checkRemote
 
 blueprint = Blueprint('project', __name__, url_prefix='/project/<string:idproject>')
-
-
-# Utility Functions
-def get_project_from_id(idproject):
-    return Project.query.filter_by(project_id=idproject).first()
-
-
-def get_branches(idproject):
-    try:
-        # Ambil proyek berdasarkan idproject
-        project = get_project_from_id(idproject)
-        
-        # Periksa apakah proyek dimiliki oleh pengguna saat ini
-        if project.user_id == current_user.id:
-            # Ambil semua branch yang terkait dengan proyek
-            branches = GitBranch.query.filter_by(project_id=idproject).all()
-            return branches
-        
-        # Jika bukan pemilik, periksa kolaborator proyek
-        project_collaborator = ProjectCollaborator.query.filter_by(
-            project_id=idproject, collaborator_id=current_user.id
-        ).first()
-
-        # Jika kolaborator ditemukan dan memiliki akses
-        if project_collaborator and project_collaborator.accesses:
-            # Ambil daftar branch yang dapat diakses oleh kolaborator
-            branches = [access.branch for access in project_collaborator.accesses]
-            return branches
-        
-        # Jika tidak ada akses, kembalikan list kosong
-        return []
-
-    except Exception as e:
-        # Log kesalahan yang terjadi dan kembalikan None
-        return None
-
-
-
-def marksdown(idproject, branch):
-    try:
-        branchx = GitBranch.query.filter_by(project_id=idproject, remote=branch).first()
-        filename = AnalyzeIssue.query.filter_by(project_id=idproject, branch=branchx.id).first()
-        dir_destination = os.path.join(app.config['STATIC_FOLDER_1'], "scan", filename.path_)
-
-        if not os.path.exists(dir_destination) or os.path.getsize(dir_destination) == 0:
-            raise FileNotFoundError(f"The file at {dir_destination} is empty or does not exist.")
-        
-        with open(dir_destination, encoding='utf-8') as user_file:
-            filejson = user_file.read()
-            if not filejson.strip():
-                raise ValueError("The file is empty.")
-            data = json.loads(filejson)
-        
-        stats = {
-            'C': len(data.get('critical', [])),
-            'H': len(data.get('high', [])),
-            'M': len(data.get('medium', [])),
-            'L': len(data.get('low', [])),
-            'W': len(data.get('weak', []))
-        }
-
-        return stats, data
-
-    except Exception as e:
-        print(f"Error: {e}")
-        return {'C': 0, 'H': 0, 'M': 0, 'L': 0, 'W': 0}, {}
-
-
-def get_project_or_404(idproject):
-    project = get_project_from_id(idproject)
-    if project is None:
-        abort(404)
-    return project
-
-
-def check_idproject(func):
-    @wraps(func)
-    @login_required
-    def decorated_function(*args, **kwargs):
-        idproject = kwargs.get('idproject')
-        if not idproject:
-            abort(404)
-
-        try:
-            g.project = get_project_or_404(idproject)
-            if g.project.user_id == current_user.id:
-                return func(*args, **kwargs)
-
-            g.collaborator = ProjectCollaborator.query.filter_by(
-                project_id=idproject, collaborator_id=current_user.id).first()
-
-            if g.collaborator:
-                if g.collaborator.status == 'confirmed':
-                    return func(*args, **kwargs)
-                elif g.collaborator.status == 'pending':
-                    return redirect(url_for('project.manage_invitation', idproject=g.project.project_id))
-            
-            abort(404)
-        except Exception as e:
-            print(f"Error: {e}")
-            abort(404)
-    return decorated_function
-
-
-def is_project_manager(func):
-    @wraps(func)
-    @login_required
-    def decorated_function(*args, **kwargs):
-        idproject = kwargs.get('idproject')
-        if not idproject:
-            abort(404)
-
-        try:
-            project = get_project_or_404(idproject)
-            if project.user_id == current_user.id:
-                return func(*args, **kwargs)
-            abort(403)
-        except Exception as e:
-            print(f"Error: {e}")
-            abort(404)
-    return decorated_function
-
 
 # Routes
 @blueprint.route("/", methods=["GET"])
@@ -145,6 +10,92 @@ def is_project_manager(func):
 def index(idproject):
     project = get_project_from_id(idproject)
     return redirect(url_for('project.analysis', idproject=project.project_id))
+
+
+@blueprint.route("/member", methods=["POST"])
+@check_idproject 
+def add_collaborator(idproject):
+    collaborator_user = request.form.get('collaborator_user')
+    
+    # Validate the input data
+    if not collaborator_user:
+        flash("Missing collaborator_user", "error")
+        return redirect(request.referrer)  # Redirect back to the previous page
+
+    # Query the database for the user
+    user = User.query.filter(
+        (User.username == collaborator_user) | 
+        (User.email == collaborator_user)
+    ).first()
+    
+    if not user:
+        flash("User not found", "error")
+        return redirect(request.referrer)  # Redirect back to the previous page
+
+    # Create a new ProjectCollaborator instance
+    new_collaborator = ProjectCollaborator(
+        project_id=idproject,
+        inviter_id=current_user.id,
+        collaborator_id=user.id
+    )
+    
+    # Add the new collaborator to the session
+    db.session.add(new_collaborator)
+    
+    try:
+        # Commit the transaction
+        db.session.commit()
+        flash("Collaborator added successfully", "success")
+        return redirect(request.referrer)  # Redirect back to the previous page
+    except Exception as e:
+        # Rollback in case of error
+        db.session.rollback()
+        flash(f"Error: {str(e)}", "error")
+        return redirect(request.referrer) 
+
+
+@blueprint.route("/add_branch", methods=["POST"])
+@check_idproject
+def add_branch_collaborator(idproject):
+    try:
+        collaborator_id = request.form.get('collaborator_id')
+        branch_id = request.form.get('branch')
+
+        if not collaborator_id or not branch_id:
+            raise ValueError("Collaborator ID and Branch ID are required.")
+
+        new_access = CollaboratorAccess(
+            collaborator_id=collaborator_id,
+            branch_id=branch_id
+        )
+        
+        db.session.add(new_access)
+        db.session.commit()
+
+        flash(f"Collaborator ID: {collaborator_id} has been added to branch {branch_id}.", "success")
+        return redirect(request.referrer)  # Redirect to the previous page
+
+    except UniqueViolation as e:
+        db.session.rollback()
+        # Extract only the relevant error message
+        error_message = str(e).split("DETAIL:")[-1].strip()
+        flash(f"Error: {error_message}", "error")
+        return redirect(request.referrer)  # Redirect to the previous page
+
+    except ValueError as ve:
+        db.session.rollback()
+        flash(f"Error: {ve}", "error")
+        return redirect(request.referrer)  # Redirect to the previous page
+
+    except Exception as e:
+        db.session.rollback()
+        # For general exceptions, just take the message
+        error_message = str(e)
+        flash(f"An error occurred: {error_message}", "error")
+        return redirect(request.referrer)  # Redirect to the previous page
+
+
+    
 
 
 
@@ -173,16 +124,16 @@ def manage_invitation(idproject):
                 flash('Invitation confirmed successfully', 'success')
             elif 'rejected' in request.form:
                 invitation.rejected()
-                flash('Invitation confirmed successfully', 'success')
+                flash('Invitation rejected successfully', 'success')
             
-            return redirect(url_for('manage_invitation', idproject=idproject))
+            return redirect(url_for('project.manage_invitation', idproject=idproject))
 
-         
         except Exception as e:
             db.session.rollback()
             return jsonify({"error": str(e)}), 500
-    
+
     return render_template('/project_detail/invitations/invitation_page.html', idproject=idproject, project=g.project)
+    
 @blueprint.route("/analysis", methods=["GET"])
 @blueprint.route("/analysis/<string:branchid>", methods=["GET"])
 @check_idproject
@@ -218,21 +169,6 @@ def analysis(idproject, branchid=None):
         branches=branch_names,
         title=title,
         project=project
-    )
-
-
-
-
-def render_analysis_content( markdown_content):
-    """Render analysis content based on branchid."""
-    filter_content = {
-        'Severity': {"high", "medium", "critical", "low", "weak"},
-        'Language': {"python", "php", "javascript"}
-    }
-    return render_template(
-        '/project_detail/analysis/branch.html',
-        filterContent=filter_content,
-        content=markdown_content
     )
 
 
@@ -286,11 +222,18 @@ def settings(idproject):
     project = get_project_from_id(idproject)
     repo = GitRepository.query.filter_by(project_id=str(UUID(idproject))).first()
     openai_data = OpenaiProject.query.filter_by(project_id=str(UUID(idproject))).first()
+
+    collaborators = ProjectCollaborator.query.filter_by(project_id=str(UUID(idproject))).all()
+
+    branches = get_branches(idproject)
+
     return render_template(
         '/project_detail/settings/index.html',
         project=project,
         repository=repo,
-        openai=openai_data
+        openai=openai_data,
+        collaborator=collaborators,
+        branch=branches
     )
 
 

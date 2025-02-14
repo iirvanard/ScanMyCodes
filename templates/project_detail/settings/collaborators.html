@@ -32,32 +32,142 @@
     <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Select a collaborator above</button>
 
   </form>
-
 {% endset %}
+
+
 
 <section class="flex-1 max-w-full divide-y divide-gray-200 border border-gray-300" id="content-collaborators" hidden>
   <header class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase">
     Manage access
   </header>
-  <div class="bg-white divide-y divide-gray-200">
 
-    {% if True %}
+    {% if collaborator %}
+    <div class="flex items-center">
+      <form class="w-full p-4 flex items-center">   
+        <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+        <div class="relative w-full">
+            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                </svg>
+            </div>
+            <input type="search" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Search Mockups, Logos..." required />
+            <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+        </div>
+      </form>
+      {% with popup_title="Add a collaborator to "~ project.project_name, popup_id='collaborators', popup_content=add_collaborators %}
+      <button onclick="openPopup('{{ popup_id }}')" class="p-2 mr-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300">
+        Add
+      </button>
+
+      {% include "widgets/popup.html" %}
+      {% endwith %}
+      
+    </div>
+    
+
+<hr>
+<ul class="space-y-4">
+  {% for collaboratorx in collaborator %}
+  <li class="flex items-center justify-between bg-white p-4 rounded-lg shadow-sm border-b">
+    <!-- Foto Profile -->
+    <div class="flex items-center">
+      <img src="{{ collaboratorx.collaborator.image_profile if collaboratorx.collaborator.image_profile else 'https://flowbite.com/docs/images/people/profile-picture-5.jpg' }}" class="w-10 h-10 rounded-full">
+      <span class="ml-4 font-medium text-gray-800">{{collaboratorx.collaborator.first_name +" "+collaboratorx.collaborator.last_name }}</span>
+    </div>
+
+    {% if collaboratorx.status != "confirmed" %}
+    <div class="flex items-center space-x-2">
+      <span id="inviteText">Pending Invite </span>
+      <!-- Tombol Copy -->
+      <button id="copyButton" class="text-blue-500 hover:text-blue-700" onclick="copyToClipboard(`{{ url_for('project.manage_invitation', idproject=project.project_id) }}`)"> 
+        <!-- Ikon Copy -->
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy">
+    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path></svg>
+      </button>
+    </div>
+    {% endif %}
+
+  <!-- Tombol 3 Dot -->
+<div class="relative">
+  <button class="p-2 rounded-full text-gray-500 hover:bg-gray-100" onclick="toggleDropdown('dropdown-{{ collaboratorx.id }}')">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+    </svg>
+  </button>
+
+
+
+  <!-- Dropdown Menu -->
+  <div id="dropdown-{{ collaboratorx.id }}" class="hidden absolute right-0 mt-2 w-40 bg-white border rounded-lg shadow-lg z-10">
+    <ul class="py-2">
+      {% if collaboratorx.status == "confirmed" %}
+
+{% set add_branch %}
+<form action="{{ url_for('project.add_branch_collaborator', idproject=project.project_id) }}" method="POST" class="rounded-lg shadow-lg">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+  
+  <label for="branch" class="block text-sm font-medium text-gray-700">Select a Branch</label>
+  <input type="hidden" name="collaborator_id" value="{{ collaboratorx.id }}">
+
+  <select name="branch" id="branch" class="w-full mt-2 px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none">
+    {% for branches in branch %}
+      <option value="{{branches.id}}">{{branches.remote}}</option>
+    {% endfor %}
+  </select>
+
+  <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 mt-4">
+      Select Branch
+  </button>
+</form>
+{% endset %}
+      {% with popup_title="add Branch to " ~ collaboratorx.collaborator.username,popup_id='add_branch', popup_content=add_branch %}
+        <li><a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100" onclick="openPopup('{{ popup_id }}')">Add Branch</a></li>
+        {% include "widgets/popup.html" %}
+      {% endwith %}
+        {% endif %}
+      <li><a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Delete</a></li>
+    </ul>
+  </div>
+</div>
+
+  </li>
+  {% endfor %}
+</ul>
+
+
+
+    {% else %}
     {% with popup_title="Add a collaborator to "~ project.project_name, popup_id='collaborators', popup_content=add_collaborators %}
-      <div class="px-6 py-4 whitespace-nowrap flex flex-col items-center max-w-lg mx-auto">
+    <div class="bg-white divide-y divide-gray-200">
+ 
+    <div class="px-6 py-4 whitespace-nowrap flex flex-col items-center max-w-lg mx-auto">
         <img class="w-14 h-14 object-cover rounded-lg" src="https://github.githubassets.com/assets/permissions-4a54b38b5f93.png" alt="Collaborators icon">
         <p class="mt-2 text-gray-600">You haven't invited any collaborators yet</p>
         <button onclick="openPopup('{{ popup_id }}')" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-          Change
+          Add Collaborator
         </button>
       </div>
       {% include "widgets/popup.html" %}
     {% endwith %}
-    {% else %}
-    <p>Please log in.</p>
     {% endif %}
 
   </div>
 </section>
+
+
+<script>
+// Fungsi untuk menyalin teks ke clipboard
+  function copyToClipboard(text) {
+    // Menyalin teks ke clipboard
+    navigator.clipboard.writeText('{{ request.url_root.rstrip("/") }}'+text).then(function() {
+      alert('Teks telah disalin ke clipboard!');
+    }).catch(function(err) {
+      alert('Gagal menyalin teks: ', err);
+    });
+  }
+</script>
+
 
 <script>
   function openPopup(id) {
@@ -68,3 +178,26 @@
     document.getElementById(id).classList.add('hidden');
   }
 </script>
+
+<script>
+  function toggleDropdown(id) {
+    const dropdown = document.getElementById(id);
+    
+    // Toggle the visibility of the dropdown
+    if (dropdown.classList.contains('hidden')) {
+      dropdown.classList.remove('hidden');
+    } else {
+      dropdown.classList.add('hidden');
+    }
+    
+    // Close other dropdowns if needed (optional)
+    const allDropdowns = document.querySelectorAll('.dropdown-menu');
+    allDropdowns.forEach(function(otherDropdown) {
+      if (otherDropdown !== dropdown) {
+        otherDropdown.classList.add('hidden');
+      }
+    });
+  }
+  
+  </script>
+  

@@ -29,7 +29,7 @@
   
   {% set sorted_items = all_items | sort(attribute='title') %}
   {% for item in sorted_items %}
-      <details language="{{ item.id.split('_')[0] }}" class="finding mb-8" id="parent-{{ loop.index0 }}" close>
+      <details language="{{ item.id.split('_')[0] }}" class="finding mb-8" id="parent-{{ loop.index0 }}" open>
           <summary>
               <div class="head">
                   <h3 class="{{ item.severity }}">
@@ -54,7 +54,7 @@
               </div>
               <hr class="border-gray-500 ">
               <div class="overflow-x-auto rounded-b-lg p-4 bg-slate-900		 ">
-             <pre><code style="color: white;">{{ item.code_extract }}</code></pre>
+                <pre><code style="color: white;">{{ item.code_extract | e }}</code></pre>
               </div>
             </div>
 
@@ -251,7 +251,8 @@
       var item = parent.querySelector("#" + tabId);
       item.style.display = "block";
       if (tabId == "openai") {
-        var code = parent.querySelector(".term-container").innerHTML;
+        var code = parent.querySelector(".term-container pre code").innerHTML;
+        console.log(code);
         var element = item.querySelector("#OpenaiContent");
         if (element.innerHTML.trim() === '') {
           element.innerHTML = `

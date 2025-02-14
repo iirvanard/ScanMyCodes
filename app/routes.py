@@ -6,7 +6,8 @@
 # app.add_url_rule("/", view_func=about)
 # app.add_url_rule("/about", view_func=dashboard)
 
-from .modules import dashboard, project_details, projects,profile_page
+from .modules.project_detail import project_details
+from .modules import dashboard, projects,profile_page
 from .modules.auth import auth
 
 from .modules.api import chat_openai

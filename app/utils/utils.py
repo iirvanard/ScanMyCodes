@@ -17,7 +17,7 @@ def split_url(url: str) -> str:
 def run_wsl_command(source_path, filename):
     # Command to run WSL
     wsl_command = f"bearer scan {source_path} --format json --output {filename} --force"
-    logging.info(f"Running command: {wsl_command}")
+    logging.info(f"Running scanning.....")
 
     # Run the command and capture output
     try:

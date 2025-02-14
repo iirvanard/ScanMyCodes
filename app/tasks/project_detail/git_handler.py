@@ -69,6 +69,7 @@ class GitHandler:
         self.logger.info("GitUtils initialized.")
 
         for branch in branches:
+            branch.remote = os.path.basename(branch.remote)
             self.logger.info(f"Processing branch: {branch.remote}")
             
             try:

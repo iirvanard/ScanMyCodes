@@ -27,7 +27,7 @@ def chat():
         # Mendapatkan bahasa dan kode sumber dari data JSON
         language = json_data.get('language')
         source_code = json_data.get('source_code')
-
+        
         # Memeriksa apakah bahasa atau kode sumber kosong
         if not source_code:
             raise BadRequest(" source code cannot be empty")
