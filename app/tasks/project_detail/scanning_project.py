@@ -29,7 +29,9 @@ def scanning(task_id, all_branches, dir_path, logger,filename=None):
                     issue = AnalyzeIssue(project_id=task_id, path_=filename, branch=gitbranch.id)
                     db.session.add(issue)
                 try:
-                    run_wsl_command(dir_source, dir_destination)
+                    runner_script = os.path.join(app.config['RUNNER'], "bearer.sh")
+
+                    run_wsl_command(dir_source, dir_destination,runner_script)
                 except Exception as e:
                     print(str(e))
                        

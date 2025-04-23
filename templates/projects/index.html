@@ -40,6 +40,16 @@
                     <input type="text" id="personal_token" name="personal_token" class="border rounded px-3 py-2 w-full" required>
                 </div>
 
+
+                <div class="mb-4">
+                    <label for="scannerTool" class="block text-gray-700 font-bold mb-2">Pilih Tool</label>
+                    <select id="scannerTool" name="scannerTool" class="border rounded px-3 py-2 w-full">
+                        <option value="bearer">Bearer</option>
+                        <option value="bandit">Bandit</option>
+                        <option value="semgrep">Semgrep</option>
+                    </select>
+                </div>
+
                 <div class="mb-4">
                     <label for="description" class="block text-gray-700 font-bold mb-2">Deskripsi (opsional)</label>
                     <textarea id="description" name="description" class="border rounded px-3 py-2 w-full"></textarea>

@@ -1,6 +1,19 @@
 import subprocess
 import logging
+import os
+import sys
 
+from flask import app
+
+# Konfigurasi logger
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler(),  # Output ke konsol
+        logging.FileHandler("realtime_scan.log", mode="w")  # Simpan ke file log
+    ]
+)
 
 def split_url(url: str) -> str:
     last_slash_index = url.rfind("/")
@@ -14,24 +27,36 @@ def split_url(url: str) -> str:
     return url[:last_slash_index].split("/")[-1], url[last_slash_index +
                                                       1:last_suffix_index]
 
-def run_wsl_command(source_path, filename):
-    # Command to run WSL
-    wsl_command = f"bearer scan {source_path} --format json --output {filename} --force"
-    logging.info(f"Running scanning.....")
 
-    # Run the command and capture output
+def run_wsl_command(entry_point, output_path, runner_script):
+    """
+    Menjalankan runner.sh dalam WSL untuk menjalankan Bearer scan.
+
+    :param entry_point: Path ke direktori proyek yang akan dipindai.
+    :param output_path: Path lengkap untuk menyimpan hasil scan (termasuk nama file JSON).
+    :param tools: Nama alat yang akan dijalankan, default "bearer".
+    """
+
+
+    if not os.path.exists(runner_script):
+        logging.error(f"{runner_script} runner script not found: {runner_script}")
+        return
+
     try:
-        result = subprocess.run(wsl_command, 
-                                shell=True, 
-                                capture_output=True, 
-                                text=True)
-        logging.info(f"Command output: {result.stdout}")
+        result = subprocess.run(
+            f"bash {runner_script} {entry_point}", shell=True, text=True, capture_output=True
+        )
+
         if result.stderr:
             logging.warning(f"Command error output: {result.stderr}")
-        return result.stdout.strip()
-    except subprocess.CalledProcessError as e:
-        logging.error(f"Command '{wsl_command}' failed with error: {e.stderr}")
-        raise
 
+        with open(output_path, "w") as file:
+            file.write(result.stdout)
 
-# repo_owner, repo_name = get_repo_info_from_url(url) #use this
+    except Exception as e:
+        logging.error(f"Error running {runner_script}: {e}")
+
+# # Contoh penggunaan
+# if __name__ == "__main__":
+
+#     run_wsl_command("/home/iirvanard/projects/ScanMyCodes/app/", "/home/iirvanard/projects/ScanMyCodes/test/test.json")
